@@ -16,6 +16,7 @@ import Kkm from '../pages/Rapor/Mapel/Kkm';
 import PresensiSiswa from '../pages/presensi/Siswa';
 import LayoutNoSidebar from '../layout/index-nonSidebar'
 import Login from '../pages/Auth/Login';
+import Register from '../pages/Auth/Register';
 
 const Router = () => {
   const location = useLocation();
@@ -45,6 +46,7 @@ const Router = () => {
       </Route>
       <Route path={`${process.env.PUBLIC_URL}`} element={<LayoutNoSidebar />}>
       <Route index element={<Login />}></Route>
+      <Route path='/register' element={<Register/>}></Route>
 
       </Route>
     </Routes>
