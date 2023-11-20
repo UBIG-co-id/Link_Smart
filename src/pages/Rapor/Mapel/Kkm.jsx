@@ -1,12 +1,17 @@
 import React, { useState, useContext, useEffect } from 'react'
 import Content from '../../../layout/Content/Content'
 import Head from '../../../layout/Head'
+import { Card, DropdownItem, DropdownMenu, DropdownToggle, UncontrolledDropdown } from 'reactstrap'
 import { Block, BlockHead, BlockBetween, BlockHeadContent, BlockTitle, BlockDes, Button, Icon, SpecialTable, DataTable, RSelect, TooltipComponent, PaginationComponent } from '../../../component/Component'
 import { DataTableBody, DataTableHead, DataTableItem, DataTableRow } from '../../../component/table/DataTable'
-import { kkmData } from '../../../component/user/UserData'
+import { kkmData, filterStatus, filterJk  } from '../../../component/user/UserData'
 const Kkm = () => {
     const [sm, updateSm] = useState(false);
     const [data, setData] = useState(kkmData);
+    const [onSearch, setonSearch] = useState(true);
+    const [onSearchText, setSearchText] = useState("");
+    const toggle = () => setonSearch(!onSearch);
+    const paginate = (pageNumber) => setCurrentPage(pageNumber);
     const [modal, setModal] = useState({
         edit: false,
         add: false,
@@ -16,7 +21,6 @@ const Kkm = () => {
     const indexOfLastItem = currentPage * itemPerPage;
     const indexOfFirstItem = indexOfLastItem - itemPerPage;
     const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
-    const paginate = (pageNumber) => setCurrentPage(pageNumber);
     const onApproveClick = (id) => {
         let newData = data;
         let index = newData.findIndex((item) => item.id === id);
@@ -29,6 +33,69 @@ const Kkm = () => {
         newData[index].status = "Rejected";
         setData([...newData]);
     };
+    const onFilterChange = (e) => {
+        setSearchText(e.target.value);
+    };
+    const [editId, setEditedId] = useState();
+    const [editFormData, setFormData] = useState({
+        mapel: "",
+        kelas:"",
+        kkm:"",
+    });
+    const resetForm = () => {
+        setFormData({
+        mapel: "",
+        kelas:"",
+        kkm:"",
+           
+        });
+    };
+    const closeModal = () => {
+        setModal({ add: false })
+        resetForm();
+    };
+    const closeEditModal = () => {
+        setModal({ edit: false })
+        resetForm();
+    }
+
+    const onFormSubmit = (submitData) => {
+        const { mapel, kelas, kkm} = submitData;
+        let submittedData = {
+            id: data.length + 1,
+            mapel: mapel,
+            kelas: kelas,
+            kkm: kkm,
+        };
+        setData([submitData, ...data]);
+        resetForm();
+        setModal({ edit: false }, { add: false });
+    };
+
+    const onEditSubmit = (submitData) => {
+        const { mapel, kelas, kkm } = submitData;
+        let submittedData;
+        let newitems = data;
+        newitems.forEach((item) => {
+            if (item.id === editId) {
+                submittedData = {
+                    id: item.id,
+                    avatarBg: item.avatarBg,
+                    image: item.image,
+                    role: item.role,
+                    balance: editFormData.balance,
+                    kycStatus: item.kycStatus,
+                    lastLogin: item.lastLogin,
+                    status: editFormData.status,
+                    country: item.country,
+                };
+            }
+        });
+        let index = newitems.findIndex((item) => item.id === editId);
+        newitems[index] = submittedData;
+        setModal({ edit: false});
+    };
+
     return (
         <React.Fragment>
             <Head title="KKM"></Head>
@@ -65,9 +132,11 @@ const Kkm = () => {
                                                 <span>Reports</span>
                                             </Button>
                                         </li>
-                                        <li className="nk-block-tools-opt">
-                                            <Button color="primary" className="btn-icon" onClick={() => setModal({ add: true })}>
-                                                <Icon name="plus"></Icon>
+                                        <li >
+                                            <Button color="primary"  onClick={() => setModal({ add: true })}>
+                                                <Icon name="plus">
+                                                </Icon>
+                                                <div>Tambah Mapel</div>
                                             </Button>
                                         </li>
                                     </ul>
@@ -81,6 +150,29 @@ const Kkm = () => {
                         <div className="card-inner position-relative card-tools-toggle">
                             <div className="card-title-group">
                                 <div className="card-tools">
+                                    <ul className='btn-toolbar gx-1'>
+                                        <li>
+                                            <Button
+                                                href="#search"
+                                                onClick={(ev) => {
+                                                    ev.preventDefault();
+                                                    toggle();
+                                                }}
+                                                className="btn-icon search-toggle toggle-search"
+                                            >
+                                                <Icon name="search"></Icon>
+                                            </Button>
+                                        </li>
+                                        <li className="btn-toolbar-sep"></li>
+                                        <li>
+                                            <UncontrolledDropdown>
+                                                <DropdownToggle tag="a" className="btn btn-trigger btn-icon dropdown-toggle">
+                                                    <div className="dot dot-primary"></div>
+                                                    <Icon name="filter-alt"></Icon>
+                                                </DropdownToggle>
+                                            </UncontrolledDropdown>
+                                        </li>
+                                    </ul>
                                     <div className="form-inline flex-nowrap gx-3">
 
                                     </div>
