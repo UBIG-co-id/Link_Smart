@@ -204,3 +204,20 @@ export const countryOptions = [
     { value: "France", label: "France" },
     { value: "England", label: "England" },
 ];
+
+//PRESENSI
+export const presensiSiswa = [
+    { 
+        id: 1,
+        nis: 1673,
+        nlp: "Avril",
+        kelas: 12,
+        tanggal: "10-11-2023",
+        in: 7.45,
+        status: "Masuk",
+        out: 16.30,
+        status: "Pulang",
+        keterangan: "Masuk tepat Waktu",
+        checked: true,
+    }
+];

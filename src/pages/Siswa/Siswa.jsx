@@ -277,6 +277,7 @@ const Siswa = () => {
                     </DataTable>
                 </Block>
                 <AddModal modal={modal.add} closeModal={closeModal} filterJk={filterJk} filterAgm={filterAgm} filterJp={filterJp} filterP={filterP} filterPeng={filterPeng}/>
+                {/* <EditModal modal={modal.edit}/> */}
             </Content>
         </React.Fragment>
     )

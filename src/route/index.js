@@ -13,6 +13,7 @@ import MutasiSiswa from '../pages/Siswa/MutasiSiswa';
 import Mapel from '../pages/Rapor/Mapel/Mapel';
 import MapelKelas from '../pages/Rapor/Mapel/Kelas'
 import Kkm from '../pages/Rapor/Mapel/Kkm';
+import PresensiSiswa from '../pages/presensi/Siswa';
 import LayoutNoSidebar from '../layout/index-nonSidebar'
 import Login from '../pages/Auth/Login';
 
@@ -40,6 +41,7 @@ const Router = () => {
         <Route path='/rapor/mapel' element={<Mapel />}></Route>
         <Route path='/rapor/mapel-kelas' element={<MapelKelas />}></Route>
         <Route path='/rapor/mapel-kkm' element={<Kkm />}></Route>
+        <Route path='/presensi/siswa' element={<PresensiSiswa />}></Route>
       </Route>
       <Route path={`${process.env.PUBLIC_URL}`} element={<LayoutNoSidebar />}>
       <Route index element={<Login />}></Route>
