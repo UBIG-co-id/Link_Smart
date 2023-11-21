@@ -211,13 +211,12 @@ export const presensiSiswa = [
         id: 1,
         nis: 1673,
         nlp: "Avril",
-        kelas: 12,
+        kelas: "XII",
         tanggal: "10-11-2023",
         in: 7.45,
-        status: "Masuk",
+        status_in: "Masuk",
         out: 16.30,
-        status: "Pulang",
+        status_out: "Pulang",
         keterangan: "Masuk tepat Waktu",
-        checked: true,
     }
 ];

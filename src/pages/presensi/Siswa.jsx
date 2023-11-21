@@ -13,11 +13,11 @@ import { DataTableBody, DataTableHead, DataTableItem, DataTableRow } from '../..
 
 
 const Siswa = () => {
+    const [data, setData] = useState(presensiSiswa);
     const [sm, updateSm] = useState(false);
     const [actionText, setActionText] = useState("");
     // const { contextData } = useContext(UserContext);
     const [tablesm, updateTableSm] = useState(false);
-    const [data, setData] = useState(presensiSiswa);
     const [onSearch, setonSearch] = useState(true);
     const [onSearchText, setSearchText] = useState("");
     const [itemPerPage, setItemPerPage] = useState(10);
@@ -329,7 +329,7 @@ const Siswa = () => {
                         </div>
                     </div>
                 </div>
-                <DataTableBody compact>
+                <DataTableBody bodyclass="nk-tb-tnx">
                     <DataTableHead>
                         <DataTableRow className="nk-tb-col-check">
                             <div className="custom-control custom-control-sm custom-checkbox notext">
@@ -377,6 +377,43 @@ const Siswa = () => {
                         </DataTableRow>
                     </DataTableHead>
                     {currentItems.leght > 0
+                        ? currentItems.map((item) => {
+                            return(
+                                <DataTableItem key={item.id}>
+                                    <DataTableRow size="md">
+                                        <span>{item.id}</span>
+                                    </DataTableRow>
+                                    <DataTableRow size="md">
+                                        <span>{item.nis}</span>
+                                    </DataTableRow>
+                                    <DataTableRow size="md">
+                                        <span>{item.nlp}</span>
+                                    </DataTableRow>
+                                    <DataTableRow size="md">
+                                        <span>{item.kelas}</span>
+                                    </DataTableRow>
+                                    <DataTableRow size="md">
+                                        <span>{item.tanggal}</span>
+                                    </DataTableRow>
+                                    <DataTableRow size="md">
+                                        <span>{item.in}</span>
+                                    </DataTableRow>
+                                    <DataTableRow size="md">
+                                        <span>{item.status_in}</span>
+                                    </DataTableRow>
+                                    <DataTableRow size="md">
+                                        <span>{item.out}</span>
+                                    </DataTableRow>
+                                    <DataTableRow size="md">
+                                        <span>{item.status_out}</span>
+                                    </DataTableRow>
+                                    <DataTableRow size="md">
+                                        <span>{item.keterangan}</span>
+                                    </DataTableRow>
+                                </DataTableItem>
+                            )
+                        }): null}
+                    {/* {currentItems.leght > 0
                         ? currentItems.map((item) => {
                             return(
                                 <DataTableItem key={item.id}>
@@ -461,9 +498,9 @@ const Siswa = () => {
                                     </DataTableRow>
                                 </DataTableItem>
                             )
-                        }) : null}
+                        }) : null} */}
                 </DataTableBody>
-                <div className="card-inner">
+                {/* <div className="card-inner">
                     {currentItems.leght > 0 ? (
                         <PaginationComponent
                             itemPerPage={itemPerPage}
@@ -476,7 +513,7 @@ const Siswa = () => {
                             <span className="text-silrnt">data tidak ditemukan</span>
                         </div>
                     )}
-                </div>
+                </div> */}
             </DataTable>
         </Block>
         {/* <EditModal modal={modal.edit} formData={editFormData} setFormData={setEditFormData} closeModal={closeEditModal} onSubmit={onEditSubmit} filterStatus={filterStatus} />         */}
