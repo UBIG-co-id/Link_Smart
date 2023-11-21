@@ -132,6 +132,20 @@ export const kkmData = [
         kkm: "75"
     },
 ]
+export const presensiSiswa = [
+    {
+        id: 1,
+       nis: 1,
+       nlp:'Ulfa',
+       kls: 'XII',
+       tgl: '20-Nov-2023',
+       in: '08:00',
+       status_in: 'Tepat Waktu',
+       out: '17:00',
+       status_out:'anda belum checkout',
+       keterangan: 'Coba'
+    },
+]
 export const filterStatus = [
     { value: "Active", label: "Active" },
     { value: "Pending", label: "Pending" },
