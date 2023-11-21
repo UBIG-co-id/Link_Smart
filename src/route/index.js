@@ -13,6 +13,7 @@ import MutasiSiswa from '../pages/Siswa/MutasiSiswa';
 import Mapel from '../pages/Rapor/Mapel/Mapel';
 import MapelKelas from '../pages/Rapor/Mapel/Kelas'
 import Kkm from '../pages/Rapor/Mapel/Kkm';
+
 import LayoutNoSidebar from '../layout/index-nonSidebar'
 import Login from '../pages/Auth/Login';
 import Register from '../pages/Auth/Register';

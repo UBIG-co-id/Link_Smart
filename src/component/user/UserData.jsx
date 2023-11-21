@@ -138,7 +138,7 @@ export const presensiSiswa = [
        nis: 1,
        nlp:'Ulfa',
        kls: 'XII',
-       tgl: '20-Nov-2023',
+       tgl: '20-11-2023',
        in: '08:00',
        status_in: 'Tepat Waktu',
        out: '17:00',
@@ -218,3 +218,6 @@ export const countryOptions = [
     { value: "France", label: "France" },
     { value: "England", label: "England" },
 ];
+
+//PRESENSI
+
