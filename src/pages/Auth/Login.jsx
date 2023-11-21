@@ -127,7 +127,6 @@ const Login = () => {
                             placeholder="Password"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
-
                             className={`form-control-lg form-control ${passState ? "is-hidden" : "is-shown"}`} />
                         {errors.passcode && <span className="invalid">{errors.passcode.message}</span>}
                     </div>

@@ -147,10 +147,13 @@ const Kkm = () => {
                 </BlockHead>
                 <Block>
                     <DataTable className="card-stretch">
-                        <div className="card-inner position-relative card-tools-toggle">
+                    <div className="card-inner">
                             <div className="card-title-group">
-                                <div className="card-tools">
-                                    <ul className='btn-toolbar gx-1'>
+                                <div className="card-title">
+                                    <h5 className="title">KKM </h5>
+                                </div>
+                                <div className="card-tools me-n1">
+                                    <ul className="btn-toolbar gx-1">
                                         <li>
                                             <Button
                                                 href="#search"
@@ -173,8 +176,28 @@ const Kkm = () => {
                                             </UncontrolledDropdown>
                                         </li>
                                     </ul>
-                                    <div className="form-inline flex-nowrap gx-3">
-
+                                </div>
+                                <div className={`card-search search-wrap ${!onSearch && "active"}`}>
+                                    <div className="search-content">
+                                        <Button
+                                            onClick={() => {
+                                                setSearchText("");
+                                                toggle();
+                                            }}
+                                            className="search-back btn-icon toggle-search"
+                                        >
+                                            <Icon name="arrow-left"></Icon>
+                                        </Button>
+                                        <input
+                                            type="text"
+                                            className="border-transparent form-focus-none form-control"
+                                            placeholder="Search by Order Id"
+                                            value={onSearchText}
+                                            onChange={(e) => onFilterChange(e)}
+                                        />
+                                        <Button className="search-submit btn-icon">
+                                            <Icon name="search"></Icon>
+                                        </Button>
                                     </div>
                                 </div>
                             </div>
