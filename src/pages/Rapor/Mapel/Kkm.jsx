@@ -4,7 +4,7 @@ import Head from '../../../layout/Head'
 import { Card, DropdownItem, DropdownMenu, DropdownToggle, UncontrolledDropdown } from 'reactstrap'
 import { Block, BlockHead, BlockBetween, BlockHeadContent, BlockTitle, BlockDes, Button, Icon, SpecialTable, DataTable, RSelect, TooltipComponent, PaginationComponent } from '../../../component/Component'
 import { DataTableBody, DataTableHead, DataTableItem, DataTableRow } from '../../../component/table/DataTable'
-import { kkmData, filterStatus, filterJk  } from '../../../component/user/UserData'
+import { kkmData, filterStatus, filterJk } from '../../../component/user/UserData'
 const Kkm = () => {
     const [sm, updateSm] = useState(false);
     const [data, setData] = useState(kkmData);
@@ -39,15 +39,15 @@ const Kkm = () => {
     const [editId, setEditedId] = useState();
     const [editFormData, setFormData] = useState({
         mapel: "",
-        kelas:"",
-        kkm:"",
+        kelas: "",
+        kkm: "",
     });
     const resetForm = () => {
         setFormData({
-        mapel: "",
-        kelas:"",
-        kkm:"",
-           
+            mapel: "",
+            kelas: "",
+            kkm: "",
+
         });
     };
     const closeModal = () => {
@@ -60,7 +60,7 @@ const Kkm = () => {
     }
 
     const onFormSubmit = (submitData) => {
-        const { mapel, kelas, kkm} = submitData;
+        const { mapel, kelas, kkm } = submitData;
         let submittedData = {
             id: data.length + 1,
             mapel: mapel,
@@ -93,7 +93,7 @@ const Kkm = () => {
         });
         let index = newitems.findIndex((item) => item.id === editId);
         newitems[index] = submittedData;
-        setModal({ edit: false});
+        setModal({ edit: false });
     };
 
     return (
@@ -133,7 +133,7 @@ const Kkm = () => {
                                             </Button>
                                         </li>
                                         <li >
-                                            <Button color="primary"  onClick={() => setModal({ add: true })}>
+                                            <Button color="primary" onClick={() => setModal({ add: true })}>
                                                 <Icon name="plus">
                                                 </Icon>
                                                 <div>Tambah Mapel</div>
@@ -147,7 +147,7 @@ const Kkm = () => {
                 </BlockHead>
                 <Block>
                     <DataTable className="card-stretch">
-                    <div className="card-inner">
+                        <div className="card-inner">
                             <div className="card-title-group">
                                 <div className="card-title">
                                     <h5 className="title">KKM </h5>
@@ -218,14 +218,25 @@ const Kkm = () => {
                                     <span className="sub-text">KKM</span>
                                 </DataTableRow>
                             </DataTableHead>
-                            {/* {currentItems.length > 0
+                            {currentItems.length > 0
                                 ? currentItems.map((item) => {
-                                    return(
+                                    return (
                                         <DataTableItem key={item.id}>
-
+                                            <DataTableRow size="md">
+                                                <span>{item.id}</span>
+                                            </DataTableRow>
+                                            <DataTableRow size="md">
+                                                <span>{item.mapel}</span>
+                                            </DataTableRow>
+                                            <DataTableRow size="md">
+                                                <span>{item.kls}</span>
+                                            </DataTableRow>
+                                            <DataTableRow size="md">
+                                                <span>{item.kkm}</span>
+                                            </DataTableRow>
                                         </DataTableItem>
                                     )
-                                }):null} */}
+                                }) : null}
                         </DataTableBody>
                     </DataTable>
                 </Block>

@@ -146,6 +146,171 @@ export const presensiSiswa = [
        keterangan: 'Coba'
     },
 ]
+export const penilaianAspek = [
+    {
+        id: 1,
+       aspek: 'Keterampilan',
+       ujian:'Project',
+      
+    },
+]
+export const penilaianKd = [
+    {
+        id: 1,
+       nokd: 123,
+       deskripsi:'Coba',
+      
+    },
+]
+export const penilaianSikap = [
+    {
+        id: 1,
+       sikap: 'Baik',
+       nilai: 90,
+       desnilai: 'Baik',
+       
+      
+    },
+]
+export const penilaianLain = [
+    {
+        id: 1,
+       penilaianlain: 'Ekstrakurikuler',
+       kolomnilai:"Predikat",
+    },
+]
+export const templateRapor = [
+    {
+        id: 1,
+        namatemplate: 'Rapor Kurikulum 2013',
+        tipe: 'Umum',
+        aktif:"Aktif",
+    },
+]
+export const tampilkanRapor = [
+    {
+        id: 1,
+        nis:1,
+        nls: 'Wahyu Fajar Robyansyah',
+        kls: 'X RPL 1',
+        tr:"Aktif",
+        plh:"Nonaktifkan"
+    },
+]
+export const rentangNilai = [
+    {
+        id: 1,
+        deskripsi:"Sangat Baik",
+        huruf: 'A',
+        
+    },
+    {
+        id: 2,
+        deskripsi:"Baik",
+        huruf: 'B',
+        
+    },
+    {
+        id: 3,
+        deskripsi:"Belum Optimal",
+        huruf: 'C',
+        
+    },
+    {
+        id: 4,
+        deskripsi:"Perlu Bimbingan",
+        huruf: 'D',
+        
+    },
+]
+export const kkmBatas = [
+    {
+        id: 1,
+        kkm: 75,
+        batasd: "0-74",
+        batasc: "75-83",
+        batasb: "84-92",
+        batasa: "93-100",
+        
+    },
+    {
+        id: 2,
+        kkm: 80,
+        batasd: "0-74",
+        batasc: "75-83",
+        batasb: "84-92",
+        batasa: "93-100",
+        
+    },
+    {
+        id: 3,
+        kkm: 85,
+        batasd: "0-74",
+        batasc: "75-83",
+        batasb: "84-92",
+        batasa: "93-100",
+        
+    },
+    {
+        id: 4,
+        kkm: 90,
+        batasd: "0-74",
+        batasc: "75-83",
+        batasb: "84-92",
+        batasa: "93-100",
+        
+    },
+]
+
+export const tagihanSpp = [
+    {
+        id: 1,
+        nis:1,
+        nls: 'Wahyu Fajar Robyansyah',
+        kls: 'X RPL 1',
+        bts:"1.000.000",
+        
+    },
+]
+export const tagihanSiswa = [
+    {
+        id: 1,
+        nis:1,
+        nls: 'Wahyu Fajar Robyansyah',
+        kls: 'X RPL 1',
+        sppgan:"1.000.000",
+        sppgen:"1.200.000",
+        tl:"200.000",
+        total: "2.400.000",
+    },
+]
+export const pengumuman = [
+    {
+        id: 1,
+        judul: "ADIWIYATA AWARDS 2023",
+        wt:"2023-10-30",
+        tb:"Ya"
+    },
+    {
+        id: 2,
+        judul: "SEMINAR NASIONAL",
+        wt:"2023-10-29",
+        tb:"Tidak"
+    },
+]
+export const ppdb =[
+    {
+        id:1,
+        nisn:1,
+        nik:123434123423,
+        ns:"Wahyu Fajar Robyansyah",
+        peminatan: "RPL",
+        verifikasi: "Ya",
+        lulus:"Ya",
+        diterima:"Ya",
+    }
+]
+
 export const filterStatus = [
     { value: "Active", label: "Active" },
     { value: "Pending", label: "Pending" },
@@ -218,6 +383,20 @@ export const countryOptions = [
     { value: "France", label: "France" },
     { value: "England", label: "England" },
 ];
+export const filterTn = [
+    { value: "Tematik", label: "Tematik" },
+    { value: "Tanpa Tematik", label: "Tanpa Tematik" },
+];
+export const filterPn = [
+    { value: "Nilai KD", label: "Nilai KD" },
+    { value: "Nilai Akhir Rapor", label: "Nilai Akhir Rapor" },
+    { value: "Kompetensi KD", label: "Kompetensi KD" },
+];
+export const filterNs = [
+    { value: "Skenario Penilai", label: "Skenario Penilai" },
+    { value: "Sub Penilaian Sikap", label: "Sub Penilaian Sikap" },
+];
 
-//PRESENSI
+//Aspek
+
 
