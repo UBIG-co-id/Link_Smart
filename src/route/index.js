@@ -17,7 +17,9 @@ import Kkm from '../pages/Rapor/Mapel/Kkm';
 import LayoutNoSidebar from '../layout/index-nonSidebar'
 import Login from '../pages/Auth/Login';
 import Register from '../pages/Auth/Register';
-import PresensiSiswa from '../pages/Presensi/Siswa';
+import PresensiSiswa from '../pages/presensi/Siswa';
+import PresensiPegawai from '../pages/presensi/Pegawai';
+import PresensiSiswaManual from '../pages/presensi/SiswaManual';
 
 const Router = () => {
   const location = useLocation();
@@ -44,6 +46,8 @@ const Router = () => {
         <Route path='/rapor/mapel-kelas' element={<MapelKelas />}></Route>
         <Route path='/rapor/mapel-kkm' element={<Kkm />}></Route>
         <Route path='/presensi/siswa' element={<PresensiSiswa/>}></Route>
+        <Route path='/presensi/pegawai' element={<PresensiPegawai/>}></Route>
+        <Route path='/presensi/siswa-manual' element={<PresensiSiswaManual/>}></Route>
       </Route>
       <Route path={`${process.env.PUBLIC_URL}`} element={<LayoutNoSidebar />}>
       <Route index element={<Login />}></Route>

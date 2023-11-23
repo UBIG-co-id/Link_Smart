@@ -139,17 +139,46 @@ export const presensiSiswa = [
        nlp:'Ulfa',
        kls: 'XII',
        tgl: '20-11-2023',
-       in: '08:00',
-       status_in: 'Tepat Waktu',
-       out: '17:00',
-       status_out:'anda belum checkout',
+       masuk: '08:00',
+       status_in: 'Masuk',
+       pulang: '17:00',
+       status_out: 'Pulang',
        keterangan: 'Coba'
     },
 ]
+export const presensiPegawai = [
+    {
+        id: 1,
+        nuptk: 2,
+        nmpgw: "Rena",
+        jbtn: "Guru",
+        tgl: '22-11-2023',
+        jmasuk: '07.30',
+        jplng: '16.30',
+        status: 'Masuk'
+    }
+]
+
+export const siswaManual = [
+    {
+        id: 2,
+        nis: 3,
+        nlp: "Rina",
+        kls: "XII RPL",
+    }
+]
+
+export const filterSts = [
+    { value: "Masuk", label: "Masuk" },
+    { value: "Izin", label: "Izin" },
+    { value: "Sakit", label: "Sakit" },
+    { value: "Telat", label: "Telat" },
+]
+
 export const filterStatus = [
     { value: "Active", label: "Active" },
-    { value: "Pending", label: "Pending" },
-    { value: "Suspend", label: "Suspend" },
+    { value: "Izin", label: "Izin" },
+    { value: "Sakit", label: "Sakit" },
 ];
 export const filterJk = [
     { value: "Laki-Laki", label: "Laki-Laki" },
@@ -218,6 +247,4 @@ export const countryOptions = [
     { value: "France", label: "France" },
     { value: "England", label: "England" },
 ];
-
-//PRESENSI
 
