@@ -3,10 +3,20 @@ import Content from '../../layout/Content/Content'
 import Head from '../../layout/Head'
 import { Block, BlockHead, BlockBetween, BlockHeadContent, BlockTitle, BlockDes, Button, Icon, SpecialTable, DataTable, RSelect, TooltipComponent, PaginationComponent } from '../../component/Component'
 import { DataTableBody, DataTableHead, DataTableItem, DataTableRow } from '../../component/table/DataTable'
-import { tagihanSiswa } from '../../component/user/UserData'
+import { tagihanSiswa, filterKls } from '../../component/user/UserData'
+import { Card, DropdownItem, DropdownMenu, DropdownToggle, UncontrolledDropdown } from 'reactstrap'
+
 const TagihanSiswa = () => {
     const [sm, updateSm] = useState(false);
     const [data, setData] = useState(tagihanSiswa);
+    const toggle = () => setonSearch(!onSearch);
+    const [onSearchText, setSearchText] = useState("");
+    const [onSearch, setonSearch] = useState(false);
+
+    const onFilterChange = (e) => {
+        setSearchText(e.target.value);
+    };
+
     const [modal, setModal] = useState({
         edit: false,
         add: false,
@@ -16,6 +26,8 @@ const TagihanSiswa = () => {
     const indexOfLastItem = currentPage * itemPerPage;
     const indexOfFirstItem = indexOfLastItem - itemPerPage;
     const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
+    const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
     const onApproveClick = (id) => {
         let newData = data;
         let index = newData.findIndex((item) => item.id === id);
@@ -28,8 +40,18 @@ const TagihanSiswa = () => {
         newData[index].status = "Rejected";
         setData([...newData]);
     };
-  return (
-    <React.Fragment>
+
+    const [formData, setFormData] = useState({
+        nis: "",
+        nls: "",
+        kls: "",
+        sppgan: "",
+        sppgen: "",
+        tl: "",
+        total: "",
+    });
+    return (
+        <React.Fragment>
             <Head title="Tagihan Siswa"></Head>
             <Content>
                 <BlockHead size="sm">
@@ -59,6 +81,11 @@ const TagihanSiswa = () => {
                                             </Button>
                                         </li>
                                         <li>
+                                            <Button>
+                                                <span>Export Semua Tagihan Siswa</span>
+                                            </Button>
+                                        </li>
+                                        {/* <li>
                                             <Button color="primary" outline className="btn-dim btn-white">
                                                 <Icon name="reports"></Icon>
                                                 <span>Reports</span>
@@ -68,7 +95,7 @@ const TagihanSiswa = () => {
                                             <Button color="primary" className="btn-icon" onClick={() => setModal({ add: true })}>
                                                 <Icon name="plus"></Icon>
                                             </Button>
-                                        </li>
+                                        </li> */}
                                     </ul>
                                 </div>
                             </div>
@@ -77,7 +104,76 @@ const TagihanSiswa = () => {
                 </BlockHead>
                 <Block size="lg">
                     <DataTable className="card-stretch">
-
+                        <div className="card-inner">
+                            <div className="card-title-group">
+                                {/* <div className="card-title">
+                                    <h5 className="title">Data Histori Pembayaran</h5>
+                                </div> */}
+                                <div className="card-tools">
+                                    <div className="form-inline flex-nowrap gx-3">
+                                        <div className="from-wrap w-150px">
+                                            <RSelect
+                                                options={filterKls}
+                                                placeholder="Semua Kelas"
+                                                // value={{
+                                                //     value: formData.kls,
+                                                //     label: formData.kls,
+                                                // }}
+                                                onChange={(e) => setFormData({ ...formData, kls: e.value })}
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="card-tools me-n1">
+                                    <ul className="btn-toolbar gx-1">
+                                        <li>
+                                            <Button
+                                                href="#search"
+                                                onClick={(ev) => {
+                                                    ev.preventDefault();
+                                                    toggle();
+                                                }}
+                                                className="btn-icon search-toggle toggle-search"
+                                            >
+                                                <Icon name="search"></Icon>
+                                            </Button>
+                                        </li>
+                                        <li className="btn-toolbar-sep"></li>
+                                        <li>
+                                            <UncontrolledDropdown>
+                                                <DropdownToggle tag="a" className="btn btn-trigger btn-icon dropdown-toggle">
+                                                    <div className="dot dot-primary"></div>
+                                                    <Icon name="filter-alt"></Icon>
+                                                </DropdownToggle>
+                                            </UncontrolledDropdown>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div className={`card-search search-wrap ${!onSearch && "active"}`}>
+                                    <div className="search-content">
+                                        <Button
+                                            onClick={() => {
+                                                setSearchText("");
+                                                toggle();
+                                            }}
+                                            className="search-back btn-icon toggle-search"
+                                        >
+                                            <Icon name="arrow-left"></Icon>
+                                        </Button>
+                                        <input
+                                            type="text"
+                                            className="border-transparent form-focus-none form-control"
+                                            placeholder="Search by Order Id"
+                                            value={onSearchText}
+                                            onChange={(e) => onFilterChange(e)}
+                                        />
+                                        <Button className="search-submit btn-icon">
+                                            <Icon name="search"></Icon>
+                                        </Button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <DataTableBody bodyclass="nk-tb-tnx">
                             <DataTableHead>
                                 <DataTableRow>
@@ -186,11 +282,25 @@ const TagihanSiswa = () => {
                                     )
                                 }) : null}
                         </DataTableBody>
+                        <div className="card-inner">
+                            {currentItems.length > 0 ? (
+                                <PaginationComponent
+                                    itemPerPage={itemPerPage}
+                                    totalItems={data.length}
+                                    paginate={paginate}
+                                    currentPage={currentPage}
+                                />
+                            ) : (
+                                <div className="text-center">
+                                    <span className="text-silent">No data found</span>
+                                </div>
+                            )}
+                        </div>
                     </DataTable>
                 </Block>
             </Content>
         </React.Fragment>
-  )
+    )
 }
 
-export default TagihanSiswa
+export default TagihanSiswa;

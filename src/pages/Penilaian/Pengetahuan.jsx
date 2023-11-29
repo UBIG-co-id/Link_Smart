@@ -44,18 +44,18 @@ const Pengetahuan = () => {
                         <Col md="13" xxl="3">
                             <PreviewAltCard className="card-full">
                                 <Row>
-                                <Col md='2' >
-                                    <div className="form-group" style={{ marginTop: '18px' }}>
-                                        <RSelect
-                                            options={filterKls}
-                                            placeholder="Pilih Kelas"
-                                            // value={{
-                                            //     value: formData.kls,
-                                            //     label: formData.kls,
-                                            // }}
-                                            onChange={(e) => setFormData({ ...formData, kls: e.value })}
-                                        />
-                                        {/* <RSelect
+                                    <Col md='2' >
+                                        <div className="form-group" style={{ marginTop: '18px' }}>
+                                            <RSelect
+                                                options={filterKls}
+                                                placeholder="Pilih Kelas"
+                                                // value={{
+                                                //     value: formData.kls,
+                                                //     label: formData.kls,
+                                                // }}
+                                                onChange={(e) => setFormData({ ...formData, kls: e.value })}
+                                            />
+                                            {/* <RSelect
                                         options={filterStatus}
                                         placeholder="Pilih Kelas"
                                         value={{
@@ -64,10 +64,10 @@ const Pengetahuan = () => {
                                         }}
                                         onChange={(e) => setFormData({ ...formData, status: e.value })}
                                     /> */}
-                                    </div>
-                                    
-                                </Col>
-                                <Col md='4' >
+                                        </div>
+
+                                    </Col>
+                                    <Col md='4' >
                                         <div className="form-group" style={{ marginTop: '21px' }}>
                                             <RSelect
                                                 options={filterMpl}
@@ -75,32 +75,30 @@ const Pengetahuan = () => {
                                                 onChange={(e) => setFormData({ ...formData, kls: e.value })}
                                             />
                                         </div>
-                                </Col>
-                                <Col md='2' >
-                                    <div className="form-group" style={{ marginTop: '21px' }}>
-                                        <RSelect
-                                            options={filterSmt}
-                                            placeholder="Pilih Semester"
-                                            // value={{
-                                            //     value: formData.ganjil,
-                                            //     label: formData.status,
-                                            // }}
-                                            onChange={(e) => setFormData({ ...formData, kls: e.value })}
-                                        />
-                                    </div>
-                                </Col>
-                            </Row>
+                                    </Col>
+                                    <Col md='2' >
+                                        <div className="form-group" style={{ marginTop: '21px' }}>
+                                            <RSelect
+                                                options={filterSmt}
+                                                placeholder="Pilih Semester"
+                                                // value={{
+                                                //     value: formData.ganjil,
+                                                //     label: formData.status,
+                                                // }}
+                                                onChange={(e) => setFormData({ ...formData, kls: e.value })}
+                                            />
+                                        </div>
+                                    </Col>
+                                </Row>
                             </PreviewAltCard>
                         </Col>
                         <Col md="12" xxl="4">
-                        <PreviewAltCard className="card-full">
-                            <div className='form-group' style={{ height: "200px", display: "flex", justifyContent: "center", alignItems: "center" }}>
-                                Untuk memasukkan Nilai Siswa
-                            </div>
-                        </PreviewAltCard>
+                            <PreviewAltCard className="card-full h-750px">
+
+                            </PreviewAltCard>
                         </Col>
                     </Row>
-                    
+
                 </Block>
             </Content>
         </React.Fragment>

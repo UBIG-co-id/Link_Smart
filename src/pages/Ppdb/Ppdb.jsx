@@ -85,19 +85,19 @@ const Ppdb = () => {
                                     <ul className="nk-block-tools g-3">
                                         <li>
                                             <Button color="primary" outline className="btn-dim btn-white">
-                                                <Icon name="download-cloud"></Icon>
+                                                <Icon name="save"></Icon>
                                                 <span>Data Penerimaan</span>
                                             </Button>
                                         </li>
                                         <li>
                                             <Button color="primary" outline className="btn-dim btn-white">
-                                                <Icon name="download-cloud"></Icon>
+                                                <Icon name="edit"></Icon>
                                                 <span>Jalur Pendaftaran</span>
                                             </Button>
                                         </li>
                                         <li>
                                             <Button color="primary" outline className="btn-dim btn-white">
-                                                <Icon name="download-cloud"></Icon>
+                                                <Icon name="book"></Icon>
                                                 <span>Kelas Peminatan</span>
                                             </Button>
                                         </li>

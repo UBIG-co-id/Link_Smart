@@ -15,9 +15,9 @@ import {
     RSelect,
     Button
 } from '../../../component/Component'
-import { filterKls, filterMpl, filterSmt, filterStatus, filterSts, filterThn } from '../../../component/user/UserData'
+import { filterKls, filterMpl, filterSmt, filterStatus, filterSts } from '../../../component/user/UserData'
 
-const RekapNilai = () => {
+const Cover = () => {
     const [formData, setFormData] = useState({
         // jk: "Laki-Laki",
         // status: "Active",
@@ -33,7 +33,7 @@ const RekapNilai = () => {
                 <BlockHead size="sm">
                     <BlockBetween>
                         <BlockHeadContent>
-                            <BlockTitle page>Rekap Nilai Semester</BlockTitle>
+                            <BlockTitle page>Cetak Cover Rapor</BlockTitle>
                             <BlockDes className="text-soft">
                                 <p>Welcome to Link Smart </p>
                             </BlockDes>
@@ -45,33 +45,7 @@ const RekapNilai = () => {
                         <Col md="13" xxl="3">
                             <PreviewAltCard className="card-full">
                                 <Row>
-                                    <Col md='2' >
-                                        <div className="form-group" style={{ marginTop: '18px' }}>
-                                            <RSelect
-                                                options={filterThn}
-                                                placeholder="Tahun Ajaran"
-                                                // value={{
-                                                //     value: formData.kls,
-                                                //     label: formData.kls,
-                                                // }}
-                                                onChange={(e) => setFormData({ ...formData, kls: e.value })}
-                                            />
-                                        </div>
-                                    </Col>
-                                    <Col md='2' >
-                                        <div className="form-group" style={{ marginTop: '18px' }}>
-                                            <RSelect
-                                                options={filterSmt}
-                                                placeholder="Pilih Semester"
-                                                // value={{
-                                                //     value: formData.kls,
-                                                //     label: formData.kls,
-                                                // }}
-                                                onChange={(e) => setFormData({ ...formData, kls: e.value })}
-                                            />
-                                        </div>
-                                    </Col>
-                                    <Col md='2' >
+                                    <Col md='5' >
                                         <div className="form-group" style={{ marginTop: '18px' }}>
                                             <RSelect
                                                 options={filterKls}
@@ -84,11 +58,11 @@ const RekapNilai = () => {
                                             />
                                         </div>
                                     </Col>
-                                    <Col md='2' >
+                                    <Col md='5' >
                                         <div className="form-group" style={{ marginTop: '18px' }}>
                                             <RSelect
-                                                options={filterSmt}
-                                                placeholder="Semua Aspek"
+                                                options={filterKls}
+                                                placeholder="Pilih Siswa"
                                                 // value={{
                                                 //     value: formData.kls,
                                                 //     label: formData.kls,
@@ -101,12 +75,12 @@ const RekapNilai = () => {
                             </PreviewAltCard>
                         </Col>
                         <Col md="12" xxl="4">
-                            <PreviewAltCard className="card-full mt-3">
+                            <PreviewAltCard className="card-full mt-1">
                                 <div className='form-group' style={{ height: "200px", display: "flex", justifyContent: "center", alignItems: "center" }}>
                                     Silahkan Pilih Kelas untuk menampilkan data
                                 </div>
                             </PreviewAltCard>
-                        </Col>
+                        </Col> 
                     </Row>
                 </Block>
             </Content>
@@ -114,4 +88,4 @@ const RekapNilai = () => {
     )
 }
 
-export default RekapNilai
+export default Cover

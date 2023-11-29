@@ -39,15 +39,12 @@ import LaporanSiswa from '../pages/Laporan/PresensiSiswa';
 import LaporanPegawai from '../pages/Laporan/PresensiPegawai';
 import PembayaranSpp from '../pages/Laporan/PembayaranSpp';
 import Pengetahuan from '../pages/Penilaian/Pengetahuan';
-import Keterampilan from '../pages/Penilaian/Keterampilan';
-import Catatanwalas from '../pages/Penilaian/Catatanwalas';
-import Nilailain from '../pages/Penilaian/Nilailain';
-import Spiritualdansosial from '../pages/Penilaian/Spiritualdansosial';
-import Chat from "../pages/Chat/ChatContainer";
-
 import RaporKurikulum from '../pages/Rapor/RaporKurikulum/RaporKurikulum';
 import RekapNilai from '../pages/Rapor/RaporKurikulum/RekapNilai';
-
+import Cover from '../pages/Rapor/Cover/CetakCover';
+import PembayaranManual from '../pages/Pembayaran/PembayaranManual';
+import HistoryPembayaran from '../pages/Pembayaran/HistoryPembayaran';
+import DataPegguna from '../pages/Pengaturan/DataPengguna';
 
 const Router = () => {
   const location = useLocation();
@@ -93,12 +90,15 @@ const Router = () => {
         <Route path='/rapor/penilaian-kkm-batas' element={<KkmBatas />}></Route>
         <Route path='/rapor/kurikulum' element={<RaporKurikulum/>}></Route>
         <Route path='/rapor/rekap-nilai' element={<RekapNilai/>}></Route>
+        <Route path='/rapor/cetak-cover' element={<Cover/>}></Route>
         {/* END RAPOR */}
 
         {/* PEMBAYARAN */}
         <Route path='/pembayaran/get-all-tagihan-siswa' element={<TagihanSiswa />}></Route>
         <Route path='/pembayaran/spp' element={<TagihanSpp />}></Route>
         <Route path='/pembayaran/kustom-spp' element={<KustomSppSiswa />}></Route>
+        <Route path='/pembayaran/bayar-tagihan' element={<PembayaranManual />}></Route>
+        <Route path='/pembayaran/histori-pembayaran' element={<HistoryPembayaran/>}></Route>
         {/* END PEMBAYARAN */}
 
         {/* PENGUMUMAN */}
@@ -109,10 +109,6 @@ const Router = () => {
         <Route path='/ppdb' element={<Ppdb />}></Route>
         {/* END PPDB */}
 
-         {/* CHAT */}
-         <Route path='/chat' element={<Chat />}></Route>
-        {/* END CHAT */}
-
         {/* LAPORAN */}
         <Route path='/laporan/siswa' element={<LaporanSiswa />}></Route>
         <Route path='/laporan/pegawai' element={<LaporanPegawai />}></Route>
@@ -121,10 +117,11 @@ const Router = () => {
 
         {/* PENILAIAN */}
         <Route path='/penilaian/pengetahuan' element={<Pengetahuan />}></Route>
-        <Route path='/penilaian/keterampilan' element={<Keterampilan />}></Route>
-        <Route path='/penilaian/catatanwalas' element={<Catatanwalas />}></Route>
-        <Route path='/penilaian/nilailain' element={<Nilailain />}></Route>
-        <Route path='/penilaian/spiritualdansosial' element={<Spiritualdansosial />}></Route>
+        {/* END PENILAIAN */}
+
+        {/* PENGATURAN */}
+        <Route path='/pengguna' element={<DataPegguna />}></Route>
+        {/* END PENGATURAN */}
 
 
       </Route>

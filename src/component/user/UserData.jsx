@@ -33,6 +33,21 @@ export const userData = [
     }
 ];
 
+//HISTORY PEMBAYARAN
+export const historyPembayaran = [
+    {
+        id: 1,
+        nama: "Ulfa",
+        kelas: "TKJ",
+        tgl: "27-11-2023",
+        pembayaran: "1.000.000",
+        jumlah: "2.000.000",
+        terbayar: "500.000",
+        jenis: "selimut",
+        via: "BRIMO"
+    }
+];
+
 
 // KELAS
 export const orderData = [
@@ -436,13 +451,8 @@ export const filterMpl = [
     {value: "IPA", label: "IPA"},
     {value: "IPS", label: "IPS"},
 ];
-export const filtermapel = [
-    { value: "Matematika", label: "Matematika" },
-    { value: "Sejarah", label: "Sejarah" },
-
-];
 export const filterSmt = [
-    {value: "Ganjil", label: "Ganjil"},
+    {value: "Ganjil", label: "Ganji"},
     {value: "Genap", label: "Genap"},
 ];
 export const filterBln = [

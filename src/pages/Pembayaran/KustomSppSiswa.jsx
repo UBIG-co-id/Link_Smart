@@ -121,6 +121,7 @@ const KustomSppSiswa = () => {
                                 </div> */}
                                 <div className="card-tools">
                                 <label className="text-bold">PERHATIAN!!</label>
+                                    {/* <label className="text-bold">PERHATIAN!!</label> */}
                                     <div className="form-inline flex-nowrap gx-3">
                                         <div className="from-wrap">
                                             <RSelect
@@ -140,7 +141,7 @@ const KustomSppSiswa = () => {
                                             />
                                         </div> */}
                                         <div className="btn-wrap">
-                                            {/* <span className="d-none d-md-block">
+                                            <span className="d-none d-md-block">
                                                 <Button
                                                     disabled={actionText !== "" ? false : true}
                                                     color="light"
@@ -150,7 +151,109 @@ const KustomSppSiswa = () => {
                                                 >
                                                     Apply
                                                 </Button>
-                                            </span> */}
+                                            </span>
+                                            <span className="d-md-none">
+                                                <Button
+                                                    color="light"
+                                                    outline
+                                                    disabled={actionText !== "" ? false : true}
+                                                    className="btn-dim  btn-icon"
+                                                    onClick={(e) => onActionClick(e)}
+                                                >
+                                                    <Icon name="arrow-right"></Icon>
+                                                </Button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="card-tools me-n1">
+                                    <ul className="btn-toolbar gx-1">
+                                        <li>
+                                            <Button
+                                                href="#search"
+                                                onClick={(ev) => {
+                                                    ev.preventDefault();
+                                                    toggle();
+                                                }}
+                                                className="btn-icon search-toggle toggle-search"
+                                            >
+                                                <Icon name="search"></Icon>
+                                            </Button>
+                                        </li>
+                                        <li className="btn-toolbar-sep"></li>
+                                        <li>
+                                            <UncontrolledDropdown>
+                                                <DropdownToggle tag="a" className="btn btn-trigger btn-icon dropdown-toggle">
+                                                    <div className="dot dot-primary"></div>
+                                                    <Icon name="filter-alt"></Icon>
+                                                </DropdownToggle>
+                                            </UncontrolledDropdown>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div className={`card-search search-wrap ${!onSearch && "active"}`}>
+                                    <div className="search-content">
+                                        <Button
+                                            onClick={() => {
+                                                setSearchText("");
+                                                toggle();
+                                            }}
+                                            className="search-back btn-icon toggle-search"
+                                        >
+                                            <Icon name="arrow-left"></Icon>
+                                        </Button>
+                                        <input
+                                            type="text"
+                                            className="border-transparent form-focus-none form-control"
+                                            placeholder="Search by Order Id"
+                                            value={onSearchText}
+                                            onChange={(e) => onFilterChange(e)}
+                                        />
+                                        <Button className="search-submit btn-icon">
+                                            <Icon name="search"></Icon>
+                                        </Button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* <div className="card-inner">
+                            <div className="card-title-group">
+                                <div className="card-title">
+                                    <h5 className="title">Data Pegawai</h5>
+                                </div>
+                                <div className="card-tools">
+                                <label className="text-bold">PERHATIAN!!</label>
+                                    <div className="form-inline flex-nowrap gx-3">
+                                        <div className="from-wrap">
+                                            <RSelect
+                                                option={bulkActionOptions}
+                                                className="w-130px"
+                                                placeholder="Semua Kelas"
+                                                onChange={(e) => onActionText(e)}
+                                            />
+                                        </div>
+                                        <div className="from-wrap">
+                                            <DatePicker
+                                                selected={selectedDate}
+                                                onChange={handleDateChange}
+                                                placeholderText="Select Date"
+                                                dateFormat="dd/MM/yyyy"
+                                                className="form-control w-130px" // Atur gaya sesuai kebutuhan
+                                            />
+                                        </div>
+                                        <div className="btn-wrap">
+                                            <span className="d-none d-md-block">
+                                                <Button
+                                                    disabled={actionText !== "" ? false : true}
+                                                    color="light"
+                                                    outline
+                                                    className="btn-dim"
+                                                    onClick={(e) => onActionClick(e)}
+                                                >
+                                                    Apply
+                                                </Button>
+                                            </span>
                                             <span className="d-md-none">
                                                 <Button
                                                     color="light"
@@ -216,7 +319,7 @@ const KustomSppSiswa = () => {
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> */}
                         <DataTableBody bodyclass="nk-tb-tnx">
                             <DataTableHead>
                                 <DataTableRow>
