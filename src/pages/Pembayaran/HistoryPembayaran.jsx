@@ -1,27 +1,31 @@
-import React, { useState, useContext } from 'react'
-import Content from '../../layout/Content/Content'
+import React, { useState, useEffect, useRef } from 'react'
 import Head from '../../layout/Head'
-import { Card, DropdownItem, DropdownMenu, DropdownToggle, UncontrolledDropdown } from 'reactstrap'
-import { UserContext } from '../../component/user/UserContext'
-import AddModal from '../../component/modal/pegawai/AddModal'
+import Content from '../../layout/Content/Content'
 import {
-    Block,
-    BlockHead,
-    BlockBetween,
-    BlockHeadContent,
-    BlockTitle,
-    BlockDes,
-    Button,
-    Icon,
-    SpecialTable,
-    DataTable,
-    TooltipComponent,
-    PaginationComponent,
+  Block,
+  BlockHead,
+  BlockBetween,
+  BlockHeadContent,
+  BlockTitle,
+  BlockDes,
+  Button,
+  Icon,
+  SpecialTable,
+  DataTable,
+  RSelect,
+  TooltipComponent,
+  PaginationComponent,
+  Col,
+  PreviewAltCard,
 } from '../../component/Component'
+import { Card, DropdownItem, DropdownMenu, DropdownToggle, UncontrolledDropdown } from 'reactstrap'
 import { DataTableBody, DataTableHead, DataTableItem, DataTableRow } from '../../component/table/DataTable'
-import { transactionData, filterStatus, filterJk } from '../../component/user/UserData'
-const Pegawai = () => {
-    const [data, setData] = useState(transactionData);
+import { filterKls, filterMpl, filterSmt, filterStatus, filterSts, historyPembayaran, penilaianSikap, filterJk } from '../../component/user/UserData'
+import AddModal from '../../component/modal/pegawai/AddModal'
+
+
+const HistoryPembayaran = () => {
+  const [data, setData] = useState(historyPembayaran);
     const [sm, updateSm] = useState(false);
     const [onSearch, setonSearch] = useState(true);
     const [onSearchText, setSearchText] = useState("");
@@ -34,41 +38,35 @@ const Pegawai = () => {
     const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
 
     const onApproveClick = (id) => {
-        let newData = data;
-        let index = newData.findIndex((item) => item.id === id);
-        newData[index].status = "Completed";
-        setData([...newData]);
-    };
-    const onRejectClick = (id) => {
-        let newData = data;
-        let index = newData.findIndex((item) => item.id === id);
-        newData[index].status = "Rejected";
-        setData([...newData]);
-    };
-    const onFilterChange = (e) => {
-        setSearchText(e.target.value);
-    };
-    const [modal, setModal] = useState({
-        edit: false,
-        add: false,
-    });
-    // const { contextData } = useContext(UserContext);
-    // const [data, setData] = contextData;
-    const [editId, setEditedId] = useState();
+      let newData = data;
+      let index = newData.findIndex((item) => item.id === id);
+      newData[index].status = "Completed";
+      setData([...newData]);
+  };
+  const onRejectClick = (id) => {
+      let newData = data;
+      let index = newData.findIndex((item) => item.id === id);
+      newData[index].status = "Rejected";
+      setData([...newData]);
+  };
+  const onFilterChange = (e) => {
+      setSearchText(e.target.value);
+  };
+  const [modal, setModal] = useState({
+      edit: false,
+      add: false,
+  });
+
+  const [editId, setEditedId] = useState();
     const [formData, setFormData] = useState({
-        nip: "",
-        nuptk: "",
-        fotoData: null,
-        nama: "",
-        jk: "Laki-Laki",
-        status: "Active",
-        notelp: "",
-        email: "",
-        tlahir: "",
-        tgllahir: '',
-        tglmt: "",
-        nik: "",
-        alamat: "",
+       nama: "",
+       kelas: "",
+       tgl: "",
+       pembayaran: "",
+       jumlah: "",
+       terbayar: "",
+       jenis: "",
+       via: "",
     });
     const [editFormData, setEditFormData] = useState({
         name: "",
@@ -88,91 +86,80 @@ const Pegawai = () => {
         });
     };
 
-    const closeModal = () => {
-        setModal({ add: false })
-        resetForm();
-    };
-    const closeEditModal = () => {
-        setModal({ edit: false })
-        resetForm();
-    };
+  const closeModal = () => {
+      setModal({ add: false })
+      resetForm();
+  };
+  const closeEditModal = () => {
+      setModal({ edit: false })
+      resetForm();
+  };
 
-    const onFormSubmit = (submitData) => {
-        const { nip, nuptk, nama, notelp, email, tlahir, tgllahir, tglmt, nik, alamat } = submitData;
-        let submittedData = {
-            id: data.length + 1,
-            nip: nip,
-            nuptk: nuptk,
-            fotoData: null,
-            nama: nama,
-            jk: "Laki-Laki",
-            status: "Active",
-            notelp: notelp,
-            email: email,
-            tlahir: tlahir,
-            tgllahir: tgllahir,
-            tglmt: tglmt,
-            nik: nik,
-            alamat: alamat,
-
-        };
-        setData([submittedData, ...data]);
-        resetForm();
-        setModal({ edit: false }, { add: false });
+  const onFormSubmit = (submitData) => {
+    const {nama, kelas, tgl, pembayaran, jumlah, terbayar, jenis, via } = submitData;
+    let submittedData = {
+        id: data.length + 1,
+        nama: nama,
+        kelas: kelas,
+        tgl: tgl,
+        pembayaran: pembayaran,
+        jumlah: jumlah,
+        terbayar: terbayar,
+        jenis: jenis,
+        via: via,
     };
-    const onEditClick = (id) => {
-        data.forEach((item) => {
-            if (item.id === id) {
-                setEditFormData({
-                    nip: item.nip,
-                    namaptk: item.namaptk,
-                    status: item.status,
-                    jnmutasi: item.jnmutasi,
+    setData([submittedData, ...data]);
+    resetForm();
+    setModal({ edit: false }, { add: false });
+};
+const onEditClick = (id) => {
+    data.forEach((item) => {
+        if (item.id === id) {
+            setEditFormData({
+                nip: item.nip,
+                namaptk: item.namaptk,
+                status: item.status,
+                jnmutasi: item.jnmutasi,
 
-                });
-                setModal({ edit: true }, { add: false });
-                setEditedId(id);
-            }
-        });
-    };
+            });
+            setModal({ edit: true }, { add: false });
+            setEditedId(id);
+        }
+    });
+};
 
-    const onEditSubmit = (submitData) => {
-        const { name, email, phone } = submitData;
-        let submittedData;
-        let newitems = data;
-        newitems.forEach((item) => {
-            if (item.id === editId) {
-                submittedData = {
-                    id: item.id,
-                    avatarBg: item.avatarBg,
-                    name: name,
-                    image: item.image,
-                    role: item.role,
-                    email: email,
-                    balance: editFormData.balance,
-                    phone: phone,
-                    emailStatus: item.emailStatus,
-                    kycStatus: item.kycStatus,
-                    lastLogin: item.lastLogin,
-                    status: editFormData.status,
-                    country: item.country,
-                };
-            }
-        });
-        let index = newitems.findIndex((item) => item.id === editId);
-        newitems[index] = submittedData;
-        setModal({ edit: false });
-    };
-
-    return (
-        <React.Fragment>
+const onEditSubmit = (submitData) => {
+    const { name, email, phone } = submitData;
+    let submittedData;
+    let newitems = data;
+    newitems.forEach((item) => {
+        if (item.id === editId) {
+            submittedData = {
+              id: item.id,
+              nama: item.nama,
+              kelas: item.kelas,
+              tgl: item.tgl,
+              pembayaran: item.pembayaran,
+              jumlah: item.jumlah,
+              terbayar: item.terbayar,
+              jenis: item.jenis,
+              via: item.via,
+            };
+        }
+    });
+    let index = newitems.findIndex((item) => item.id === editId);
+    newitems[index] = submittedData;
+    setModal({ edit: false });
+};
+  return (
+    <React.Fragment>
             <Head title="Pegawai"></Head>
             <Content>
                 <BlockHead size="sm">
                     <BlockBetween>
                         <BlockHeadContent>
                             <BlockTitle page tag="h3">
-                                Pegawai
+                                History Pembayaran
                             </BlockTitle>
                             <BlockDes className="text-soft">
                                 <p>Welcome to Link Smart</p>
@@ -186,7 +173,7 @@ const Pegawai = () => {
                                 >
                                     <Icon name="more-v"></Icon>
                                 </Button>
-                                <div className="toggle-expand-content" style={{ display: sm ? "block" : "none" }}>
+                                {/* <div className="toggle-expand-content" style={{ display: sm ? "block" : "none" }}>
                                     <ul className="nk-block-tools g-3">
                                         <li>
                                             <Button color="primary" outline className="btn-dim btn-white">
@@ -220,7 +207,7 @@ const Pegawai = () => {
                                             </Button>
                                         </li>
                                     </ul>
-                                </div>
+                                </div> */}
                             </div>
                         </BlockHeadContent>
                     </BlockBetween>
@@ -231,7 +218,7 @@ const Pegawai = () => {
                         <div className="card-inner">
                             <div className="card-title-group">
                                 <div className="card-title">
-                                    <h5 className="title">Data Pegawai</h5>
+                                    <h5 className="title">Data Histori Pembayaran</h5>
                                 </div>
                                 <div className="card-tools me-n1">
                                     <ul className="btn-toolbar gx-1">
@@ -289,22 +276,28 @@ const Pegawai = () => {
                                     <span>No</span>
                                 </DataTableRow>
                                 <DataTableRow >
-                                    <span>NIP</span>
+                                    <span>Nama Siswa</span>
                                 </DataTableRow>
                                 <DataTableRow size="lg">
-                                    <span>Nama Lengkap</span>
+                                    <span>Kelas</span>
                                 </DataTableRow>
                                 <DataTableRow >
-                                    <span>Email</span>
+                                    <span>Tanggal</span>
                                 </DataTableRow>
                                 <DataTableRow size="sm" >
-                                    <span>Jenis Kelamin</span>
+                                    <span>Pembayaran</span>
                                 </DataTableRow>
                                 <DataTableRow size="sm" >
-                                    <span>Status </span>
+                                    <span>Jumlah</span>
                                 </DataTableRow>
                                 <DataTableRow size="sm" >
-                                    <span>No Telp</span>
+                                    <span>Terbayar</span>
+                                </DataTableRow>
+                                <DataTableRow size="sm" >
+                                    <span>Jenis</span>
+                                </DataTableRow>
+                                <DataTableRow size="sm" >
+                                    <span>Via</span>
                                 </DataTableRow>
                                 <DataTableRow className="nk-tb-col-tools">Aksi</DataTableRow>
                             </DataTableHead>
@@ -319,32 +312,42 @@ const Pegawai = () => {
                                             </DataTableRow>
                                             <DataTableRow>
                                                 <div className="tb-lead">
-                                                    <span>{item.nip}</span>
-                                                </div>
-                                            </DataTableRow>
-                                            <DataTableRow>
-                                                <div className="tb-lead">
                                                     <span>{item.nama}</span>
                                                 </div>
                                             </DataTableRow>
                                             <DataTableRow>
                                                 <div className="tb-lead">
-                                                    <span>{item.email}</span>
+                                                    <span>{item.kelas}</span>
                                                 </div>
                                             </DataTableRow>
                                             <DataTableRow>
                                                 <div className="tb-lead">
-                                                    <span>{item.jk}</span>
+                                                    <span>{item.tgl}</span>
                                                 </div>
                                             </DataTableRow>
                                             <DataTableRow>
                                                 <div className="tb-lead">
-                                                    <span>{item.status}</span>
+                                                    <span>{item.pembayaran}</span>
                                                 </div>
                                             </DataTableRow>
                                             <DataTableRow>
                                                 <div className="tb-lead">
-                                                    <span>{item.notelp}</span>
+                                                    <span>{item.jumlah}</span>
+                                                </div>
+                                            </DataTableRow>
+                                            <DataTableRow>
+                                                <div className="tb-lead">
+                                                    <span>{item.terbayar}</span>
+                                                </div>
+                                            </DataTableRow>
+                                            <DataTableRow>
+                                                <div className="tb-lead">
+                                                    <span>{item.jenis}</span>
+                                                </div>
+                                            </DataTableRow>
+                                            <DataTableRow>
+                                                <div className="tb-lead">
+                                                    <span>{item.via}</span>
                                                 </div>
                                             </DataTableRow>
                                             <DataTableRow className="nk-tb-col-tools">
@@ -368,7 +371,7 @@ const Pegawai = () => {
                                                             text="add"
                                                         />
                                                     </li> */}
-                                                    <li containerClassName="bg-white btn btn-sm btn-outline-light btn-icon btn-tooltip" onClick={() => onEditClick(item.id)}>
+                                                    {/* <li containerClassName="bg-white btn btn-sm btn-outline-light btn-icon btn-tooltip" onClick={() => onEditClick(item.id)}>
                                                         <DropdownItem
                                                             tag="a"
                                                             href="#edit"
@@ -381,7 +384,7 @@ const Pegawai = () => {
                                                             <Icon name="edit"></Icon>
 
                                                         </DropdownItem>
-                                                    </li>
+                                                    </li> */}
                                                     <li className="" onClick={() => onEditClick(item.id)}>
                                                         <TooltipComponent
                                                             tag="a"
@@ -540,7 +543,7 @@ const Pegawai = () => {
                 <AddModal modal={modal.add} formData={formData} setFormData={setFormData} closeModal={closeModal} onSubmit={onFormSubmit} filterStatus={filterStatus} filterJk={filterJk} />
             </Content>
         </React.Fragment>
-    )
+  )
 }
 
-export default Pegawai
+export default HistoryPembayaran

@@ -3,81 +3,40 @@ import Content from '../../layout/Content/Content'
 import Head from '../../layout/Head'
 import { Block, BlockHead, BlockBetween, BlockHeadContent, BlockTitle, BlockDes, Button, Icon, SpecialTable, DataTable, RSelect, TooltipComponent, PaginationComponent } from '../../component/Component'
 import { DataTableBody, DataTableHead, DataTableItem, DataTableRow } from '../../component/table/DataTable'
-import { mutasiSiswa, filterJp, filterP, filterPeng, filterAgm, filterJk, filterThn, filterBln, filterKls } from '../../component/user/UserData'
-import { Card, DropdownItem, DropdownMenu, DropdownToggle, Label, UncontrolledDropdown } from 'reactstrap'
-import { bulkActionOptions } from '../../utils/Utils'
-import Mutasi from '../../component/modal/siswa/Mutasi'
+import { tagihanSpp, filterKls } from '../../component/user/UserData'
+import { Card, DropdownItem, DropdownMenu, DropdownToggle, UncontrolledDropdown } from 'reactstrap'
 
-const MutasiSiswa = () => {
+
+const TagihanSpp = () => {
     const [sm, updateSm] = useState(false);
-    const [data, setData] = useState(mutasiSiswa);
-    const toggle = () => setonSearch(!onSearch);
+    const [data, setData] = useState(tagihanSpp);
     const [onSearchText, setSearchText] = useState("");
+    const toggle = () => setonSearch(!onSearch);
     const [onSearch, setonSearch] = useState(false);
-    const [actionText, setActionText] = useState("");
-
-    const onActionText = (e) => {
-        setActionText(e.value);
-    };
-
-    const onActionClick = (e) => {
-        if (actionText === "suspend") {
-            let newData = data.map((item) => {
-                if (item.checked === true) item.status = "Suspend";
-                return item;
-            });
-            setData([...newData]);
-        } else if (actionText === "delete") {
-            let newData;
-            newData = data.filter((item) => item.checked !== true);
-            setData([...newData]);
-        }
-    };
+    const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
     const onFilterChange = (e) => {
         setSearchText(e.target.value);
     };
 
+    const [formData, setFormData] = useState(
+        {
+            nis: "",
+            nls: "",
+            kls: "",
+            bts: "",
+        }
+    );
+
     const [modal, setModal] = useState({
         edit: false,
         add: false,
     });
-    const closeModal = () => {
-        setModal({ add: false })
-        resetForm();
-    };
-    const [formData, setFormData] = useState({
-        nis: "",
-        nuptk: "",
-        fotoData: null,
-        nama: "",
-        jk: "Laki-Laki",
-        status: "Active",
-        notelp: "",
-        email: "",
-        tlahir: "",
-        tgllahir: '',
-        tglmt: "",
-        nik: "",
-        alamat: "",
-    });
-    const resetForm = () => {
-        setFormData({
-            name: "",
-            email: "",
-            balance: 0,
-            phone: "",
-            jk: "Laki-Laki",
-            status: "Active",
-        });
-    };
-
     const [currentPage, setCurrentPage] = useState(1);
     const [itemPerPage, setItemPerPage] = useState(10);
     const indexOfLastItem = currentPage * itemPerPage;
     const indexOfFirstItem = indexOfLastItem - itemPerPage;
     const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
-    const paginate = (pageNumber) => setCurrentPage(pageNumber);
     const onApproveClick = (id) => {
         let newData = data;
         let index = newData.findIndex((item) => item.id === id);
@@ -92,13 +51,13 @@ const MutasiSiswa = () => {
     };
     return (
         <React.Fragment>
-            <Head title="Mutasi Siswa"></Head>
+            <Head title="Tagihan SPP"></Head>
             <Content>
                 <BlockHead size="sm">
                     <BlockBetween>
                         <BlockHeadContent>
                             <BlockTitle page tag="h3">
-                                Mutasi Siswa
+                                Tagihan SPP
                             </BlockTitle>
                             <BlockDes className="text-soft">
                                 <p>Welcome to Link Smart</p>
@@ -117,7 +76,13 @@ const MutasiSiswa = () => {
                                         <li>
                                             <Button color="primary" outline className="btn-dim btn-white">
                                                 <Icon name="download-cloud"></Icon>
-                                                <span>Download Data Mutasi</span>
+                                                <span>Export Kerangka Pembayaran </span>
+                                            </Button>
+                                        </li>
+                                        <li>
+                                            <Button color="primary" outline className="btn-dim btn-white">
+                                                <Icon name="download-cloud"></Icon>
+                                                <span>Import Data</span>
                                             </Button>
                                         </li>
                                         {/* <li>
@@ -125,14 +90,12 @@ const MutasiSiswa = () => {
                                                 <Icon name="reports"></Icon>
                                                 <span>Reports</span>
                                             </Button>
-                                        </li> */}
-                                        <li >
-                                            <Button color="primary" onClick={() => setModal({ add: true })}>
-                                                <Icon name="plus">
-                                                </Icon>
-                                                <div>Data Manual</div>
-                                            </Button>
                                         </li>
+                                        <li className="nk-block-tools-opt">
+                                            <Button color="primary" className="btn-icon" onClick={() => setModal({ add: true })}>
+                                                <Icon name="plus"></Icon>
+                                            </Button>
+                                        </li> */}
                                     </ul>
                                 </div>
                             </div>
@@ -141,86 +104,41 @@ const MutasiSiswa = () => {
                 </BlockHead>
                 <Block size="lg">
                     <DataTable className="card-stretch">
-                        <div className="card-inner position-relative card-tools-toggle">
+                        <div className="card-inner">
                             <div className="card-title-group">
+                                {/* <div className="card-title">
+                                    <h5 className="title">Data Histori Pembayaran</h5>
+                                </div> */}
                                 <div className="card-tools">
                                     <div className="form-inline flex-nowrap gx-3">
-                                        <div className="from-wrap">
+                                        <div className="from-wrap w-150px">
                                             <RSelect
-                                                option={filterThn}
-                                                className="w-150px"
-                                                placeholder="Tahun Ajran Aktif"
-                                                onChange={(e) => onActionText(e)}
+                                                options={filterKls}
+                                                placeholder="Semua Kelas"
+                                                // value={{
+                                                //     value: formData.kls,
+                                                //     label: formData.kls,
+                                                // }}
+                                                onChange={(e) => setFormData({ ...formData, kls: e.value })}
                                             />
-                                        </div>
-                                        <div className="from-wrap">
-                                            <RSelect
-                                                option={filterBln}
-                                                className="w-150px"
-                                                placeholder="Semua Bulan"
-                                                onChange={(e) => onActionText(e)}
-                                            />
-                                        </div>
-                                        <div className="from-wrap">
-                                            <RSelect
-                                                option={filterKls}
-                                                className="w-150px"
-                                                placeholder="Semua Jenjang"
-                                                onChange={(e) => onActionText(e)}
-                                            />
-                                        </div>
-                                        {/* <div className="from-wrap">
-                                            <DatePicker
-                                                selected={selectedDate}
-                                                onChange={handleDateChange}
-                                                placeholderText="Select Date"
-                                                dateFormat="dd/MM/yyyy"
-                                                className="form-control w-130px" // Atur gaya sesuai kebutuhan
-                                            />
-                                        </div> */}
-                                        <div className="btn-wrap">
-                                            {/* <span className="d-none d-md-block">
-                                                <Button
-                                                    disabled={actionText !== "" ? false : true}
-                                                    color="light"
-                                                    outline
-                                                    className="btn-dim"
-                                                    onClick={(e) => onActionClick(e)}
-                                                >
-                                                    Apply
-                                                </Button>
-                                            </span> */}
-                                            <span className="d-md-none">
-                                                <Button
-                                                    color="light"
-                                                    outline
-                                                    disabled={actionText !== "" ? false : true}
-                                                    className="btn-dim  btn-icon"
-                                                    onClick={(e) => onActionClick(e)}
-                                                >
-                                                    <Icon name="arrow-right"></Icon>
-                                                </Button>
-                                            </span>
                                         </div>
                                     </div>
                                 </div>
                                 <div className="card-tools me-n1">
                                     <ul className="btn-toolbar gx-1">
                                         <li>
-                                            <a
+                                            <Button
                                                 href="#search"
                                                 onClick={(ev) => {
                                                     ev.preventDefault();
                                                     toggle();
                                                 }}
-                                                className="btn btn-icon search-toggle toggle-search"
+                                                className="btn-icon search-toggle toggle-search"
                                             >
                                                 <Icon name="search"></Icon>
-                                            </a>
+                                            </Button>
                                         </li>
                                         <li className="btn-toolbar-sep"></li>
-
-
                                         <li>
                                             <UncontrolledDropdown>
                                                 <DropdownToggle tag="a" className="btn btn-trigger btn-icon dropdown-toggle">
@@ -256,53 +174,53 @@ const MutasiSiswa = () => {
                                 </div>
                             </div>
                         </div>
-                        <DataTableBody compact>
+                        <DataTableBody bodyclass="nk-tb-tnx">
                             <DataTableHead>
-
                                 <DataTableRow>
-                                    <span className="sub-text">No</span>
+                                    <span>No</span>
                                 </DataTableRow>
                                 <DataTableRow >
-                                    <span className="sub-text">Tanggal Mutasi</span>
+                                    <span>NIS</span>
                                 </DataTableRow>
                                 <DataTableRow >
-                                    <span className="sub-text">NIS</span>
+                                    <span>Nama Lengkap Siswa</span>
                                 </DataTableRow>
                                 <DataTableRow >
-                                    <span className="sub-text">Nama Siswa</span>
-                                </DataTableRow>
-
-                                <DataTableRow >
-                                    <span className="sub-text">Kelas</span>
+                                    <span>Kelas</span>
                                 </DataTableRow>
                                 <DataTableRow >
-                                    <span className="sub-text">Jenis Surat</span>
+                                    <span>Besar Tagihan SPP</span>
                                 </DataTableRow>
-                                <DataTableRow >
-                                    <span className="sub-text">Aksi</span>
-                                </DataTableRow>
+                                <DataTableRow className="nk-tb-col-tools">Aksi</DataTableRow>
                             </DataTableHead>
                             {currentItems.length > 0
                                 ? currentItems.map((item) => {
                                     return (
                                         <DataTableItem key={item.id}>
-                                            <DataTableRow size="md">
-                                                <span>{item.id}</span>
+                                            <DataTableRow>
+                                                <div className="tb-lead">
+                                                    <span>{item.id}</span>
+                                                </div>
                                             </DataTableRow>
-                                            <DataTableRow size="md">
-                                                <span>{item.tglmutasi}</span>
+                                            <DataTableRow>
+                                                <div className="tb-lead">
+                                                    <span>{item.nis}</span>
+                                                </div>
                                             </DataTableRow>
-                                            <DataTableRow size="md">
-                                                <span>{item.nis}</span>
+                                            <DataTableRow>
+                                                <div className="tb-lead">
+                                                    <span>{item.nls}</span>
+                                                </div>
                                             </DataTableRow>
-                                            <DataTableRow size="md">
-                                                <span>{item.nls}</span>
+                                            <DataTableRow>
+                                                <div className="tb-lead">
+                                                    <span>{item.kls}</span>
+                                                </div>
                                             </DataTableRow>
-                                            <DataTableRow size="md">
-                                                <span>{item.kls}</span>
-                                            </DataTableRow>
-                                            <DataTableRow size="md">
-                                                <span>{item.jeniss}</span>
+                                            <DataTableRow>
+                                                <div className="tb-lead">
+                                                    <span>{item.bts}</span>
+                                                </div>
                                             </DataTableRow>
                                             <DataTableRow className="nk-tb-col-tools">
                                                 <ul className="nk-tb-actions gx-1">
@@ -314,8 +232,6 @@ const MutasiSiswa = () => {
                                                         direction="top"
                                                         text="Details"
                                                     />
-
-
                                                     <li className="" onClick={() => onApproveClick(item.id)}>
                                                         <TooltipComponent
                                                             tag="a"
@@ -337,7 +253,6 @@ const MutasiSiswa = () => {
                                                         />
                                                     </li>
                                                 </ul>
-
                                             </DataTableRow>
                                         </DataTableItem>
                                     )
@@ -359,10 +274,9 @@ const MutasiSiswa = () => {
                         </div>
                     </DataTable>
                 </Block>
-                <Mutasi modal={modal.add} closeModal={closeModal} formData={formData} setFormData={setFormData} filterJk={filterJk} filterAgm={filterAgm} filterJp={filterJp} filterP={filterP} filterPeng={filterPeng} />
             </Content>
         </React.Fragment>
     )
 }
 
-export default MutasiSiswa
+export default TagihanSpp

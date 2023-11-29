@@ -1,17 +1,23 @@
 import React, { useState, useContext, useEffect } from 'react'
 import Content from '../../../layout/Content/Content'
 import Head from '../../../layout/Head'
-import { Card, DropdownItem, DropdownMenu, DropdownToggle, UncontrolledDropdown } from 'reactstrap'
-import { Block, BlockHead, BlockBetween, BlockHeadContent, BlockTitle, BlockDes, Button, Icon, SpecialTable, DataTable, RSelect, TooltipComponent, PaginationComponent } from '../../../component/Component'
+import { Col, Block, BlockHead, BlockBetween, BlockHeadContent, BlockTitle, BlockDes, Button, Icon, SpecialTable, DataTable, RSelect, TooltipComponent, PaginationComponent } from '../../../component/Component'
 import { DataTableBody, DataTableHead, DataTableItem, DataTableRow } from '../../../component/table/DataTable'
-import { kkmData, filterStatus, filterJk } from '../../../component/user/UserData'
-const Kkm = () => {
+import { kkmBatas } from '../../../component/user/UserData'
+import { Card, DropdownItem, DropdownMenu, DropdownToggle, UncontrolledDropdown } from 'reactstrap'
+
+const KkmBatas = () => {
     const [sm, updateSm] = useState(false);
-    const [data, setData] = useState(kkmData);
-    const [onSearch, setonSearch] = useState(true);
-    const [onSearchText, setSearchText] = useState("");
+    const [data, setData] = useState(kkmBatas);
     const toggle = () => setonSearch(!onSearch);
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
+    const [onSearch, setonSearch] = useState(true);
+    const [onSearchText, setSearchText] = useState("");
+
+    const onFilterChange = (e) => {
+        setSearchText(e.target.value);
+    };
+
     const [modal, setModal] = useState({
         edit: false,
         add: false,
@@ -33,85 +39,22 @@ const Kkm = () => {
         newData[index].status = "Rejected";
         setData([...newData]);
     };
-    const onFilterChange = (e) => {
-        setSearchText(e.target.value);
-    };
-    const [editId, setEditedId] = useState();
-    const [editFormData, setFormData] = useState({
-        mapel: "",
-        kelas: "",
-        kkm: "",
-    });
-    const resetForm = () => {
-        setFormData({
-            mapel: "",
-            kelas: "",
-            kkm: "",
-
-        });
-    };
-    const closeModal = () => {
-        setModal({ add: false })
-        resetForm();
-    };
-    const closeEditModal = () => {
-        setModal({ edit: false })
-        resetForm();
-    }
-
-    const onFormSubmit = (submitData) => {
-        const { mapel, kelas, kkm } = submitData;
-        let submittedData = {
-            id: data.length + 1,
-            mapel: mapel,
-            kelas: kelas,
-            kkm: kkm,
-        };
-        setData([submitData, ...data]);
-        resetForm();
-        setModal({ edit: false }, { add: false });
-    };
-
-    const onEditSubmit = (submitData) => {
-        const { mapel, kelas, kkm } = submitData;
-        let submittedData;
-        let newitems = data;
-        newitems.forEach((item) => {
-            if (item.id === editId) {
-                submittedData = {
-                    id: item.id,
-                    avatarBg: item.avatarBg,
-                    image: item.image,
-                    role: item.role,
-                    balance: editFormData.balance,
-                    kycStatus: item.kycStatus,
-                    lastLogin: item.lastLogin,
-                    status: editFormData.status,
-                    country: item.country,
-                };
-            }
-        });
-        let index = newitems.findIndex((item) => item.id === editId);
-        newitems[index] = submittedData;
-        setModal({ edit: false });
-    };
-
     return (
         <React.Fragment>
-            <Head title="KKM"></Head>
+            <Head title="KKM Batas"></Head>
             <Content>
                 <BlockHead size="sm">
                     <BlockBetween>
                         <BlockHeadContent>
                             <BlockTitle page tag="h3">
-                                KKM - Mata Pelajaran
+                                KKM Batas
                             </BlockTitle>
                             <BlockDes className="text-soft">
                                 <p>Welcome to Link Smart</p>
                             </BlockDes>
                         </BlockHeadContent>
                         <BlockHeadContent>
-                            <div className="toggle-wrap nk-block-tools-toggle">
+                            {/* <div className="toggle-wrap nk-block-tools-toggle">
                                 <Button
                                     className={`btn-icon btn-trigger toggle-expand me-n1 ${sm ? "active" : ""}`}
                                     onClick={() => updateSm(!sm)}
@@ -132,27 +75,34 @@ const Kkm = () => {
                                                 <span>Reports</span>
                                             </Button>
                                         </li>
-                                        <li >
-                                            <Button color="primary" onClick={() => setModal({ add: true })}>
-                                                <Icon name="plus">
-                                                </Icon>
-                                                <div>Tambah Mapel</div>
+                                        <li className="nk-block-tools-opt">
+                                            <Button color="primary" className="btn-icon" onClick={() => setModal({ add: true })}>
+                                                <Icon name="plus"></Icon>
                                             </Button>
                                         </li>
                                     </ul>
                                 </div>
-                            </div>
+                            </div> */}
                         </BlockHeadContent>
                     </BlockBetween>
                 </BlockHead>
-                <Block>
+                <Block size="lg">
                     <DataTable className="card-stretch">
                         <div className="card-inner">
                             <div className="card-title-group">
                                 <div className="card-title">
-                                    <h5 className="title">KKM </h5>
+                                    <h5 className="title">Data KKM Batas</h5>
                                 </div>
                                 <div className="card-tools me-n1">
+                                    <ul>
+                                        <li className="nk-block-tools-opt mb-2">
+                                            <Button color="primary" onClick={() => setModal({ add: true })}>
+                                                <Icon name="plus">
+                                                </Icon>
+                                                <div>KKM Batas</div>
+                                            </Button>
+                                        </li>
+                                    </ul>
                                     <ul className="btn-toolbar gx-1">
                                         <li>
                                             <Button
@@ -202,42 +152,114 @@ const Kkm = () => {
                                 </div>
                             </div>
                         </div>
-                        <DataTableBody compact>
+                        <DataTableBody bodyclass="nk-tb-tnx">
                             <DataTableHead>
-
                                 <DataTableRow>
-                                    <span className="sub-text">No</span>
+                                    <span>No</span>
                                 </DataTableRow>
                                 <DataTableRow >
-                                    <span className="sub-text">Mata Pelajaran</span>
+                                    <span>KKM</span>
                                 </DataTableRow>
                                 <DataTableRow >
-                                    <span className="sub-text">Kelas</span>
+                                    <span>D</span>
                                 </DataTableRow>
                                 <DataTableRow >
-                                    <span className="sub-text">KKM</span>
+                                    <span>C</span>
                                 </DataTableRow>
+                                <DataTableRow >
+                                    <span>B</span>
+                                </DataTableRow>
+                                <DataTableRow >
+                                    <span>A</span>
+                                </DataTableRow>
+
+                                <DataTableRow className="nk-tb-col-tools">Aksi</DataTableRow>
                             </DataTableHead>
                             {currentItems.length > 0
                                 ? currentItems.map((item) => {
                                     return (
                                         <DataTableItem key={item.id}>
-                                            <DataTableRow size="md">
-                                                <span>{item.id}</span>
+                                            <DataTableRow>
+                                                <div className="tb-lead">
+                                                    <span>{item.id}</span>
+                                                </div>
                                             </DataTableRow>
-                                            <DataTableRow size="md">
-                                                <span>{item.mapel}</span>
+                                            <DataTableRow>
+                                                <div className="tb-lead">
+                                                    <span>{item.kkm}</span>
+                                                </div>
                                             </DataTableRow>
-                                            <DataTableRow size="md">
-                                                <span>{item.kls}</span>
+
+                                            <DataTableRow>
+                                                <div className="tb-lead">
+                                                    <span>{item.batasd}</span>
+                                                </div>
                                             </DataTableRow>
-                                            <DataTableRow size="md">
-                                                <span>{item.kkm}</span>
+                                            <DataTableRow>
+                                                <div className="tb-lead">
+                                                    <span>{item.batasc}</span>
+                                                </div>
+                                            </DataTableRow>
+                                            <DataTableRow>
+                                                <div className="tb-lead">
+                                                    <span>{item.batasb}</span>
+                                                </div>
+                                            </DataTableRow>
+                                            <DataTableRow>
+                                                <div className="tb-lead">
+                                                    <span>{item.batasa}</span>
+                                                </div>
+                                            </DataTableRow>
+                                            <DataTableRow className="nk-tb-col-tools">
+                                                <ul className="nk-tb-actions gx-1">
+                                                    <TooltipComponent
+                                                        tag="a"
+                                                        containerClassName="bg-white btn btn-sm btn-outline-light btn-icon btn-tooltip"
+                                                        id={item.ref + "details"}
+                                                        icon="delete"
+                                                        direction="top"
+                                                        text="Hapus"
+                                                    />
+                                                    {/* <li className="" onClick={() => onApproveClick(item.id)}>
+                                                        <TooltipComponent
+                                                            tag="a"
+                                                            containerClassName="bg-white btn btn-sm btn-outline-light btn-icon btn-tooltip"
+                                                            id={item.ref + "approve"}
+                                                            icon="done"
+                                                            direction="top"
+                                                            text="approve"
+                                                        />
+                                                    </li>
+                                                    <li className="" onClick={() => onRejectClick(item.id)}>
+                                                        <TooltipComponent
+                                                            tag="a"
+                                                            containerClassName="bg-white btn btn-sm btn-outline-light btn-icon btn-tooltip"
+                                                            id={item.ref + "reject"}
+                                                            icon="cross-round"
+                                                            direction="top"
+                                                            text="Reject"
+                                                        />
+                                                    </li> */}
+                                                </ul>
                                             </DataTableRow>
                                         </DataTableItem>
                                     )
                                 }) : null}
                         </DataTableBody>
+                        <div className="card-inner">
+                            {currentItems.length > 0 ? (
+                                <PaginationComponent
+                                    itemPerPage={itemPerPage}
+                                    totalItems={data.length}
+                                    paginate={paginate}
+                                    currentPage={currentPage}
+                                />
+                            ) : (
+                                <div className="text-center">
+                                    <span className="text-silent">No data found</span>
+                                </div>
+                            )}
+                        </div>
                     </DataTable>
                 </Block>
             </Content>
@@ -245,4 +267,4 @@ const Kkm = () => {
     )
 }
 
-export default Kkm
+export default KkmBatas

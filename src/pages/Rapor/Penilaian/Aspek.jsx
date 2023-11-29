@@ -1,77 +1,19 @@
-import React, { useState } from 'react'
-import Head from '../../layout/Head'
-import { bulkActionOptions } from '../../utils/Utils'
-import Content from '../../layout/Content/Content'
+import React, { useState, useContext, useEffect } from 'react'
+import Content from '../../../layout/Content/Content'
+import Head from '../../../layout/Head'
+import { Block, BlockHead, BlockBetween, BlockHeadContent, BlockTitle, BlockDes, Button, Icon, SpecialTable, DataTable, RSelect, TooltipComponent, PaginationComponent } from '../../../component/Component'
+import { DataTableBody, DataTableHead, DataTableItem, DataTableRow } from '../../../component/table/DataTable'
+import { penilaianAspek } from '../../../component/user/UserData'
 import { Card, DropdownItem, DropdownMenu, DropdownToggle, UncontrolledDropdown } from 'reactstrap'
-import {
-    Block,
-    BlockHead,
-    BlockBetween,
-    BlockHeadContent,
-    BlockTitle,
-    BlockDes,
-    Button,
-    Icon,
-    SpecialTable,
-    DataTable,
-    TooltipComponent,
-    PaginationComponent,
-    RSelect
-} from '../../component/Component'
-import { DataTableBody, DataTableHead, DataTableItem, DataTableRow } from '../../component/table/DataTable'
-import { presensiSiswa, filterKls, filterSts } from '../../component/user/UserData'
-import AddModal from '../../component/modal/presesensi-siswa/AddModal';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css'; // Import styles
-// import { filterKls} from '../../component/user/UserData'
 
-
-const Siswa = () => {
-    const [data, setData] = useState(presensiSiswa);
+const Aspek = () => {
     const [sm, updateSm] = useState(false);
+    const [data, setData] = useState(penilaianAspek);
+    const toggle = () => setonSearch(!onSearch);
     const [onSearch, setonSearch] = useState(false);
     const [onSearchText, setSearchText] = useState("");
-    const paginate = (pageNumber) => setCurrentPage(pageNumber);
-    const [selectedDate, setSelectedDate] = useState(null);
-    const [tablesm, updateTableSm] = useState(false);
-
-    const onFilterChange = (e) => {
-        setSearchText(e.target.value);
-    };
-
-    const handleDateChange = (date) => {
-        setSelectedDate(date);
-    };
-
-    const [modal, setModal] = useState({
-        edit: false,
-        add: false,
-    });
-
-    const [currentPage, setCurrentPage] = useState(1);
-    const [itemPerPage, setItemPerPage] = useState(10);
-    const indexOfLastItem = currentPage * itemPerPage;
-    const indexOfFirstItem = indexOfLastItem - itemPerPage;
-    const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
-    const toggle = () => setonSearch(!onSearch);
     const [actionText, setActionText] = useState("");
-
-    const onApproveClick = (id) => {
-        let newData = data;
-        let index = newData.findIndex((item) => item.id === id);
-        newData[index].status = "Completed";
-        setData([...newData]);
-    };
-    const onRejectClick = (id) => {
-        let newData = data;
-        let index = newData.findIndex((item) => item.id === id);
-        newData[index].status = "Rejected";
-        setData([...newData]);
-    };
-
-    const onActionText = (e) => {
-        setActionText(e.value);
-    };
+    const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
     const onActionClick = (e) => {
         if (actionText === "suspend") {
@@ -87,70 +29,40 @@ const Siswa = () => {
         }
     };
 
-    const [editId, setEditedId] = useState();
-    const [formData, setFormData] = useState({
-        nis: "",
-        nlp: "",
-        kls: "",
-        tgl: "",
-        masuk: "",
-        pulang: "",
-        status_in: "",
-        keterangan: "",
+    const onFilterChange = (e) => {
+        setSearchText(e.target.value);
+    };
+
+    const [modal, setModal] = useState({
+        edit: false,
+        add: false,
     });
-
-    const [editFormData, setEditFormData] = useState({
-        nlp: "",
-        kls: "",
-        status: "",
-    })
-
-    const resetForm = () => {
-        setFormData({
-            nis: "",
-            nlp: "",
-            kls: "",
-            tgl: "",
-            masuk: "",
-            pulang: "",
-            status_in: "Masuk",
-            keterangan: "",
-        });
+    const [currentPage, setCurrentPage] = useState(1);
+    const [itemPerPage, setItemPerPage] = useState(10);
+    const indexOfLastItem = currentPage * itemPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemPerPage;
+    const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
+    const onApproveClick = (id) => {
+        let newData = data;
+        let index = newData.findIndex((item) => item.id === id);
+        newData[index].status = "Completed";
+        setData([...newData]);
     };
-
-    const closeModal = () => {
-        setModal({ add: false })
-        resetForm();
-    };
-
-    const onFormSubmit = (submitData) => {
-        const { nis, nlp, kls, tgl, masuk, pulang, status_in, status_out, keterangan } = submitData;
-        let submittedData = {
-            id: data.length + 1,
-            nis: nis,
-            nlp: nlp,
-            kls: "XII",
-            tgl: tgl,
-            masuk: masuk,
-            status_in: status_in,
-            pulang: pulang,
-            status_out: status_out,
-            keterangan: keterangan,
-
-        };
-        setData([submittedData, ...data]);
-        resetForm();
-        setModal({ edit: false }, { add: false });
+    const onRejectClick = (id) => {
+        let newData = data;
+        let index = newData.findIndex((item) => item.id === id);
+        newData[index].status = "Rejected";
+        setData([...newData]);
     };
     return (
         <React.Fragment>
-            <Head title="Presensi Siswa"></Head>
+            <Head title="Penilaian Aspek"></Head>
             <Content>
                 <BlockHead size="sm">
                     <BlockBetween>
                         <BlockHeadContent>
                             <BlockTitle page tag="h3">
-                                Data Presensi Siswa
+                                Penilaian Aspek
                             </BlockTitle>
                             <BlockDes className="text-soft">
                                 <p>Welcome to Link Smart</p>
@@ -169,49 +81,21 @@ const Siswa = () => {
                                         {/* <li>
                                             <Button color="primary" outline className="btn-dim btn-white">
                                                 <Icon name="download-cloud"></Icon>
-                                                <span>Template Import PTK</span>
+                                                <span>Export</span>
+                                            </Button>
+                                        </li>
+                                        <li>
+                                            <Button color="primary" outline className="btn-dim btn-white">
+                                                <Icon name="reports"></Icon>
+                                                <span>Reports</span>
                                             </Button>
                                         </li> */}
-                                        <li >
-                                            <Button color="warning" onClick={() => setModal({ add: true })}>
-                                                <Icon name="list">
-                                                </Icon>
-                                                <div>Set Presensi 1 Semester </div>
-                                            </Button>
-                                        </li>
-                                        <li>
-                                            <Button color="primary" outline className="btn-dim btn-white">
-                                                <Icon name="download-cloud"></Icon>
-                                                <span>Ekspor Presensi Siswa</span>
-                                            </Button>
-                                        </li>
-                                        <li>
-                                            <Button color="primary" outline className="btn-dim btn-white">
-                                                <Icon name="upload-cloud"></Icon>
-                                                <span>Import Data</span>
-                                            </Button>
-                                        </li>
-                                        {/* <li>
-                                            <Button color="primary" outline className="btn-dim btn-white">
-                                                <Icon name="user"></Icon>
-                                                <span>Status PTK</span>
-                                            </Button>
-                                        </li> */}
-                                        <li>
+                                        <li className="nk-block-tools-opt">
                                             <Button color="primary" onClick={() => setModal({ add: true })}>
                                                 <Icon name="plus">
                                                 </Icon>
-                                                <div>Tambah Presensi </div>
+                                                <div>Aspek Penilaian</div>
                                             </Button>
-                                        <li>
-                                                {/* <li>
-                                                <Button color="primary" onClick={() => setModal({ add: true })}>
-                                                    <Icon name="pdf">
-                                                    </Icon>
-                                                    <div>Presensi Manual</div>
-                                                </Button>
-                                            </li> */}
-                                            </li>
                                         </li>
                                     </ul>
                                 </div>
@@ -227,16 +111,17 @@ const Siswa = () => {
                                     <h5 className="title">Data Pegawai</h5>
                                 </div> */}
                                 <div className="card-tools">
+                                    {/* <label className="text-bold">PERHATIAN!!</label> */}
                                     <div className="form-inline flex-nowrap gx-3">
-                                        <div className="from-wrap">
+                                        {/* <div className="from-wrap">
                                             <RSelect
                                                 option={bulkActionOptions}
                                                 className="w-130px"
                                                 placeholder="Semua Kelas"
                                                 onChange={(e) => onActionText(e)}
                                             />
-                                        </div>
-                                        <div className="from-wrap">
+                                        </div> */}
+                                        {/* <div className="from-wrap">
                                             <DatePicker
                                                 selected={selectedDate}
                                                 onChange={handleDateChange}
@@ -244,7 +129,7 @@ const Siswa = () => {
                                                 dateFormat="dd/MM/yyyy"
                                                 className="form-control w-130px" // Atur gaya sesuai kebutuhan
                                             />
-                                        </div>
+                                        </div> */}
                                         <div className="btn-wrap">
                                             <span className="d-none d-md-block">
                                                 <Button
@@ -329,43 +214,10 @@ const Siswa = () => {
                                     <span>No</span>
                                 </DataTableRow>
                                 <DataTableRow >
-                                    <span>NIS</span>
+                                    <span>Aspek</span>
                                 </DataTableRow>
                                 <DataTableRow size="lg">
-                                    <span>Nama Lengkap</span>
-                                </DataTableRow>
-                                <DataTableRow >
-                                    <span>Kelas</span>
-                                </DataTableRow>
-                                <DataTableRow size="sm" >
-                                    <span>Tanggal</span>
-                                </DataTableRow>
-                                <DataTableRow size="sm" >
-                                    <span>Masuk</span>
-                                </DataTableRow>
-                                <DataTableRow size="sm" >
-                                    <span>Status</span>
-                                </DataTableRow>
-                                <DataTableRow size="sm" >
-                                    <span>Pulang</span>
-                                </DataTableRow>
-                                <DataTableRow size="sm" >
-                                    <span>Status</span>
-                                </DataTableRow>
-                                {/* <DataTableRow size="sm" >
-                                    <span>In </span>
-                                </DataTableRow> */}
-                                {/* <DataTableRow size="sm" >
-                                    <span>Status </span>
-                                </DataTableRow> */}
-                                {/* <DataTableRow size="sm" >
-                                    <span>Out </span>
-                                </DataTableRow> */}
-                                {/* <DataTableRow size="sm" >
-                                    <span>Status </span>
-                                </DataTableRow> */}
-                                <DataTableRow size="sm" >
-                                    <span>Keterangan </span>
+                                    <span>Ujian</span>
                                 </DataTableRow>
                                 <DataTableRow className="nk-tb-col-tools">Aksi</DataTableRow>
                             </DataTableHead>
@@ -380,67 +232,12 @@ const Siswa = () => {
                                             </DataTableRow>
                                             <DataTableRow>
                                                 <div className="tb-lead">
-                                                    <span>{item.nis}</span>
+                                                    <span>{item.aspek}</span>
                                                 </div>
                                             </DataTableRow>
                                             <DataTableRow>
                                                 <div className="tb-lead">
-                                                    <span>{item.nlp}</span>
-                                                </div>
-                                            </DataTableRow>
-                                            <DataTableRow>
-                                                <div className="tb-lead">
-                                                    <span>{item.kls}</span>
-                                                </div>
-                                            </DataTableRow>
-                                            <DataTableRow>
-                                                <div className="tb-lead">
-                                                    <span>{item.tgl}</span>
-                                                </div>
-                                            </DataTableRow>
-                                            <DataTableRow>
-                                                <div className="tb-lead">
-                                                    <span>{item.masuk}</span>
-                                                </div>
-                                            </DataTableRow>
-                                            <DataTableRow>
-                                                <div className="tb-lead">
-                                                    <span>{item.status_in}</span>
-                                                </div>
-                                            </DataTableRow>
-                                            <DataTableRow>
-                                                <div className="tb-lead">
-                                                    <span>{item.pulang}</span>
-                                                </div>
-                                            </DataTableRow>
-                                            <DataTableRow>
-                                                <div className="tb-lead">
-                                                    <span>{item.status_out}</span>
-                                                </div>
-                                            </DataTableRow>
-                                            {/* <DataTableRow>
-                                                <div className="tb-lead">
-                                                    <span>{item.in}</span>
-                                                </div>
-                                            </DataTableRow> */}
-                                            {/* <DataTableRow>
-                                                <div className="tb-lead">
-                                                    <span>{item.status}</span>
-                                                </div>
-                                            </DataTableRow> */}
-                                            {/* <DataTableRow>
-                                                <div className="tb-lead">
-                                                    <span>{item.out}</span>
-                                                </div>
-                                            </DataTableRow> */}
-                                            {/* <DataTableRow>
-                                                <div className="tb-lead">
-                                                    <span>{item.status_out}</span>
-                                                </div>
-                                            </DataTableRow> */}
-                                            <DataTableRow>
-                                                <div className="tb-lead">
-                                                    <span>{item.keterangan}</span>
+                                                    <span>{item.ujian}</span>
                                                 </div>
                                             </DataTableRow>
                                             <DataTableRow className="nk-tb-col-tools">
@@ -474,7 +271,6 @@ const Siswa = () => {
                                                         />
                                                     </li>
                                                 </ul>
-
                                             </DataTableRow>
                                         </DataTableItem>
                                     )
@@ -496,10 +292,9 @@ const Siswa = () => {
                         </div>
                     </DataTable>
                 </Block>
-                <AddModal modal={modal.add} formData={formData} setFormData={setFormData} onSubmit={onFormSubmit} closeModal={closeModal} filterKls={filterKls} filterSts={filterSts} />
             </Content>
         </React.Fragment>
     )
 }
 
-export default Siswa
+export default Aspek

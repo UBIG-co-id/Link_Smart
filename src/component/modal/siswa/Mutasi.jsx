@@ -14,6 +14,7 @@ import {
 } from '../../Component'
 import { useForm } from 'react-hook-form'
 import Dropzone from "react-dropzone";
+import { filterSts, filterThn } from '../../user/UserData';
 
 const Mutasi = ({ modal, closeModal, onSubmit, formData, setFormData, filterStatus, filterJk }) => {
   const [files4, setFiles4] = useState([]);
@@ -105,12 +106,12 @@ const Mutasi = ({ modal, closeModal, onSubmit, formData, setFormData, filterStat
                   <label className="form-label">Jenis Surat</label>
                   <div className="form-control-wrap">
                     <RSelect
-                      options={filterJk}
+                      options={filterSts}
                       value={{
-                        value: formData.jk,
-                        label: formData.jk,
+                        value: formData.status,
+                        label: formData.status,
                       }}
-                      onChange={(e) => setFormData({ ...formData, jk: e.value })}
+                      onChange={(e) => setFormData({ ...formData, status: e.value })}
                     />
                   </div>
                 </div>
@@ -120,12 +121,12 @@ const Mutasi = ({ modal, closeModal, onSubmit, formData, setFormData, filterStat
                   <label className="form-label">Tahun </label>
                   <div className="form-control-wrap">
                     <RSelect
-                      options={filterStatus}
+                      options={filterThn}
                       value={{
-                        value: formData.status,
-                        label: formData.status,
+                        value: formData.tahun,
+                        label: formData.tahun,
                       }}
-                      onChange={(e) => setFormData({ ...formData, status: e.value })}
+                      onChange={(e) => setFormData({ ...formData, tahun: e.value })}
                     />
                   </div>
                 </div>
