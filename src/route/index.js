@@ -44,6 +44,7 @@ import RekapNilai from '../pages/Rapor/RaporKurikulum/RekapNilai';
 import Cover from '../pages/Rapor/Cover/CetakCover';
 import PembayaranManual from '../pages/Pembayaran/PembayaranManual';
 import HistoryPembayaran from '../pages/Pembayaran/HistoryPembayaran';
+import DataPegguna from '../pages/Pengaturan/DataPengguna';
 
 const Router = () => {
   const location = useLocation();
@@ -116,6 +117,11 @@ const Router = () => {
 
         {/* PENILAIAN */}
         <Route path='/penilaian/pengetahuan' element={<Pengetahuan />}></Route>
+        {/* END PENILAIAN */}
+
+        {/* PENGATURAN */}
+        <Route path='/pengguna' element={<DataPegguna />}></Route>
+        {/* END PENGATURAN */}
 
 
       </Route>

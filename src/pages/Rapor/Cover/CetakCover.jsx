@@ -74,6 +74,13 @@ const Cover = () => {
                                 </Row>
                             </PreviewAltCard>
                         </Col>
+                        <Col md="12" xxl="4">
+                            <PreviewAltCard className="card-full mt-1">
+                                <div className='form-group' style={{ height: "200px", display: "flex", justifyContent: "center", alignItems: "center" }}>
+                                    Silahkan Pilih Kelas untuk menampilkan data
+                                </div>
+                            </PreviewAltCard>
+                        </Col> 
                     </Row>
                 </Block>
             </Content>
