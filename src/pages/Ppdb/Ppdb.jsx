@@ -1,73 +1,29 @@
-import React, { useState } from 'react'
-import Head from '../../layout/Head'
-import { bulkActionOptions } from '../../utils/Utils'
+import React, { useState, useContext, useEffect } from 'react'
 import Content from '../../layout/Content/Content'
-import { Card, DropdownItem, DropdownMenu, DropdownToggle, UncontrolledDropdown } from 'reactstrap'
-import {
-    Block,
-    BlockHead,
-    BlockBetween,
-    BlockHeadContent,
-    BlockTitle,
-    BlockDes,
-    Button,
-    Icon,
-    SpecialTable,
-    DataTable,
-    TooltipComponent,
-    PaginationComponent,
-    RSelect
-} from '../../component/Component'
+import Head from '../../layout/Head'
+import { Block, BlockHead, BlockBetween, BlockHeadContent, BlockTitle, BlockDes, Button, Icon, SpecialTable, DataTable, RSelect, TooltipComponent, PaginationComponent } from '../../component/Component'
 import { DataTableBody, DataTableHead, DataTableItem, DataTableRow } from '../../component/table/DataTable'
-import { presensiSiswa, filterKls, filterSts } from '../../component/user/UserData'
-import AddModal from '../../component/modal/presesensi-siswa/AddModal';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css'; // Import styles
-// import { filterKls} from '../../component/user/UserData'
+import { ppdb } from '../../component/user/UserData'
+import { bulkActionOptions } from '../../utils/Utils'
+import { Card, DropdownItem, DropdownMenu, DropdownToggle, Label, UncontrolledDropdown } from 'reactstrap'
 
-
-const Siswa = () => {
-    const [data, setData] = useState(presensiSiswa);
+const Ppdb = () => {
     const [sm, updateSm] = useState(false);
-    const [onSearch, setonSearch] = useState(false);
-    const [onSearchText, setSearchText] = useState("");
-    const paginate = (pageNumber) => setCurrentPage(pageNumber);
-    const [selectedDate, setSelectedDate] = useState(null);
-    const [tablesm, updateTableSm] = useState(false);
-
-    const onFilterChange = (e) => {
-        setSearchText(e.target.value);
-    };
-
-    const handleDateChange = (date) => {
-        setSelectedDate(date);
-    };
-
+    const [data, setData] = useState(ppdb);
     const [modal, setModal] = useState({
         edit: false,
         add: false,
     });
-
     const [currentPage, setCurrentPage] = useState(1);
     const [itemPerPage, setItemPerPage] = useState(10);
     const indexOfLastItem = currentPage * itemPerPage;
     const indexOfFirstItem = indexOfLastItem - itemPerPage;
     const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
     const toggle = () => setonSearch(!onSearch);
+    const [onSearch, setonSearch] = useState(false);
+    const [onSearchText, setSearchText] = useState("");
     const [actionText, setActionText] = useState("");
-
-    const onApproveClick = (id) => {
-        let newData = data;
-        let index = newData.findIndex((item) => item.id === id);
-        newData[index].status = "Completed";
-        setData([...newData]);
-    };
-    const onRejectClick = (id) => {
-        let newData = data;
-        let index = newData.findIndex((item) => item.id === id);
-        newData[index].status = "Rejected";
-        setData([...newData]);
-    };
+    const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
     const onActionText = (e) => {
         setActionText(e.value);
@@ -87,70 +43,31 @@ const Siswa = () => {
         }
     };
 
-    const [editId, setEditedId] = useState();
-    const [formData, setFormData] = useState({
-        nis: "",
-        nlp: "",
-        kls: "",
-        tgl: "",
-        masuk: "",
-        pulang: "",
-        status_in: "",
-        keterangan: "",
-    });
-
-    const [editFormData, setEditFormData] = useState({
-        nlp: "",
-        kls: "",
-        status: "",
-    })
-
-    const resetForm = () => {
-        setFormData({
-            nis: "",
-            nlp: "",
-            kls: "",
-            tgl: "",
-            masuk: "",
-            pulang: "",
-            status_in: "Masuk",
-            keterangan: "",
-        });
+    const onFilterChange = (e) => {
+        setSearchText(e.target.value);
     };
 
-    const closeModal = () => {
-        setModal({ add: false })
-        resetForm();
+    const onApproveClick = (id) => {
+        let newData = data;
+        let index = newData.findIndex((item) => item.id === id);
+        newData[index].status = "Completed";
+        setData([...newData]);
     };
-
-    const onFormSubmit = (submitData) => {
-        const { nis, nlp, kls, tgl, masuk, pulang, status_in, status_out, keterangan } = submitData;
-        let submittedData = {
-            id: data.length + 1,
-            nis: nis,
-            nlp: nlp,
-            kls: "XII",
-            tgl: tgl,
-            masuk: masuk,
-            status_in: status_in,
-            pulang: pulang,
-            status_out: status_out,
-            keterangan: keterangan,
-
-        };
-        setData([submittedData, ...data]);
-        resetForm();
-        setModal({ edit: false }, { add: false });
+    const onRejectClick = (id) => {
+        let newData = data;
+        let index = newData.findIndex((item) => item.id === id);
+        newData[index].status = "Rejected";
+        setData([...newData]);
     };
     return (
         <React.Fragment>
-            <Head title="Presensi Siswa"></Head>
+            <Head title="PPDB"></Head>
             <Content>
                 <BlockHead size="sm">
                     <BlockBetween>
                         <BlockHeadContent>
                             <BlockTitle page tag="h3">
-                                Data Presensi Siswa
+                                PPDB
                             </BlockTitle>
                             <BlockDes className="text-soft">
                                 <p>Welcome to Link Smart</p>
@@ -166,53 +83,47 @@ const Siswa = () => {
                                 </Button>
                                 <div className="toggle-expand-content" style={{ display: sm ? "block" : "none" }}>
                                     <ul className="nk-block-tools g-3">
-                                        {/* <li>
+                                        <li>
                                             <Button color="primary" outline className="btn-dim btn-white">
                                                 <Icon name="download-cloud"></Icon>
-                                                <span>Template Import PTK</span>
-                                            </Button>
-                                        </li> */}
-                                        <li >
-                                            <Button color="warning" onClick={() => setModal({ add: true })}>
-                                                <Icon name="list">
-                                                </Icon>
-                                                <div>Set Presensi 1 Semester </div>
+                                                <span>Data Penerimaan</span>
                                             </Button>
                                         </li>
                                         <li>
                                             <Button color="primary" outline className="btn-dim btn-white">
                                                 <Icon name="download-cloud"></Icon>
-                                                <span>Ekspor Presensi Siswa</span>
+                                                <span>Jalur Pendaftaran</span>
                                             </Button>
                                         </li>
                                         <li>
                                             <Button color="primary" outline className="btn-dim btn-white">
-                                                <Icon name="upload-cloud"></Icon>
-                                                <span>Import Data</span>
+                                                <Icon name="download-cloud"></Icon>
+                                                <span>Kelas Peminatan</span>
+                                            </Button>
+                                        </li>
+                                        <li>
+                                            <Button color="primary" outline className="btn-dim btn-white">
+                                                <Icon name="download-cloud"></Icon>
+                                                <span>Download Data PPDB</span>
+                                            </Button>
+                                        </li>
+                                        <li>
+                                            <Button color="primary" outline className="btn-dim btn-white">
+                                                <Icon name="download-cloud"></Icon>
+                                                <span>Download Password</span>
                                             </Button>
                                         </li>
                                         {/* <li>
                                             <Button color="primary" outline className="btn-dim btn-white">
-                                                <Icon name="user"></Icon>
-                                                <span>Status PTK</span>
+                                                <Icon name="reports"></Icon>
+                                                <span>Reports</span>
+                                            </Button>
+                                        </li>
+                                        <li className="nk-block-tools-opt">
+                                            <Button color="primary" className="btn-icon" onClick={() => setModal({ add: true })}>
+                                                <Icon name="plus"></Icon>
                                             </Button>
                                         </li> */}
-                                        <li>
-                                            <Button color="primary" onClick={() => setModal({ add: true })}>
-                                                <Icon name="plus">
-                                                </Icon>
-                                                <div>Tambah Presensi </div>
-                                            </Button>
-                                        <li>
-                                                {/* <li>
-                                                <Button color="primary" onClick={() => setModal({ add: true })}>
-                                                    <Icon name="pdf">
-                                                    </Icon>
-                                                    <div>Presensi Manual</div>
-                                                </Button>
-                                            </li> */}
-                                            </li>
-                                        </li>
                                     </ul>
                                 </div>
                             </div>
@@ -231,12 +142,12 @@ const Siswa = () => {
                                         <div className="from-wrap">
                                             <RSelect
                                                 option={bulkActionOptions}
-                                                className="w-130px"
-                                                placeholder="Semua Kelas"
+                                                className="w-150px"
+                                                placeholder="Pilih Tahun Ajran"
                                                 onChange={(e) => onActionText(e)}
                                             />
                                         </div>
-                                        <div className="from-wrap">
+                                        {/* <div className="from-wrap">
                                             <DatePicker
                                                 selected={selectedDate}
                                                 onChange={handleDateChange}
@@ -244,9 +155,9 @@ const Siswa = () => {
                                                 dateFormat="dd/MM/yyyy"
                                                 className="form-control w-130px" // Atur gaya sesuai kebutuhan
                                             />
-                                        </div>
+                                        </div> */}
                                         <div className="btn-wrap">
-                                            <span className="d-none d-md-block">
+                                            {/* <span className="d-none d-md-block">
                                                 <Button
                                                     disabled={actionText !== "" ? false : true}
                                                     color="light"
@@ -256,7 +167,7 @@ const Siswa = () => {
                                                 >
                                                     Apply
                                                 </Button>
-                                            </span>
+                                            </span> */}
                                             <span className="d-md-none">
                                                 <Button
                                                     color="light"
@@ -329,44 +240,27 @@ const Siswa = () => {
                                     <span>No</span>
                                 </DataTableRow>
                                 <DataTableRow >
-                                    <span>NIS</span>
-                                </DataTableRow>
-                                <DataTableRow size="lg">
-                                    <span>Nama Lengkap</span>
+                                    <span>NISN</span>
                                 </DataTableRow>
                                 <DataTableRow >
-                                    <span>Kelas</span>
+                                    <span>NIK</span>
                                 </DataTableRow>
-                                <DataTableRow size="sm" >
-                                    <span>Tanggal</span>
+                                <DataTableRow >
+                                    <span>Nama Siswa</span>
                                 </DataTableRow>
-                                <DataTableRow size="sm" >
-                                    <span>Masuk</span>
+                                <DataTableRow >
+                                    <span>Peminatan</span>
                                 </DataTableRow>
-                                <DataTableRow size="sm" >
-                                    <span>Status</span>
+                                <DataTableRow >
+                                    <span>Verifikasi</span>
                                 </DataTableRow>
-                                <DataTableRow size="sm" >
-                                    <span>Pulang</span>
+                                <DataTableRow >
+                                    <span>Lulus</span>
                                 </DataTableRow>
-                                <DataTableRow size="sm" >
-                                    <span>Status</span>
+                                <DataTableRow >
+                                    <span>Diterima</span>
                                 </DataTableRow>
-                                {/* <DataTableRow size="sm" >
-                                    <span>In </span>
-                                </DataTableRow> */}
-                                {/* <DataTableRow size="sm" >
-                                    <span>Status </span>
-                                </DataTableRow> */}
-                                {/* <DataTableRow size="sm" >
-                                    <span>Out </span>
-                                </DataTableRow> */}
-                                {/* <DataTableRow size="sm" >
-                                    <span>Status </span>
-                                </DataTableRow> */}
-                                <DataTableRow size="sm" >
-                                    <span>Keterangan </span>
-                                </DataTableRow>
+
                                 <DataTableRow className="nk-tb-col-tools">Aksi</DataTableRow>
                             </DataTableHead>
                             {currentItems.length > 0
@@ -380,67 +274,37 @@ const Siswa = () => {
                                             </DataTableRow>
                                             <DataTableRow>
                                                 <div className="tb-lead">
-                                                    <span>{item.nis}</span>
+                                                    <span>{item.nisn}</span>
                                                 </div>
                                             </DataTableRow>
                                             <DataTableRow>
                                                 <div className="tb-lead">
-                                                    <span>{item.nlp}</span>
+                                                    <span>{item.nik}</span>
                                                 </div>
                                             </DataTableRow>
                                             <DataTableRow>
                                                 <div className="tb-lead">
-                                                    <span>{item.kls}</span>
+                                                    <span>{item.ns}</span>
                                                 </div>
                                             </DataTableRow>
                                             <DataTableRow>
                                                 <div className="tb-lead">
-                                                    <span>{item.tgl}</span>
+                                                    <span>{item.peminatan}</span>
                                                 </div>
                                             </DataTableRow>
                                             <DataTableRow>
                                                 <div className="tb-lead">
-                                                    <span>{item.masuk}</span>
+                                                    <span>{item.verifikasi}</span>
                                                 </div>
                                             </DataTableRow>
                                             <DataTableRow>
                                                 <div className="tb-lead">
-                                                    <span>{item.status_in}</span>
+                                                    <span>{item.lulus}</span>
                                                 </div>
                                             </DataTableRow>
                                             <DataTableRow>
                                                 <div className="tb-lead">
-                                                    <span>{item.pulang}</span>
-                                                </div>
-                                            </DataTableRow>
-                                            <DataTableRow>
-                                                <div className="tb-lead">
-                                                    <span>{item.status_out}</span>
-                                                </div>
-                                            </DataTableRow>
-                                            {/* <DataTableRow>
-                                                <div className="tb-lead">
-                                                    <span>{item.in}</span>
-                                                </div>
-                                            </DataTableRow> */}
-                                            {/* <DataTableRow>
-                                                <div className="tb-lead">
-                                                    <span>{item.status}</span>
-                                                </div>
-                                            </DataTableRow> */}
-                                            {/* <DataTableRow>
-                                                <div className="tb-lead">
-                                                    <span>{item.out}</span>
-                                                </div>
-                                            </DataTableRow> */}
-                                            {/* <DataTableRow>
-                                                <div className="tb-lead">
-                                                    <span>{item.status_out}</span>
-                                                </div>
-                                            </DataTableRow> */}
-                                            <DataTableRow>
-                                                <div className="tb-lead">
-                                                    <span>{item.keterangan}</span>
+                                                    <span>{item.diterima}</span>
                                                 </div>
                                             </DataTableRow>
                                             <DataTableRow className="nk-tb-col-tools">
@@ -474,7 +338,6 @@ const Siswa = () => {
                                                         />
                                                     </li>
                                                 </ul>
-
                                             </DataTableRow>
                                         </DataTableItem>
                                     )
@@ -496,10 +359,9 @@ const Siswa = () => {
                         </div>
                     </DataTable>
                 </Block>
-                <AddModal modal={modal.add} formData={formData} setFormData={setFormData} onSubmit={onFormSubmit} closeModal={closeModal} filterKls={filterKls} filterSts={filterSts} />
             </Content>
         </React.Fragment>
     )
 }
 
-export default Siswa
+export default Ppdb

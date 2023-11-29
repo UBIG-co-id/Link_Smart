@@ -2,9 +2,11 @@ import React, { useState, useContext, useEffect } from 'react'
 import Content from '../../../layout/Content/Content'
 import Head from '../../../layout/Head'
 import { Card, DropdownItem, DropdownMenu, DropdownToggle, UncontrolledDropdown } from 'reactstrap'
+import AddModal from '../../../component/modal/kkm/AddModal'
 import { Block, BlockHead, BlockBetween, BlockHeadContent, BlockTitle, BlockDes, Button, Icon, SpecialTable, DataTable, RSelect, TooltipComponent, PaginationComponent } from '../../../component/Component'
 import { DataTableBody, DataTableHead, DataTableItem, DataTableRow } from '../../../component/table/DataTable'
-import { kkmData, filterStatus, filterJk  } from '../../../component/user/UserData'
+import { kkmData, filtermapel, } from '../../../component/user/UserData'
+// import { kkmData, filterStatus, filterJk } from '../../../component/user/UserData'
 const Kkm = () => {
     const [sm, updateSm] = useState(false);
     const [data, setData] = useState(kkmData);
@@ -39,15 +41,15 @@ const Kkm = () => {
     const [editId, setEditedId] = useState();
     const [editFormData, setFormData] = useState({
         mapel: "",
-        kelas:"",
-        kkm:"",
+        kelas: "",
+        kkm: "",
     });
     const resetForm = () => {
         setFormData({
-        mapel: "",
-        kelas:"",
-        kkm:"",
-           
+            mapel: "",
+            kelas: "",
+            kkm: "",
+
         });
     };
     const closeModal = () => {
@@ -60,7 +62,7 @@ const Kkm = () => {
     }
 
     const onFormSubmit = (submitData) => {
-        const { mapel, kelas, kkm} = submitData;
+        const { mapel, kelas, kkm } = submitData;
         let submittedData = {
             id: data.length + 1,
             mapel: mapel,
@@ -69,11 +71,11 @@ const Kkm = () => {
         };
         setData([submitData, ...data]);
         resetForm();
-        setModal({ edit: false }, { add: false });
+        setModal({ edit: false , add: false });
     };
 
     const onEditSubmit = (submitData) => {
-        const { mapel, kelas, kkm } = submitData;
+        const { mapel, kelas, nilai_kkm} = submitData;
         let submittedData;
         let newitems = data;
         newitems.forEach((item) => {
@@ -83,18 +85,22 @@ const Kkm = () => {
                     avatarBg: item.avatarBg,
                     image: item.image,
                     role: item.role,
-                    balance: editFormData.balance,
+                    balance: item.balance,
                     kycStatus: item.kycStatus,
                     lastLogin: item.lastLogin,
-                    status: editFormData.status,
+                    status: item.status,
                     country: item.country,
+                    mapel: mapel, // Tambahkan properti mapel, kelas, dan kkm
+                    kelas: kelas,
+                    nilai_kkm: nilai_kkm,
                 };
             }
         });
         let index = newitems.findIndex((item) => item.id === editId);
         newitems[index] = submittedData;
-        setModal({ edit: false});
+        setModal({ edit: false });
     };
+    
 
     return (
         <React.Fragment>
@@ -133,10 +139,10 @@ const Kkm = () => {
                                             </Button>
                                         </li>
                                         <li >
-                                            <Button color="primary"  onClick={() => setModal({ add: true })}>
+                                            <Button color="primary" onClick={() => setModal({ add: true })}>
                                                 <Icon name="plus">
                                                 </Icon>
-                                                <div>Tambah Mapel</div>
+                                                <div>Mata Pelajaran</div>
                                             </Button>
                                         </li>
                                     </ul>
@@ -147,13 +153,22 @@ const Kkm = () => {
                 </BlockHead>
                 <Block>
                     <DataTable className="card-stretch">
-                    <div className="card-inner">
+                        <div className="card-inner">
                             <div className="card-title-group">
                                 <div className="card-title">
                                     <h5 className="title">KKM </h5>
                                 </div>
                                 <div className="card-tools me-n1">
-                                    <ul className="btn-toolbar gx-1">
+                                    
+                                    <ul>
+                                        <li >
+                                            <Button color="primary"  onClick={() => setModal({ add: true })}>
+                                                <Icon name="plus">
+                                                </Icon>
+                                                <div>Set Nilai KKM</div>
+                                            </Button>
+                                        </li>
+                                        <ul className="btn-toolbar gx-1">
                                         <li>
                                             <Button
                                                 href="#search"
@@ -175,9 +190,10 @@ const Kkm = () => {
                                                 </DropdownToggle>
                                             </UncontrolledDropdown>
                                         </li>
+                                        </ul>
+                                        
                                     </ul>
-                                </div>
-                                <div className={`card-search search-wrap ${!onSearch && "active"}`}>
+                                    <div className={`card-search search-wrap ${!onSearch && "active"}`}>
                                     <div className="search-content">
                                         <Button
                                             onClick={() => {
@@ -193,11 +209,16 @@ const Kkm = () => {
                                             className="border-transparent form-focus-none form-control"
                                             placeholder="Search by Order Id"
                                             value={onSearchText}
-                                            onChange={(e) => onFilterChange(e)}
+                                            onChange={() => onFilterChange()}
                                         />
                                         <Button className="search-submit btn-icon">
                                             <Icon name="search"></Icon>
                                         </Button>
+                                    </div>
+                                    
+                                </div>
+                                    <div className="form-inline flex-nowrap gx-3">
+
                                     </div>
                                 </div>
                             </div>
@@ -218,17 +239,43 @@ const Kkm = () => {
                                     <span className="sub-text">KKM</span>
                                 </DataTableRow>
                             </DataTableHead>
-                            {/* {currentItems.length > 0
+                            {currentItems.length > 0
                                 ? currentItems.map((item) => {
-                                    return(
+                                    return (
                                         <DataTableItem key={item.id}>
-
+                                            <DataTableRow size="md">
+                                                <span>{item.id}</span>
+                                            </DataTableRow>
+                                            <DataTableRow size="md">
+                                                <span>{item.mapel}</span>
+                                            </DataTableRow>
+                                            <DataTableRow size="md">
+                                                <span>{item.kls}</span>
+                                            </DataTableRow>
+                                            <DataTableRow size="md">
+                                                <span>{item.kkm}</span>
+                                            </DataTableRow>
                                         </DataTableItem>
                                     )
-                                }):null} */}
+                                }) : null}
                         </DataTableBody>
+                        <div className="card-inner">
+                            {currentItems.length > 0 ? (
+                                <PaginationComponent
+                                    itemPerPage={itemPerPage}
+                                    totalItems={data.length}
+                                    paginate={paginate}
+                                    currentPage={currentPage}
+                                />
+                            ) : (
+                                <div className="text-center">
+                                    <span className="text-silent">No data found</span>
+                                </div>
+                            )}
+                        </div>
                     </DataTable>
                 </Block>
+                <AddModal modal={modal.add} FormData={FormData} setFormData={setFormData} closeModal={closeModal} onSubmit={onFormSubmit} filtermapel={filtermapel} />
             </Content>
         </React.Fragment>
     )

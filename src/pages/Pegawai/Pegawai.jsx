@@ -114,11 +114,26 @@ const Pegawai = () => {
             tglmt: tglmt,
             nik: nik,
             alamat: alamat,
-            
+
         };
         setData([submittedData, ...data]);
         resetForm();
         setModal({ edit: false }, { add: false });
+    };
+    const onEditClick = (id) => {
+        data.forEach((item) => {
+            if (item.id === id) {
+                setEditFormData({
+                    nip: item.nip,
+                    namaptk: item.namaptk,
+                    status: item.status,
+                    jnmutasi: item.jnmutasi,
+
+                });
+                setModal({ edit: true }, { add: false });
+                setEditedId(id);
+            }
+        });
     };
 
     const onEditSubmit = (submitData) => {
@@ -198,7 +213,7 @@ const Pegawai = () => {
                                             </Button>
                                         </li>
                                         <li >
-                                            <Button color="primary"  onClick={() => setModal({ add: true })}>
+                                            <Button color="primary" onClick={() => setModal({ add: true })}>
                                                 <Icon name="plus">
                                                 </Icon>
                                                 <div>Tambah PTK </div>
@@ -353,14 +368,28 @@ const Pegawai = () => {
                                                             text="add"
                                                         />
                                                     </li> */}
-                                                    <li className="" onClick={() => onApproveClick(item.id)}>
+                                                    <li containerClassName="bg-white btn btn-sm btn-outline-light btn-icon btn-tooltip" onClick={() => onEditClick(item.id)}>
+                                                        <DropdownItem
+                                                            tag="a"
+                                                            href="#edit"
+                                                            direction="top"
+                                                            ClassName="bg-white btn btn-sm btn-outline-light btn-icon btn-tooltip"
+                                                            onClick={(ev) => {
+                                                                ev.preventDefault();
+                                                            }}
+                                                        >
+                                                            <Icon name="edit"></Icon>
+
+                                                        </DropdownItem>
+                                                    </li>
+                                                    <li className="" onClick={() => onEditClick(item.id)}>
                                                         <TooltipComponent
                                                             tag="a"
                                                             containerClassName="bg-white btn btn-sm btn-outline-light btn-icon btn-tooltip"
                                                             id={item.ref + "approve"}
-                                                            icon="done"
+                                                            icon="edit"
                                                             direction="top"
-                                                            text="approve"
+                                                            text="edit"
                                                         />
                                                     </li>
                                                     <li className="" onClick={() => onRejectClick(item.id)}>

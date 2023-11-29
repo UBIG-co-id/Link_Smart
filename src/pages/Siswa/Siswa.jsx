@@ -119,18 +119,38 @@ const Siswa = () => {
                                         <li>
                                             <Button color="primary" outline className="btn-dim btn-white">
                                                 <Icon name="download-cloud"></Icon>
-                                                <span>Export</span>
+                                                <span>Template Import Siswa</span>
                                             </Button>
                                         </li>
                                         <li>
                                             <Button color="primary" outline className="btn-dim btn-white">
-                                                <Icon name="reports"></Icon>
-                                                <span>Reports</span>
+                                                <Icon name="upload-cloud"></Icon>
+                                                <span>Import Data</span>
                                             </Button>
                                         </li>
-                                        <li className="nk-block-tools-opt">
-                                            <Button color="primary" className="btn-icon" onClick={() => setModal({ add: true })}>
+                                        <li>
+                                            <Button color="primary" outline className="btn-dim btn-white" onClick={() => setModal({ add: true })}>
                                                 <Icon name="plus"></Icon>
+                                                <div>Tambah Siswa</div>
+                                            </Button>
+                                        </li>
+                                        {/* <li className="nk-block-tools-opt">
+                                            <Button color="primary" className="btn-dim btn-white" onClick={() => setModal({ add: true })}>
+                                                <Icon name="plus">
+                                                </Icon>
+                                                <div>Tambah Siswa</div>
+                                            </Button>
+                                        </li> */}
+                                        <li>
+                                            <Button color="primary" outline className="btn-dim btn-white">
+                                                <Icon name="user"></Icon>
+                                                <span>Status Siswa</span>
+                                            </Button>
+                                        </li>
+                                        <li>
+                                            <Button color="primary" outline className="btn-dim btn-white">
+                                                <Icon name="download-cloud"></Icon>
+                                                <span>Download Data Siswa</span>
                                             </Button>
                                         </li>
                                     </ul>
@@ -276,7 +296,7 @@ const Siswa = () => {
                         </DataTableBody>
                     </DataTable>
                 </Block>
-                <AddModal modal={modal.add} closeModal={closeModal} filterJk={filterJk} filterAgm={filterAgm} filterJp={filterJp} filterP={filterP} filterPeng={filterPeng}/>
+                <AddModal modal={modal.add} closeModal={closeModal} filterJk={filterJk} filterAgm={filterAgm} filterJp={filterJp} filterP={filterP} filterPeng={filterPeng} />
                 {/* <EditModal modal={modal.edit}/> */}
             </Content>
         </React.Fragment>

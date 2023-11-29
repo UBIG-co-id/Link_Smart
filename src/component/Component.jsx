@@ -10,7 +10,9 @@ import {
     BlockImage,
     BackTo,
 } from "./Block";
+import { LinkList, LinkItem } from "./links/Links";
 import Icon from "./Icon";
+import UserAvatar from "./user/UserAvatar";
 import Button from "./Button";
 import { Row, Col } from "./Grid";
 import { PreviewCard, PreviewAltCard } from "./Preview";
@@ -76,5 +78,16 @@ export {
     PaginationComponent,
     // PAGINATION
 
+    //AVATAR
+    UserAvatar,
+    //AVATAR
+
+    //LINKITEM
+    LinkItem,
+    //LINKITEM
+
+    //LINKLIST
+    LinkList,
+    //LINKLIST
 
 }
