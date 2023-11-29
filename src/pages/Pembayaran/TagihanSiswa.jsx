@@ -77,11 +77,6 @@ const TagihanSiswa = () => {
                                         <li>
                                             <Button color="primary" outline className="btn-dim btn-white">
                                                 <Icon name="download-cloud"></Icon>
-                                                <span>Export</span>
-                                            </Button>
-                                        </li>
-                                        <li>
-                                            <Button>
                                                 <span>Export Semua Tagihan Siswa</span>
                                             </Button>
                                         </li>
@@ -303,4 +298,4 @@ const TagihanSiswa = () => {
     )
 }
 
-export default TagihanSiswa;
+export default TagihanSiswa
