@@ -288,7 +288,7 @@ const menu = [
     subMenu: [
       {
         text: "Data Pengguna",
-        link: "/pengguna"
+        link: "pengaturan/pengguna"
       },
       {
         text: "Pengaturan",

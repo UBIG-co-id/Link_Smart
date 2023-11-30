@@ -58,22 +58,16 @@ const TemplateRapor = () => {
                     <div className="card-inner">
                             <div className="card-title-group">
                                 <div className="card-title">
-                                    <h5 className="title"></h5>
-                                </div>
-                                <div className="card-tools">
-                                    <div className="form-inline flex-nowrap gx-3">
-                                        <div className="from-wrap w-150px">
-                                            <ul>
-                                                <li className="nk-block-tools-opt mb-2">
-                                                    <Button color="primary" onClick={() => setModal({ add: true })}>
-                                                        <Icon name="plus">
-                                                        </Icon>
-                                                        <span>Template Rapor</span>
-                                                    </Button>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
+                                    <ul>
+                                        <li className="nk-block-tools-opt mb-2">
+                                            <Button color="primary" onClick={() => setModal({ add: true })}>
+                                                <Icon name="plus">
+                                                </Icon>
+                                                <div>Template Rapor</div>
+                                            </Button>
+                                        </li>
+                                    </ul>
+                                    {/* <h5 className="title">Data Rentang Nilai</h5> */}
                                 </div>
                                 <div className="card-tools me-n1">
                                     <ul className="btn-toolbar gx-1">
