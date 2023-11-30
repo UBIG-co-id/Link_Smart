@@ -59,11 +59,19 @@ const PembayaranManual = () => {
           <BlockBetween>
             <BlockHeadContent>
               <BlockTitle page tag="h3">
-                Pembayaran Manual
+                Bayar Tagihan
               </BlockTitle>
               <BlockDes className="text-soft">
                 <p>Welcome to Link Smart</p>
               </BlockDes>
+              
+                <ul>
+                  <li>NIS</li>
+                  <li>Nama</li>
+                  <li>Kelas</li>
+                  <li></li>
+                </ul>
+              
               <BlockHeadContent>
                 <div className="toggle-wrap nk-block-tools-toggle">
                   <Button

@@ -1,13 +1,15 @@
 import React, { useState, useContext, useEffect } from 'react'
-import Content from '../../../layout/Content/Content'
-import Head from '../../../layout/Head'
-import { Block, BlockHead, BlockBetween, BlockHeadContent, BlockTitle, BlockDes, Button, Icon, SpecialTable, DataTable, RSelect, TooltipComponent, PaginationComponent } from '../../../component/Component'
-import { DataTableBody, DataTableHead, DataTableItem, DataTableRow } from '../../../component/table/DataTable'
-import { penilaianKd, filterKls, filterMpl} from '../../../component/user/UserData'
+import Content from '../../layout/Content/Content'
+import Head from '../../layout/Head'
+import { Block, BlockHead, BlockBetween, BlockHeadContent, BlockTitle, BlockDes, Button, Icon, SpecialTable, DataTable, RSelect, TooltipComponent, PaginationComponent } from '../../component/Component'
+import { DataTableBody, DataTableHead, DataTableItem, DataTableRow } from '../../component/table/DataTable'
+import { pengaturanProfile } from '../../component/user/UserData'
 import { Card, DropdownItem, DropdownMenu, DropdownToggle, UncontrolledDropdown } from 'reactstrap'
-const Kd = () => {
+
+
+const Profile = () => {
     const [sm, updateSm] = useState(false);
-    const [data, setData] = useState(penilaianKd);
+    const [data, setData] = useState(pengaturanProfile);
     const [modal, setModal] = useState({
         edit: false,
         add: false,
@@ -17,10 +19,14 @@ const Kd = () => {
     const indexOfLastItem = currentPage * itemPerPage;
     const indexOfFirstItem = indexOfLastItem - itemPerPage;
     const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
-    const paginate = (pageNumber) => setCurrentPage(pageNumber);
-    const toggle = () => setonSearch(!onSearch);
     const [onSearchText, setSearchText] = useState("");
+    const toggle = () => setonSearch(!onSearch);
     const [onSearch, setonSearch] = useState(false);
+    const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+    const onFilterChange = (e) => {
+        setSearchText(e.target.value);
+    };
 
     const onApproveClick = (id) => {
         let newData = data;
@@ -34,26 +40,15 @@ const Kd = () => {
         newData[index].status = "Rejected";
         setData([...newData]);
     };
-    const onFilterChange = (e) => {
-        setSearchText(e.target.value);
-    };
-    const [formData, setFormData] = useState(
-        {
-            nis: "",
-            nls: "",
-            kls: "",
-            bts: "",
-        }
-    );
     return (
         <React.Fragment>
-            <Head title="Penilaian KD"></Head>
+            <Head title="Pengaturan Profile"></Head>
             <Content>
                 <BlockHead size="sm">
                     <BlockBetween>
                         <BlockHeadContent>
                             <BlockTitle page tag="h3">
-                                Penilaian KD
+                                Pengaturan Profile
                             </BlockTitle>
                             <BlockDes className="text-soft">
                                 <p>Welcome to Link Smart</p>
@@ -69,16 +64,23 @@ const Kd = () => {
                                 </Button>
                                 <div className="toggle-expand-content" style={{ display: sm ? "block" : "none" }}>
                                     <ul className="nk-block-tools g-3">
-                                        <li>
+                                        {/* <li>
                                             <Button color="primary" outline className="btn-dim btn-white">
                                                 <Icon name="download-cloud"></Icon>
-                                                <span>Export </span>
+                                                <span>Export</span>
                                             </Button>
                                         </li>
                                         <li>
                                             <Button color="primary" outline className="btn-dim btn-white">
-                                                <Icon name="upload-cloud"></Icon>
-                                                <span>Import KD</span>
+                                                <Icon name="reports"></Icon>
+                                                <span>Reports</span>
+                                            </Button>
+                                        </li> */}
+                                        <li className="nk-block-tools-opt">
+                                            <Button color="primary " onClick={() => setModal({ add: true })}>
+                                                <Icon name="plus">
+                                                </Icon>
+                                                <div>Tambah Data</div>
                                             </Button>
                                         </li>
                                     </ul>
@@ -88,37 +90,11 @@ const Kd = () => {
                     </BlockBetween>
                 </BlockHead>
                 <Block size="lg">
-                    <DataTable className="card-stretch">
-                        <div className="card-inner">
+                    <DataTable className="card-stretch" >
+                        {/* <div className="card-inner">
                             <div className="card-title-group">
-                                {/* <div className="card-title">
-                                    <h5 className="title">Data Histori Pembayaran</h5>
-                                </div> */}
-                                <div className="card-tools">
-                                    <div className="form-inline flex-nowrap gx-3">
-                                        <div className="from-wrap w-150px">
-                                            <RSelect
-                                                options={filterKls}
-                                                placeholder="Semua Kelas"
-                                                // value={{
-                                                //     value: formData.kls,
-                                                //     label: formData.kls,
-                                                // }}
-                                                onChange={(e) => setFormData({ ...formData, kls: e.value })}
-                                            />
-                                        </div>
-                                        <div className="from-wrap w-200px">
-                                            <RSelect
-                                                options={filterMpl}
-                                                placeholder="Pilih Mata Pelajaran"
-                                                // value={{
-                                                //     value: formData.kls,
-                                                //     label: formData.kls,
-                                                // }}
-                                                onChange={(e) => setFormData({ ...formData, mapel: e.value })}
-                                            />
-                                        </div>
-                                    </div>
+                                <div className="card-title">
+                                    <h5 className="title">Pengaturan Profile</h5>
                                 </div>
                                 <div className="card-tools me-n1">
                                     <ul className="btn-toolbar gx-1">
@@ -169,17 +145,17 @@ const Kd = () => {
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> */}
                         <DataTableBody bodyclass="nk-tb-tnx">
                             <DataTableHead>
                                 <DataTableRow>
                                     <span>No</span>
                                 </DataTableRow>
                                 <DataTableRow >
-                                    <span>No.KD</span>
+                                    <span>Judul</span>
                                 </DataTableRow>
-                                <DataTableRow size="lg">
-                                    <span>Deskripsi</span>
+                                <DataTableRow >
+                                    <span>Urutan</span>
                                 </DataTableRow>
                                 <DataTableRow className="nk-tb-col-tools">Aksi</DataTableRow>
                             </DataTableHead>
@@ -194,12 +170,12 @@ const Kd = () => {
                                             </DataTableRow>
                                             <DataTableRow>
                                                 <div className="tb-lead">
-                                                    <span>{item.nokd}</span>
+                                                    <span>{item.judul}</span>
                                                 </div>
                                             </DataTableRow>
                                             <DataTableRow>
                                                 <div className="tb-lead">
-                                                    <span>{item.deskripsi}</span>
+                                                    <span>{item.urutan}</span>
                                                 </div>
                                             </DataTableRow>
                                             <DataTableRow className="nk-tb-col-tools">
@@ -259,4 +235,4 @@ const Kd = () => {
     )
 }
 
-export default Kd
+export default Profile

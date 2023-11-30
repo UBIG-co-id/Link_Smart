@@ -241,19 +241,19 @@ const menu = [
         },
         {
           text: "Keterampilan",
-          link: "/ppdb/cetak-cover",
+          link: "/penilaian/keterampilan",
         },
         {
           text: "Spiritual dan Sosial",
-          link: "/ppdb/cetak-cover",
+          link: "/penilaian/spiritualdansosial",
         },
         {
           text: "Penilaian Lain",
-          link: "/ppdb/cetak-cover",
+          link: "/penilaian/nilailain",
         },
         {
           text: "Catatan Wali Kelas",
-          link: "/ppdb/cetak-cover",
+          link: "/penilaian/catatanwalas",
         },
     ],
   },

@@ -354,6 +354,15 @@ export const ppdb =[
         diterima:"Ya",
     }
 ]
+export const pengaturanProfile = [
+    {
+        id: 1,
+        judul: 'Struktur',
+        urutan: 1,
+       
+      
+    },
+]
 
 export const filterStatus = [
     { value: "Active", label: "Active" },

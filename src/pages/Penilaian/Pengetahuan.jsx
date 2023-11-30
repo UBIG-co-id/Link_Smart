@@ -93,9 +93,11 @@ const Pengetahuan = () => {
                             </PreviewAltCard>
                         </Col>
                         <Col md="12" xxl="4">
-                            <PreviewAltCard className="card-full h-750px">
-
-                            </PreviewAltCard>
+                        <PreviewAltCard className="card-full">
+                            <div className='form-group' style={{ height: "200px", display: "flex", justifyContent: "center", alignItems: "center" }}>
+                                Untuk Memasukkan Nilai Siswa
+                            </div>
+                        </PreviewAltCard>
                         </Col>
                     </Row>
 
