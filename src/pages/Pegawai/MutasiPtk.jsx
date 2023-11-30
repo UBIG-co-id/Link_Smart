@@ -14,12 +14,14 @@ import { Link } from 'react-router-dom'
 const Pegawai = () => {
     const [data, setData] = useState(userData);
     const [sm, updateSm] = useState(false);
-    const [onSearch, setonSearch] = useState(false);
+    const [onSearch, setonSearch] = useState(true);
     const [onSearchText, setSearchText] = useState("");
+    const toggle = () => setonSearch(!onSearch);
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
     const [selectedDate, setSelectedDate] = useState(null);
     const [tablesm, updateTableSm] = useState(false);
-    const [actionText, setActionText] = useState("");;
+    const [actionText, setActionText] = useState("");
+    const [numUrutan, setNumUrutan] = useState(1);
     const [sort, setSortState] = useState("");
     const sortFunc = (params) => {
         let defaultData = [...data]; // Clone array to avoid modifying the original data
@@ -38,6 +40,61 @@ const Pegawai = () => {
         setData([...newData]);
     };
     
+    const [currentPage, setCurrentPage] = useState(1);
+    const [itemPerPage, setItemPerPage] = useState(10);
+    const indexOfLastItem = currentPage * itemPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemPerPage;
+    const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
+    const fetchData = async () => {
+        try {
+            const token = localStorage.getItem('jwtToken');
+    
+            // Membuat objek untuk menyimpan parameter yang akan digunakan dalam URL
+            const params = {
+                sort_order: sort === "asc" ? "ascending" : "descending",
+                page: 1, // Page selalu dimulai dari 1, Anda dapat memperbarui ini jika menggunakan halaman yang berbeda
+                limit: itemPerPage,
+            };
+    
+            // Mengubah objek parameter menjadi query string
+            const queryString = Object.keys(params)
+                .map(key => `${key}=${encodeURIComponent(params[key])}`)
+                .join('&');
+    
+            // Menggabungkan URL dengan query string
+            const apiUrl = `https://linksmart-1-t2560421.deta.app/ptk-cari?${queryString}`;
+    
+            const response = await fetch(apiUrl, {
+                method: 'POST',
+                headers: {
+                    'accept': 'application/json',
+                    'Authorization': `Bearer ${token}`,
+                },
+                // ... (tambahkan konfigurasi lainnya sesuai kebutuhan)
+            });
+    
+            const result = await response.json();
+            console.log("ini Data", result.Data)
+            let updatedNumUrutan = numUrutan;
+    
+            const updatedData = result.Data.map((item) => {
+                return { ...item, nomor_urutan: updatedNumUrutan++ };
+            });
+    
+            setData(updatedData);
+            setNumUrutan(updatedNumUrutan);
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    };
+    
+    useEffect(() => {
+        setNumUrutan(1);
+        fetchData();
+    }, [sort, itemPerPage]); // Menambahkan dependensi sort dan itemPerPage ke dalam useEffect
+    
+    
+        // GET DATA
 
     const onFormSubmit = (submitData) => {
         const { tgl, nama, jm, tahun, alasan } = submitData;
@@ -69,7 +126,7 @@ const Pegawai = () => {
         }
     };
 
-    const toggle = () => setonSearch(!onSearch);
+    // const toggle = () => setonSearch(!onSearch);
     const onActionText = (e) => {
         setActionText(e.value);
     };
@@ -181,11 +238,7 @@ const Pegawai = () => {
     };
     // END EDIT DATA
     // Get current list, pagination
-    const [currentPage, setCurrentPage] = useState(1);
-    const [itemPerPage, setItemPerPage] = useState(10);
-    const indexOfLastItem = currentPage * itemPerPage;
-    const indexOfFirstItem = indexOfLastItem - itemPerPage;
-    const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
+    
 
     return (
         <React.Fragment>

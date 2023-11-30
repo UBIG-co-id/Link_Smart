@@ -137,7 +137,7 @@ const Login = () => {
                     </Button>
                 </div>
             </Form>
-            <div className="form-note-s2 text-center pt-4">
+            {/* <div className="form-note-s2 text-center pt-4">
             New on our platform? <Link to={`${process.env.PUBLIC_URL}/register`}>Create an account</Link>
           </div>
           <div className="text-center pt-4 pb-3">
@@ -168,7 +168,7 @@ const Login = () => {
                 Google
               </a>
             </li>
-          </ul>
+          </ul> */}
         </PreviewCard>
         </Block>
       {/* <AuthFooter /> */}
