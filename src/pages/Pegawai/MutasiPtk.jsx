@@ -9,6 +9,7 @@ import { userData, filterPtk, filterStatus, filterThn } from '../../component/us
 import { DataTableBody, DataTableHead, DataTableItem, DataTableRow } from '../../component/table/DataTable'
 import EditModal from '../../component/modal/mutasiPTK/EditModal'
 import AddModal from '../../component/modal/mutasiPTK/AddModal'
+import { Link } from 'react-router-dom'
 
 const Pegawai = () => {
     const [sm, updateSm] = useState(false);
@@ -18,6 +19,24 @@ const Pegawai = () => {
     const { contextData } = useContext(UserContext);
     const [data, setData] = contextData;
     const [onSearchText, setSearchText] = useState("");
+    const [sort, setSortState] = useState("");
+    const sortFunc = (params) => {
+        let defaultData = [...data]; // Clone array to avoid modifying the original data
+        if (params === "asc") {
+            let sortedData = defaultData.sort((a, b) => (a.name || "").localeCompare(b.name || ""));
+            setData(sortedData);
+        } else if (params === "dsc") {
+            let sortedData = defaultData.sort((a, b) => (b.name || "").localeCompare(a.name || ""));
+            setData(sortedData);
+        }
+    };
+    const onRejectClick = (id) => {
+        let newData = data;
+        let index = newData.findIndex((item) => item.id === id);
+        newData[index].status = "Rejected";
+        setData([...newData]);
+    };
+    
 
     const onFormSubmit = (submitData) => {
         const { tgl, nama, jm, tahun, alasan } = submitData;
@@ -205,9 +224,11 @@ const Pegawai = () => {
                                             </Button>
                                         </li>
                                         <li className="nk-block-tools-opt">
-                                            <Button color="primary" className="btn-icon" onClick={() => setModal({ add: true })}>
+                                        <Link to="/pegawai/add-mutasi">
+                                            <Button color="primary" className="btn-icon" >
                                                 <Icon name="plus"></Icon>
                                             </Button>
+                                            </Link>
                                         </li>
                                     </ul>
                                 </div>
@@ -259,53 +280,86 @@ const Pegawai = () => {
                                 <div className="card-tools me-n1">
                                     <ul className="btn-toolbar gx-1">
                                         <li>
-                                            <a
+                                            <Button
                                                 href="#search"
                                                 onClick={(ev) => {
                                                     ev.preventDefault();
                                                     toggle();
                                                 }}
-                                                className="btn btn-icon search-toggle toggle-search"
+                                                className="btn-icon search-toggle toggle-search"
                                             >
                                                 <Icon name="search"></Icon>
-                                            </a>
+                                            </Button>
                                         </li>
                                         <li className="btn-toolbar-sep"></li>
                                         <li>
-                                            <div className="toggle-wrap">
-                                                <Button
-                                                    className={`btn-icon btn-trigger toggle ${tablesm ? "active" : ""}`}
-                                                    onClick={() => updateTableSm(true)}
-                                                >
-                                                    <Icon name="menu-right"></Icon>
-                                                </Button>
-                                                <div className={`toggle-content ${tablesm ? "content-active" : ""}`}>
-                                                    <ul className="btn-toolbar gx-1">
-                                                        <li className="toggle-close">
-                                                            <Button className="btn-icon btn-trigger toggle" onClick={() => updateTableSm(false)}>
-                                                                <Icon name="arrow-left"></Icon>
-                                                            </Button>
-                                                        </li>
+                                            <UncontrolledDropdown>
+                                                <DropdownToggle tag="a" className="btn btn-trigger btn-icon dropdown-toggle">
+                                                    <Icon name="setting"></Icon>
+                                                </DropdownToggle>
+                                                <DropdownMenu end className="dropdown-menu-xs">
+                                                    <ul className="link-check">
                                                         <li>
-                                                            <UncontrolledDropdown>
-                                                                <DropdownToggle tag="a" className="btn btn-trigger btn-icon dropdown-toggle">
-                                                                    <div className="dot dot-primary"></div>
-                                                                    <Icon name="filter-alt"></Icon>
-                                                                </DropdownToggle>
-                                                                <DropdownMenu
-                                                                    end
-                                                                    className="filter-wg dropdown-menu-xl"
-                                                                    style={{ overflow: "visible" }}
-                                                                >
-                                                                    <div className="dropdown-head">
-                                                                        <span className="sub-title dropdown-title">Filter Users</span>
-                                                                    </div>
-                                                                </DropdownMenu>
-                                                            </UncontrolledDropdown>
+                                                            <span>Show</span>
+                                                        </li>
+                                                        <li className={itemPerPage === 10 ? "active" : ""}>
+                                                            <DropdownItem
+                                                                tag="a"
+                                                                href="#dropdownitem"
+                                                                onClick={(ev) => {
+                                                                    ev.preventDefault();
+                                                                    setItemPerPage(10);
+                                                                }}
+                                                            >
+                                                                10
+                                                            </DropdownItem>
+                                                        </li>
+                                                        <li className={itemPerPage === 15 ? "active" : ""}>
+                                                            <DropdownItem
+                                                                tag="a"
+                                                                href="#dropdownitem"
+                                                                onClick={(ev) => {
+                                                                    ev.preventDefault();
+                                                                    setItemPerPage(15);
+                                                                }}
+                                                            >
+                                                                15
+                                                            </DropdownItem>
                                                         </li>
                                                     </ul>
-                                                </div>
-                                            </div>
+                                                    <ul className="link-check">
+                                                        <li>
+                                                            <span>Order</span>
+                                                        </li>
+                                                        <li className={sort === "dsc" ? "active" : ""}>
+                                                            <DropdownItem
+                                                                tag="a"
+                                                                href="#dropdownitem"
+                                                                onClick={(ev) => {
+                                                                    ev.preventDefault();
+                                                                    setSortState("dsc");
+                                                                    sortFunc("dsc");
+                                                                }}
+                                                            >
+                                                                DESC
+                                                            </DropdownItem>
+                                                        </li>
+                                                        <li className={sort === "asc" ? "active" : ""}>
+                                                            <DropdownItem
+                                                                tag="a"
+                                                                href="#dropdownitem"
+                                                                onClick={(ev) => {
+                                                                    ev.preventDefault();
+                                                                    setSortState("asc");
+                                                                    sortFunc("asc");
+                                                                }}
+                                                            >
+                                                                ASC
+                                                            </DropdownItem>
+                                                        </li>
+                                                    </ul>
+                                                </DropdownMenu>
+                                            </UncontrolledDropdown>
                                         </li>
                                     </ul>
                                 </div>
@@ -411,33 +465,41 @@ const Pegawai = () => {
                                             <DataTableRow size="lg">
                                                 <span>{item.jnmutasi}</span>
                                             </DataTableRow>
-                                            <DataTableRow >
-                                                <ul>
-                                                    <li>
-                                                        <UncontrolledDropdown>
-                                                            <DropdownToggle tag="a" className="dropdown-toggle btn btn-icon btn-trigger">
-                                                                <Icon name="more-h"></Icon>
-                                                            </DropdownToggle>
-                                                            <DropdownMenu end>
-                                                                <ul className="link-list-opt no-bdr">
-                                                                    <li onClick={() => onEditClick(item.id)}>
-                                                                        <DropdownItem
-                                                                            tag="a"
-                                                                            href="#edit"
-                                                                            onClick={(ev) => {
-                                                                                ev.preventDefault();
-                                                                            }}
-                                                                        >
-                                                                            <Icon name="edit"></Icon>
-                                                                            <span>Edit</span>
-                                                                        </DropdownItem>
-                                                                    </li>
+                                            <DataTableRow className="nk-tb-col-tools">
+                                                <ul className="nk-tb-actions gx-1">
+                                                    <TooltipComponent
+                                                        tag="a"
+                                                        containerClassName="bg-white btn btn-sm btn-outline-light btn-icon btn-tooltip"
+                                                        id={item.ref + "details"}
+                                                        icon="eye"
+                                                        direction="top"
+                                                        text="Details"
+                                                    />
 
-                                                                </ul>
-                                                            </DropdownMenu>
-                                                        </UncontrolledDropdown>
+
+
+                                                    <li className="" onClick={() => onEditClick(item.id)}>
+                                                        <TooltipComponent
+                                                            tag="a"
+                                                            containerClassName="bg-white btn btn-sm btn-outline-light btn-icon btn-tooltip"
+                                                            id={item.ref + "edit"}
+                                                            icon="edit"
+                                                            direction="top"
+                                                            text="edit"
+                                                        />
+                                                    </li>
+                                                    <li className="" onClick={() => onRejectClick(item.id)}>
+                                                        <TooltipComponent
+                                                            tag="a"
+                                                            containerClassName="bg-white btn btn-sm btn-outline-light btn-icon btn-tooltip"
+                                                            id={item.ref + "reject"}
+                                                            icon="cross-round"
+                                                            direction="top"
+                                                            text="Reject"
+                                                        />
                                                     </li>
                                                 </ul>
+
                                             </DataTableRow>
                                         </DataTableItem>
                                     )
@@ -473,7 +535,7 @@ const Pegawai = () => {
                         <SpecialTable action={true} />
                     </Card>
                 </Block> */}
-                <AddModal modal={modal.add} formData={formData} setFormData={setFormData} closeModal={closeModal} onSubmit={onFormSubmit} filterStatus={filterStatus} filterPtk={filterPtk} filterThn={filterThn}/>
+                {/* <AddModal modal={modal.add} formData={formData} setFormData={setFormData} closeModal={closeModal} onSubmit={onFormSubmit} filterStatus={filterStatus} filterPtk={filterPtk} filterThn={filterThn}/> */}
                 <EditModal modal={modal.edit} formData={editFormData} setFormData={setEditFormData} closeModal={closeEditModal} onSubmit={onEditSubmit} filterStatus={filterStatus} />
             </Content>
         </React.Fragment>

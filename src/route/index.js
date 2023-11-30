@@ -34,6 +34,10 @@ import Ppdb from '../pages/Ppdb/Ppdb';
 import LaporanSiswa from '../pages/Laporan/PresensiSiswa';
 import LaporanPegawai from '../pages/Laporan/PresensiPegawai';
 import PembayaranSpp from '../pages/Laporan/PembayaranSpp';
+import Identitas from '../pages/Pengaturan/Identitas';
+import AddPegawai from '../component/modal/pegawai/AddModal'
+import AddMutasi from '../component/modal/mutasiPTK/AddModal'
+
 const Router = () => {
   const location = useLocation();
   useLayoutEffect(() => {
@@ -47,6 +51,8 @@ const Router = () => {
         <Route element={<UserContextProvider />}>
           <Route path='/pegawai' element={<Pegawai />}></Route>
           <Route path='/pegawai/mutasi-ptk' element={<PTK />}></Route>
+          <Route path='/pegawai/add-pegawai' element={<AddPegawai />}></Route>
+          <Route path='/pegawai/add-mutasi' element={<AddMutasi />}></Route>
         </Route>
 
         <Route path='/kelas/ruang' element={<RuangKelas />}></Route>
@@ -94,6 +100,10 @@ const Router = () => {
         <Route path='/laporan/pegawai' element={<LaporanPegawai />}></Route>
         <Route path='/laporan/spp' element={<PembayaranSpp />}></Route>
         {/* END LAPORAN */}
+
+        {/* PENGATURAN */}
+        <Route path='/pengaturan/identitas' element={<Identitas/>}></Route>
+        {/* PENGATURAN */}
 
 
       </Route>

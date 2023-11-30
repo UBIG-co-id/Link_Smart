@@ -3,18 +3,18 @@
 export const transactionData = [
     {
         id: 1,
-        nip: 123,
-        nuptk: 1234,
-        fotoData: null,
-        nama: "Wahyu",
-        jk: "Laki-Laki",
-        status: "Active",
+        namaptk: "Wahyu",
+        nip: 1234,
+        nuptk: 12345,
+        nik: 321355,
+        jenis_kelamin: "Laki-Laki",
+        status_ptk: "Active",
+        foto: null,
         notelp: "035464",
         email: "wahyu@gmail.com",
-        tlahir: "denpasar",
-        tgllahir: '31/10/2001',
-        tglmt: "1/11/2002",
-        nik: 321355,
+        tgl_lahir: '31/10/2001',
+        tempat_lahir: "Denpasar",
+        tgl_mulaitugas: "1/11/2002" ,
         alamat: "malang",
     }
 ];
