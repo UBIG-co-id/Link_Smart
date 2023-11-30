@@ -37,7 +37,7 @@ const Umum = () => {
                                 >
                                     <Icon name="more-v"></Icon>
                                 </Button>
-                                <div className="toggle-expand-content" style={{ display: sm ? "block" : "none" }}>
+                                {/* <div className="toggle-expand-content" style={{ display: sm ? "block" : "none" }}>
                                     <ul className="nk-block-tools g-3">
                                         <li>
                                             <Button color="primary" outline className="btn-dim btn-white">
@@ -57,7 +57,7 @@ const Umum = () => {
                                             </Button>
                                         </li>
                                     </ul>
-                                </div>
+                                </div> */}
                             </div>
                         </BlockHeadContent>
                     </BlockBetween>

@@ -145,11 +145,11 @@ const menu = [
           },
           {
             text: "Rapor Kurikulum 2013",
-            link: "/ppdb/cetak-cover",
+            link: "rapor/kurikulum",
           },
           {
             text: "Rekap Nilai Semester",
-            link: "/ppdb/cetak-cover",
+            link: "/rapor/rekap-nilai",
           },
         ],
 
@@ -210,7 +210,7 @@ const menu = [
       },
       {
         text: "Chat",
-        link: "/saran-masukan",
+        link: "/chat",
       },
       {
         text: "PPDB",
@@ -237,23 +237,23 @@ const menu = [
       
         {
           text: "Pengetahuan",
-          link: "/ppdb/cetak-cover",
+          link: "/penilaian/pengetahuan",
         },
         {
           text: "Keterampilan",
-          link: "/ppdb/cetak-cover",
+          link: "/penilaian/keterampilan",
         },
         {
           text: "Spiritual dan Sosial",
-          link: "/ppdb/cetak-cover",
+          link: "/penilaian/spiritualdansosial",
         },
         {
           text: "Penilaian Lain",
-          link: "/ppdb/cetak-cover",
+          link: "/penilaian/nilailain",
         },
         {
           text: "Catatan Wali Kelas",
-          link: "/ppdb/cetak-cover",
+          link: "/penilaian/catatanwalas",
         },
     ],
   },

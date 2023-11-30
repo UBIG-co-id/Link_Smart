@@ -4,9 +4,20 @@ import Head from '../../../layout/Head'
 import { Col, Block, BlockHead, BlockBetween, BlockHeadContent, BlockTitle, BlockDes, Button, Icon, SpecialTable, DataTable, RSelect, TooltipComponent, PaginationComponent } from '../../../component/Component'
 import { DataTableBody, DataTableHead, DataTableItem, DataTableRow } from '../../../component/table/DataTable'
 import { kkmBatas } from '../../../component/user/UserData'
+import { Card, DropdownItem, DropdownMenu, DropdownToggle, UncontrolledDropdown } from 'reactstrap'
+
 const KkmBatas = () => {
     const [sm, updateSm] = useState(false);
     const [data, setData] = useState(kkmBatas);
+    const toggle = () => setonSearch(!onSearch);
+    const paginate = (pageNumber) => setCurrentPage(pageNumber);
+    const [onSearch, setonSearch] = useState(true);
+    const [onSearchText, setSearchText] = useState("");
+
+    const onFilterChange = (e) => {
+        setSearchText(e.target.value);
+    };
+
     const [modal, setModal] = useState({
         edit: false,
         add: false,
@@ -28,8 +39,8 @@ const KkmBatas = () => {
         newData[index].status = "Rejected";
         setData([...newData]);
     };
-  return (
-    <React.Fragment>
+    return (
+        <React.Fragment>
             <Head title="KKM Batas"></Head>
             <Content>
                 <BlockHead size="sm">
@@ -43,7 +54,7 @@ const KkmBatas = () => {
                             </BlockDes>
                         </BlockHeadContent>
                         <BlockHeadContent>
-                            <div className="toggle-wrap nk-block-tools-toggle">
+                            {/* <div className="toggle-wrap nk-block-tools-toggle">
                                 <Button
                                     className={`btn-icon btn-trigger toggle-expand me-n1 ${sm ? "active" : ""}`}
                                     onClick={() => updateSm(!sm)}
@@ -71,13 +82,76 @@ const KkmBatas = () => {
                                         </li>
                                     </ul>
                                 </div>
-                            </div>
+                            </div> */}
                         </BlockHeadContent>
                     </BlockBetween>
                 </BlockHead>
                 <Block size="lg">
                     <DataTable className="card-stretch">
-
+                        <div className="card-inner">
+                            <div className="card-title-group">
+                                <div className="card-title">
+                                    <h5 className="title">Data KKM Batas</h5>
+                                </div>
+                                <div className="card-tools me-n1">
+                                    <ul>
+                                        <li className="nk-block-tools-opt mb-2">
+                                            <Button color="primary" onClick={() => setModal({ add: true })}>
+                                                <Icon name="plus">
+                                                </Icon>
+                                                <div>KKM Batas</div>
+                                            </Button>
+                                        </li>
+                                    </ul>
+                                    <ul className="btn-toolbar gx-1">
+                                        <li>
+                                            <Button
+                                                href="#search"
+                                                onClick={(ev) => {
+                                                    ev.preventDefault();
+                                                    toggle();
+                                                }}
+                                                className="btn-icon search-toggle toggle-search"
+                                            >
+                                                <Icon name="search"></Icon>
+                                            </Button>
+                                        </li>
+                                        <li className="btn-toolbar-sep"></li>
+                                        <li>
+                                            <UncontrolledDropdown>
+                                                <DropdownToggle tag="a" className="btn btn-trigger btn-icon dropdown-toggle">
+                                                    <div className="dot dot-primary"></div>
+                                                    <Icon name="filter-alt"></Icon>
+                                                </DropdownToggle>
+                                            </UncontrolledDropdown>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div className={`card-search search-wrap ${!onSearch && "active"}`}>
+                                    <div className="search-content">
+                                        <Button
+                                            onClick={() => {
+                                                setSearchText("");
+                                                toggle();
+                                            }}
+                                            className="search-back btn-icon toggle-search"
+                                        >
+                                            <Icon name="arrow-left"></Icon>
+                                        </Button>
+                                        <input
+                                            type="text"
+                                            className="border-transparent form-focus-none form-control"
+                                            placeholder="Search by Order Id"
+                                            value={onSearchText}
+                                            onChange={(e) => onFilterChange(e)}
+                                        />
+                                        <Button className="search-submit btn-icon">
+                                            <Icon name="search"></Icon>
+                                        </Button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <DataTableBody bodyclass="nk-tb-tnx">
                             <DataTableHead>
                                 <DataTableRow>
@@ -98,7 +172,6 @@ const KkmBatas = () => {
                                 <DataTableRow >
                                     <span>A</span>
                                 </DataTableRow>
-                                
                                 <DataTableRow className="nk-tb-col-tools">Aksi</DataTableRow>
                             </DataTableHead>
                             {currentItems.length > 0
@@ -115,7 +188,6 @@ const KkmBatas = () => {
                                                     <span>{item.kkm}</span>
                                                 </div>
                                             </DataTableRow>
-                                           
                                             <DataTableRow>
                                                 <div className="tb-lead">
                                                     <span>{item.batasd}</span>
@@ -142,11 +214,11 @@ const KkmBatas = () => {
                                                         tag="a"
                                                         containerClassName="bg-white btn btn-sm btn-outline-light btn-icon btn-tooltip"
                                                         id={item.ref + "details"}
-                                                        icon="eye"
+                                                        icon="delete"
                                                         direction="top"
-                                                        text="Details"
+                                                        text="Hapus"
                                                     />
-                                                    <li className="" onClick={() => onApproveClick(item.id)}>
+                                                    {/* <li className="" onClick={() => onApproveClick(item.id)}>
                                                         <TooltipComponent
                                                             tag="a"
                                                             containerClassName="bg-white btn btn-sm btn-outline-light btn-icon btn-tooltip"
@@ -165,18 +237,32 @@ const KkmBatas = () => {
                                                             direction="top"
                                                             text="Reject"
                                                         />
-                                                    </li>
+                                                    </li> */}
                                                 </ul>
                                             </DataTableRow>
                                         </DataTableItem>
                                     )
                                 }) : null}
                         </DataTableBody>
+                        <div className="card-inner">
+                            {currentItems.length > 0 ? (
+                                <PaginationComponent
+                                    itemPerPage={itemPerPage}
+                                    totalItems={data.length}
+                                    paginate={paginate}
+                                    currentPage={currentPage}
+                                />
+                            ) : (
+                                <div className="text-center">
+                                    <span className="text-silent">No data found</span>
+                                </div>
+                            )}
+                        </div>
                     </DataTable>
                 </Block>
             </Content>
         </React.Fragment>
-  )
+    )
 }
 
 export default KkmBatas

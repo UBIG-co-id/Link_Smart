@@ -3,13 +3,41 @@ import Content from '../../layout/Content/Content'
 import Head from '../../layout/Head'
 import { Block, BlockHead, BlockBetween, BlockHeadContent, BlockTitle, BlockDes, Button, Icon, SpecialTable, DataTable, RSelect, TooltipComponent, PaginationComponent } from '../../component/Component'
 import { DataTableBody, DataTableHead, DataTableItem, DataTableRow } from '../../component/table/DataTable'
-import { mutasiSiswa,filterJp, filterP, filterPeng, filterAgm, filterJk  } from '../../component/user/UserData'
+import { mutasiSiswa, filterJp, filterP, filterPeng, filterAgm, filterJk, filterThn, filterBln, filterKls } from '../../component/user/UserData'
+import { Card, DropdownItem, DropdownMenu, DropdownToggle, Label, UncontrolledDropdown } from 'reactstrap'
+import { bulkActionOptions } from '../../utils/Utils'
 import Mutasi from '../../component/modal/siswa/Mutasi'
 
 const MutasiSiswa = () => {
     const [sm, updateSm] = useState(false);
     const [data, setData] = useState(mutasiSiswa);
-    
+    const toggle = () => setonSearch(!onSearch);
+    const [onSearchText, setSearchText] = useState("");
+    const [onSearch, setonSearch] = useState(false);
+    const [actionText, setActionText] = useState("");
+
+    const onActionText = (e) => {
+        setActionText(e.value);
+    };
+
+    const onActionClick = (e) => {
+        if (actionText === "suspend") {
+            let newData = data.map((item) => {
+                if (item.checked === true) item.status = "Suspend";
+                return item;
+            });
+            setData([...newData]);
+        } else if (actionText === "delete") {
+            let newData;
+            newData = data.filter((item) => item.checked !== true);
+            setData([...newData]);
+        }
+    };
+
+    const onFilterChange = (e) => {
+        setSearchText(e.target.value);
+    };
+
     const [modal, setModal] = useState({
         edit: false,
         add: false,
@@ -89,18 +117,20 @@ const MutasiSiswa = () => {
                                         <li>
                                             <Button color="primary" outline className="btn-dim btn-white">
                                                 <Icon name="download-cloud"></Icon>
-                                                <span>Export</span>
+                                                <span>Download Data Mutasi</span>
                                             </Button>
                                         </li>
-                                        <li>
+                                        {/* <li>
                                             <Button color="primary" outline className="btn-dim btn-white">
                                                 <Icon name="reports"></Icon>
                                                 <span>Reports</span>
                                             </Button>
-                                        </li>
-                                        <li className="nk-block-tools-opt">
-                                            <Button color="primary" className="btn-icon" onClick={() => setModal({ add: true })}>
-                                                <Icon name="plus"></Icon>
+                                        </li> */}
+                                        <li >
+                                            <Button color="primary" onClick={() => setModal({ add: true })}>
+                                                <Icon name="plus">
+                                                </Icon>
+                                                <div>Data Manual</div>
                                             </Button>
                                         </li>
                                     </ul>
@@ -109,13 +139,119 @@ const MutasiSiswa = () => {
                         </BlockHeadContent>
                     </BlockBetween>
                 </BlockHead>
-                <Block>
+                <Block size="lg">
                     <DataTable className="card-stretch">
                         <div className="card-inner position-relative card-tools-toggle">
                             <div className="card-title-group">
                                 <div className="card-tools">
                                     <div className="form-inline flex-nowrap gx-3">
+                                        <div className="from-wrap">
+                                            <RSelect
+                                                option={filterThn}
+                                                className="w-150px"
+                                                placeholder="Tahun Ajran Aktif"
+                                                onChange={(e) => onActionText(e)}
+                                            />
+                                        </div>
+                                        <div className="from-wrap">
+                                            <RSelect
+                                                option={filterBln}
+                                                className="w-150px"
+                                                placeholder="Semua Bulan"
+                                                onChange={(e) => onActionText(e)}
+                                            />
+                                        </div>
+                                        <div className="from-wrap">
+                                            <RSelect
+                                                option={filterKls}
+                                                className="w-150px"
+                                                placeholder="Semua Jenjang"
+                                                onChange={(e) => onActionText(e)}
+                                            />
+                                        </div>
+                                        {/* <div className="from-wrap">
+                                            <DatePicker
+                                                selected={selectedDate}
+                                                onChange={handleDateChange}
+                                                placeholderText="Select Date"
+                                                dateFormat="dd/MM/yyyy"
+                                                className="form-control w-130px" // Atur gaya sesuai kebutuhan
+                                            />
+                                        </div> */}
+                                        <div className="btn-wrap">
+                                            {/* <span className="d-none d-md-block">
+                                                <Button
+                                                    disabled={actionText !== "" ? false : true}
+                                                    color="light"
+                                                    outline
+                                                    className="btn-dim"
+                                                    onClick={(e) => onActionClick(e)}
+                                                >
+                                                    Apply
+                                                </Button>
+                                            </span> */}
+                                            <span className="d-md-none">
+                                                <Button
+                                                    color="light"
+                                                    outline
+                                                    disabled={actionText !== "" ? false : true}
+                                                    className="btn-dim  btn-icon"
+                                                    onClick={(e) => onActionClick(e)}
+                                                >
+                                                    <Icon name="arrow-right"></Icon>
+                                                </Button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="card-tools me-n1">
+                                    <ul className="btn-toolbar gx-1">
+                                        <li>
+                                            <a
+                                                href="#search"
+                                                onClick={(ev) => {
+                                                    ev.preventDefault();
+                                                    toggle();
+                                                }}
+                                                className="btn btn-icon search-toggle toggle-search"
+                                            >
+                                                <Icon name="search"></Icon>
+                                            </a>
+                                        </li>
+                                        <li className="btn-toolbar-sep"></li>
 
+
+                                        <li>
+                                            <UncontrolledDropdown>
+                                                <DropdownToggle tag="a" className="btn btn-trigger btn-icon dropdown-toggle">
+                                                    <div className="dot dot-primary"></div>
+                                                    <Icon name="filter-alt"></Icon>
+                                                </DropdownToggle>
+                                            </UncontrolledDropdown>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div className={`card-search search-wrap ${!onSearch && "active"}`}>
+                                    <div className="search-content">
+                                        <Button
+                                            onClick={() => {
+                                                setSearchText("");
+                                                toggle();
+                                            }}
+                                            className="search-back btn-icon toggle-search"
+                                        >
+                                            <Icon name="arrow-left"></Icon>
+                                        </Button>
+                                        <input
+                                            type="text"
+                                            className="border-transparent form-focus-none form-control"
+                                            placeholder="Search by Order Id"
+                                            value={onSearchText}
+                                            onChange={(e) => onFilterChange(e)}
+                                        />
+                                        <Button className="search-submit btn-icon">
+                                            <Icon name="search"></Icon>
+                                        </Button>
                                     </div>
                                 </div>
                             </div>
@@ -135,7 +271,7 @@ const MutasiSiswa = () => {
                                 <DataTableRow >
                                     <span className="sub-text">Nama Siswa</span>
                                 </DataTableRow>
-                                
+
                                 <DataTableRow >
                                     <span className="sub-text">Kelas</span>
                                 </DataTableRow>
@@ -148,7 +284,7 @@ const MutasiSiswa = () => {
                             </DataTableHead>
                             {currentItems.length > 0
                                 ? currentItems.map((item) => {
-                                    return(
+                                    return (
                                         <DataTableItem key={item.id}>
                                             <DataTableRow size="md">
                                                 <span>{item.id}</span>
@@ -179,7 +315,7 @@ const MutasiSiswa = () => {
                                                         text="Details"
                                                     />
 
-                                                    
+
                                                     <li className="" onClick={() => onApproveClick(item.id)}>
                                                         <TooltipComponent
                                                             tag="a"
@@ -201,15 +337,29 @@ const MutasiSiswa = () => {
                                                         />
                                                     </li>
                                                 </ul>
-                                                
+
                                             </DataTableRow>
                                         </DataTableItem>
                                     )
-                                }):null}
+                                }) : null}
                         </DataTableBody>
+                        <div className="card-inner">
+                            {currentItems.length > 0 ? (
+                                <PaginationComponent
+                                    itemPerPage={itemPerPage}
+                                    totalItems={data.length}
+                                    paginate={paginate}
+                                    currentPage={currentPage}
+                                />
+                            ) : (
+                                <div className="text-center">
+                                    <span className="text-silent">No data found</span>
+                                </div>
+                            )}
+                        </div>
                     </DataTable>
                 </Block>
-                <Mutasi modal={modal.add} closeModal={closeModal} formData={formData} setFormData={setFormData} filterJk={filterJk} filterAgm={filterAgm} filterJp={filterJp} filterP={filterP} filterPeng={filterPeng}/>
+                <Mutasi modal={modal.add} closeModal={closeModal} formData={formData} setFormData={setFormData} filterJk={filterJk} filterAgm={filterAgm} filterJp={filterJp} filterP={filterP} filterPeng={filterPeng} />
             </Content>
         </React.Fragment>
     )

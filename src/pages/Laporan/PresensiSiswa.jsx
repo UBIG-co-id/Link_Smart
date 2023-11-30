@@ -15,6 +15,7 @@ import {
     RSelect, 
     Button } from '../../component/Component'
 import { filterStatus } from '../../component/user/UserData'
+
 const PresensiSiswa = () => {
     const [formData, setFormData] = useState({
         // jk: "Laki-Laki",
@@ -56,7 +57,7 @@ const PresensiSiswa = () => {
                                 </Col>
                                 <Col md='12' >
                                     <div className="form-group" style={{ marginTop: '21px' }}>
-                                        <label className="form-label">Statu</label>
+                                        <label className="form-label">Status</label>
                                         <RSelect
                                             options={filterStatus}
                                             value={{

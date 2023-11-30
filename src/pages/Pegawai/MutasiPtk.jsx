@@ -1,24 +1,25 @@
 import React, { useState, useContext, useEffect } from 'react'
 import Content from '../../layout/Content/Content'
 import Head from '../../layout/Head'
-import { Block, BlockHead, BlockBetween, BlockHeadContent, BlockTitle, BlockDes, Button, Icon, SpecialTable, DataTable, RSelect, TooltipComponent, PaginationComponent } from '../../component/Component'
+import { Row, Block, BlockHead, BlockBetween, BlockHeadContent, BlockTitle, BlockDes, Button, Icon, SpecialTable, DataTable, RSelect, TooltipComponent, PaginationComponent } from '../../component/Component'
 import { Card, DropdownItem, DropdownMenu, DropdownToggle, UncontrolledDropdown } from 'reactstrap'
 import { bulkActionOptions } from '../../utils/Utils'
 import { UserContext } from '../../component/user/UserContext'
-import { userData, filterPtk, filterStatus, filterThn } from '../../component/user/UserData'
+import { userData, filterPtk, filterStatus, filterThn, filterBln } from '../../component/user/UserData'
 import { DataTableBody, DataTableHead, DataTableItem, DataTableRow } from '../../component/table/DataTable'
 import EditModal from '../../component/modal/mutasiPTK/EditModal'
 import AddModal from '../../component/modal/mutasiPTK/AddModal'
 import { Link } from 'react-router-dom'
 
 const Pegawai = () => {
+    const [data, setData] = useState(userData);
     const [sm, updateSm] = useState(false);
-    const [onSearch, setonSearch] = useState(true);
-    const [tablesm, updateTableSm] = useState(false);
-    const [actionText, setActionText] = useState("");
-    const { contextData } = useContext(UserContext);
-    const [data, setData] = contextData;
+    const [onSearch, setonSearch] = useState(false);
     const [onSearchText, setSearchText] = useState("");
+    const paginate = (pageNumber) => setCurrentPage(pageNumber);
+    const [selectedDate, setSelectedDate] = useState(null);
+    const [tablesm, updateTableSm] = useState(false);
+    const [actionText, setActionText] = useState("");;
     const [sort, setSortState] = useState("");
     const sortFunc = (params) => {
         let defaultData = [...data]; // Clone array to avoid modifying the original data
@@ -185,7 +186,6 @@ const Pegawai = () => {
     const indexOfLastItem = currentPage * itemPerPage;
     const indexOfFirstItem = indexOfLastItem - itemPerPage;
     const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
-    const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
     return (
         <React.Fragment>
@@ -211,7 +211,7 @@ const Pegawai = () => {
                                 </Button>
                                 <div className="toggle-expand-content" style={{ display: sm ? "block" : "none" }}>
                                     <ul className="nk-block-tools g-3">
-                                        <li>
+                                        {/* <li>
                                             <Button color="primary" outline className="btn-dim btn-white">
                                                 <Icon name="download-cloud"></Icon>
                                                 <span>Export</span>
@@ -227,8 +227,14 @@ const Pegawai = () => {
                                         <Link to="/pegawai/add-mutasi">
                                             <Button color="primary" className="btn-icon" >
                                                 <Icon name="plus"></Icon>
+                                        </li> */}
+                                        <li >
+                                            <Button color="primary" onClick={() => setModal({ add: true })}>
+                                                <Icon name="plus">
+                                                </Icon>
+                                                <div>Tambah Mutasi </div>
                                             </Button>
-                                            </Link>
+                                            {/* </Link> */}
                                         </li>
                                     </ul>
                                 </div>
@@ -243,16 +249,16 @@ const Pegawai = () => {
                             <div className="card-title-group">
                                 <div className="card-tools">
                                     <div className="form-inline flex-nowrap gx-3">
-                                        <div className="form-wrap">
+                                        {/* <div className="form-wrap">
                                             <RSelect
                                                 options={bulkActionOptions}
                                                 className="w-130px"
                                                 placeholder="Bulk Action"
                                                 onChange={(e) => onActionText(e)}
                                             />
-                                        </div>
+                                        </div> */}
                                         <div className="btn-wrap">
-                                            <span className="d-none d-md-block">
+                                            {/* <span className="d-none d-md-block">
                                                 <Button
                                                     disabled={actionText !== "" ? false : true}
                                                     color="light"
@@ -262,7 +268,23 @@ const Pegawai = () => {
                                                 >
                                                     Apply
                                                 </Button>
-                                            </span>
+                                            </span> */}
+                                            <Row>
+                                                <div className="from-wrap w-200px">
+                                                    <RSelect
+                                                        options={filterThn}
+                                                        placeholder="Tahun Ajaran Aktif"
+                                                        onChange={(e) => setFormData({ ...formData, kls: e.value })}
+                                                    />
+                                                </div>
+                                                <div className="from-wrap w-200px">
+                                                    <RSelect
+                                                        options={filterBln}
+                                                        placeholder="Semua Bulan"
+                                                        onChange={(e) => setFormData({ ...formData, kls: e.value })}
+                                                    />
+                                                </div>
+                                            </Row>
                                             <span className="d-md-none">
                                                 <Button
                                                     color="light"
@@ -393,7 +415,7 @@ const Pegawai = () => {
                         <DataTableBody compact>
                             <DataTableHead>
                                 <DataTableRow className="nk-tb-col-check">
-                                    <div className="custom-control custom-control-sm custom-checkbox notext">
+                                    {/* <div className="custom-control custom-control-sm custom-checkbox notext">
                                         <input
                                             type="checkbox"
                                             className="custom-control-input"
@@ -401,7 +423,7 @@ const Pegawai = () => {
                                             id="uid"
                                         />
                                         <label className="custom-control-label" htmlFor="uid"></label>
-                                    </div>
+                                    </div> */}
                                 </DataTableRow>
                                 <DataTableRow>
                                     <span className="sub-text">No</span>
@@ -430,7 +452,7 @@ const Pegawai = () => {
                                     return (
                                         <DataTableItem key={item.id}>
                                             <DataTableRow className="nk-tb-col-check">
-                                                <div className="custom-control custom-control-sm custom-checkbox notext">
+                                                {/* <div className="custom-control custom-control-sm custom-checkbox notext">
                                                     <input
                                                         type="checkbox"
                                                         className="custom-control-input"
@@ -440,7 +462,7 @@ const Pegawai = () => {
                                                         onChange={(e) => onSelectChange(e, item.checkeds)}
                                                     />
                                                     <label className="custom-control-label" htmlFor={item.checkeds + "uid1"}></label>
-                                                </div>
+                                                </div> */}
                                             </DataTableRow>
                                             <DataTableRow size="md">
                                                 <span>{item.id}</span>

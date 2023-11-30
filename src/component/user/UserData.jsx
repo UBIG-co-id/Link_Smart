@@ -33,6 +33,21 @@ export const userData = [
     }
 ];
 
+//HISTORY PEMBAYARAN
+export const historyPembayaran = [
+    {
+        id: 1,
+        nama: "Ulfa",
+        kelas: "TKJ",
+        tgl: "27-11-2023",
+        pembayaran: "1.000.000",
+        jumlah: "2.000.000",
+        terbayar: "500.000",
+        jenis: "selimut",
+        via: "BRIMO"
+    }
+];
+
 
 // KELAS
 export const orderData = [
@@ -139,13 +154,42 @@ export const presensiSiswa = [
        nlp:'Ulfa',
        kls: 'XII',
        tgl: '20-11-2023',
-       in: '08:00',
-       status_in: 'Tepat Waktu',
-       out: '17:00',
-       status_out:'anda belum checkout',
+       masuk: '08:00',
+       status_in: 'Masuk',
+       pulang: '17:00',
+       status_out: 'Pulang',
        keterangan: 'Coba'
     },
 ]
+export const presensiPegawai = [
+    {
+        id: 1,
+        nuptk: 2,
+        nmpgw: "Rena",
+        jbtn: "Guru",
+        tgl: '22-11-2023',
+        jmasuk: '07.30',
+        jplng: '16.30',
+        status: 'Masuk'
+    }
+]
+
+export const siswaManual = [
+    {
+        id: 2,
+        nis: 3,
+        nlp: "Rina",
+        kls: "XII RPL",
+    }
+]
+
+export const filterSts = [
+    { value: "Masuk", label: "Masuk" },
+    { value: "Izin", label: "Izin" },
+    { value: "Sakit", label: "Sakit" },
+    { value: "Telat", label: "Telat" },
+]
+
 export const penilaianAspek = [
     {
         id: 1,
@@ -310,11 +354,20 @@ export const ppdb =[
         diterima:"Ya",
     }
 ]
+export const pengaturanProfile = [
+    {
+        id: 1,
+        judul: 'Struktur',
+        urutan: 1,
+       
+      
+    },
+]
 
 export const filterStatus = [
     { value: "Active", label: "Active" },
-    { value: "Pending", label: "Pending" },
-    { value: "Suspend", label: "Suspend" },
+    { value: "Izin", label: "Izin" },
+    { value: "Sakit", label: "Sakit" },
 ];
 export const filterJk = [
     { value: "Laki-Laki", label: "Laki-Laki" },
@@ -336,6 +389,12 @@ export const filterWk = [
     { value: "Dika", label: "Dika" },
     { value: "Abdul", label: "Abdul" },
     { value: "Permana", label: "Permana" },
+
+];
+export const filterSiswa = [
+    { value: "ismail ahmad kanabawi", label: "ismail ahmad kanabawi" },
+    { value: "utsman abdul jalil sheisyah", label: "utsman abdul jalil sheisyah" },
+    { value: "Muhammad Sumbul", label: "Muhammad Sumbul" },
 
 ];
 export const filterAgm = [
@@ -396,7 +455,29 @@ export const filterNs = [
     { value: "Skenario Penilai", label: "Skenario Penilai" },
     { value: "Sub Penilaian Sikap", label: "Sub Penilaian Sikap" },
 ];
-
+export const filterMpl = [
+    {value: "Matematika", label: "Matematika"},
+    {value: "IPA", label: "IPA"},
+    {value: "IPS", label: "IPS"},
+];
+export const filterSmt = [
+    {value: "Ganjil", label: "Ganji"},
+    {value: "Genap", label: "Genap"},
+];
+export const filterBln = [
+    {value: "Januari", label: "Januari"},
+    {value: "Februari", label: "Februari"},
+    {value: "Maret", label: "Maret"},
+    {value: "April", label: "April"},
+    {value: "Mei", label: "Mei"},
+    {value: "Juni", label: "Juni"},
+    {value: "Juli", label: "Juli"},
+    {value: "Agustus", label: "Agustus"},
+    {value: "September", label: "September"},
+    {value: "Oktober", label: "Oktober"},
+    {value: "November", label: "November"},
+    {value: "Desember", label: "Desember"},
+]
 //Aspek
 
 

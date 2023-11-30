@@ -1,8 +1,10 @@
 import React, { useState, useContext, useEffect } from 'react'
 import Content from '../../layout/Content/Content'
 import Head from '../../layout/Head'
+import { Card, DropdownItem, DropdownMenu, DropdownToggle, Label, UncontrolledDropdown } from 'reactstrap'
 import { Block, BlockHead, BlockBetween, BlockHeadContent, BlockTitle, BlockDes, Button, Icon, SpecialTable, DataTable, RSelect, TooltipComponent, PaginationComponent } from '../../component/Component'
 import { DataTableBody, DataTableHead, DataTableItem, DataTableRow } from '../../component/table/DataTable'
+import { bulkActionOptions } from '../../utils/Utils'
 
 const KustomSppSiswa = () => {
     const [sm, updateSm] = useState(false);
@@ -16,6 +18,35 @@ const KustomSppSiswa = () => {
     const indexOfLastItem = currentPage * itemPerPage;
     const indexOfFirstItem = indexOfLastItem - itemPerPage;
     const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
+    const [actionText, setActionText] = useState("");
+    const toggle = () => setonSearch(!onSearch);
+    const [onSearch, setonSearch] = useState(false);
+    const [onSearchText, setSearchText] = useState("");
+    const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+
+    const onFilterChange = (e) => {
+        setSearchText(e.target.value);
+    };
+
+    const onActionText = (e) => {
+        setActionText(e.value);
+    };
+
+    const onActionClick = (e) => {
+        if (actionText === "suspend") {
+            let newData = data.map((item) => {
+                if (item.checked === true) item.status = "Suspend";
+                return item;
+            });
+            setData([...newData]);
+        } else if (actionText === "delete") {
+            let newData;
+            newData = data.filter((item) => item.checked !== true);
+            setData([...newData]);
+        }
+    };
+
     const onApproveClick = (id) => {
         let newData = data;
         let index = newData.findIndex((item) => item.id === id);
@@ -28,8 +59,8 @@ const KustomSppSiswa = () => {
         newData[index].status = "Rejected";
         setData([...newData]);
     };
-  return (
-    <React.Fragment>
+    return (
+        <React.Fragment>
             <Head title="Kustom SPP Siswa"></Head>
             <Content>
                 <BlockHead size="sm">
@@ -55,20 +86,26 @@ const KustomSppSiswa = () => {
                                         <li>
                                             <Button color="primary" outline className="btn-dim btn-white">
                                                 <Icon name="download-cloud"></Icon>
-                                                <span>Export</span>
+                                                <span>Template Import Kustom SPP</span>
                                             </Button>
                                         </li>
                                         <li>
                                             <Button color="primary" outline className="btn-dim btn-white">
+                                                <Icon name="upload-cloud"></Icon>
+                                                <span>Import Data</span>
+                                            </Button>
+                                        </li>
+                                        {/* <li>
+                                            <Button color="primary" outline className="btn-dim btn-white">
                                                 <Icon name="reports"></Icon>
                                                 <span>Reports</span>
                                             </Button>
-                                        </li>
-                                        <li className="nk-block-tools-opt">
+                                        </li> */}
+                                        {/* <li className="nk-block-tools-opt">
                                             <Button color="primary" className="btn-icon" onClick={() => setModal({ add: true })}>
                                                 <Icon name="plus"></Icon>
                                             </Button>
-                                        </li>
+                                        </li> */}
                                     </ul>
                                 </div>
                             </div>
@@ -77,7 +114,212 @@ const KustomSppSiswa = () => {
                 </BlockHead>
                 <Block size="lg">
                     <DataTable className="card-stretch">
+                        <div className="card-inner">
+                            <div className="card-title-group">
+                                {/* <div className="card-title">
+                                    <h5 className="title">Data Pegawai</h5>
+                                </div> */}
+                                <div className="card-tools">
+                                <label className="text-bold">PERHATIAN!!</label>
+                                    {/* <label className="text-bold">PERHATIAN!!</label> */}
+                                    <div className="form-inline flex-nowrap gx-3">
+                                        <div className="from-wrap">
+                                            <RSelect
+                                                option={bulkActionOptions}
+                                                className="w-130px"
+                                                placeholder="Semua Kelas"
+                                                onChange={(e) => onActionText(e)}
+                                            />
+                                        </div>
+                                        {/* <div className="from-wrap">
+                                            <DatePicker
+                                                selected={selectedDate}
+                                                onChange={handleDateChange}
+                                                placeholderText="Select Date"
+                                                dateFormat="dd/MM/yyyy"
+                                                className="form-control w-130px" // Atur gaya sesuai kebutuhan
+                                            />
+                                        </div> */}
+                                        <div className="btn-wrap">
+                                            <span className="d-none d-md-block">
+                                                <Button
+                                                    disabled={actionText !== "" ? false : true}
+                                                    color="light"
+                                                    outline
+                                                    className="btn-dim"
+                                                    onClick={(e) => onActionClick(e)}
+                                                >
+                                                    Apply
+                                                </Button>
+                                            </span>
+                                            <span className="d-md-none">
+                                                <Button
+                                                    color="light"
+                                                    outline
+                                                    disabled={actionText !== "" ? false : true}
+                                                    className="btn-dim  btn-icon"
+                                                    onClick={(e) => onActionClick(e)}
+                                                >
+                                                    <Icon name="arrow-right"></Icon>
+                                                </Button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="card-tools me-n1">
+                                    <ul className="btn-toolbar gx-1">
+                                        <li>
+                                            <Button
+                                                href="#search"
+                                                onClick={(ev) => {
+                                                    ev.preventDefault();
+                                                    toggle();
+                                                }}
+                                                className="btn-icon search-toggle toggle-search"
+                                            >
+                                                <Icon name="search"></Icon>
+                                            </Button>
+                                        </li>
+                                        <li className="btn-toolbar-sep"></li>
+                                        <li>
+                                            <UncontrolledDropdown>
+                                                <DropdownToggle tag="a" className="btn btn-trigger btn-icon dropdown-toggle">
+                                                    <div className="dot dot-primary"></div>
+                                                    <Icon name="filter-alt"></Icon>
+                                                </DropdownToggle>
+                                            </UncontrolledDropdown>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div className={`card-search search-wrap ${!onSearch && "active"}`}>
+                                    <div className="search-content">
+                                        <Button
+                                            onClick={() => {
+                                                setSearchText("");
+                                                toggle();
+                                            }}
+                                            className="search-back btn-icon toggle-search"
+                                        >
+                                            <Icon name="arrow-left"></Icon>
+                                        </Button>
+                                        <input
+                                            type="text"
+                                            className="border-transparent form-focus-none form-control"
+                                            placeholder="Search by Order Id"
+                                            value={onSearchText}
+                                            onChange={(e) => onFilterChange(e)}
+                                        />
+                                        <Button className="search-submit btn-icon">
+                                            <Icon name="search"></Icon>
+                                        </Button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
+                        {/* <div className="card-inner">
+                            <div className="card-title-group">
+                                <div className="card-title">
+                                    <h5 className="title">Data Pegawai</h5>
+                                </div>
+                                <div className="card-tools">
+                                <label className="text-bold">PERHATIAN!!</label>
+                                    <div className="form-inline flex-nowrap gx-3">
+                                        <div className="from-wrap">
+                                            <RSelect
+                                                option={bulkActionOptions}
+                                                className="w-130px"
+                                                placeholder="Semua Kelas"
+                                                onChange={(e) => onActionText(e)}
+                                            />
+                                        </div>
+                                        <div className="from-wrap">
+                                            <DatePicker
+                                                selected={selectedDate}
+                                                onChange={handleDateChange}
+                                                placeholderText="Select Date"
+                                                dateFormat="dd/MM/yyyy"
+                                                className="form-control w-130px" // Atur gaya sesuai kebutuhan
+                                            />
+                                        </div>
+                                        <div className="btn-wrap">
+                                            <span className="d-none d-md-block">
+                                                <Button
+                                                    disabled={actionText !== "" ? false : true}
+                                                    color="light"
+                                                    outline
+                                                    className="btn-dim"
+                                                    onClick={(e) => onActionClick(e)}
+                                                >
+                                                    Apply
+                                                </Button>
+                                            </span>
+                                            <span className="d-md-none">
+                                                <Button
+                                                    color="light"
+                                                    outline
+                                                    disabled={actionText !== "" ? false : true}
+                                                    className="btn-dim  btn-icon"
+                                                    onClick={(e) => onActionClick(e)}
+                                                >
+                                                    <Icon name="arrow-right"></Icon>
+                                                </Button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="card-tools me-n1">
+                                    <ul className="btn-toolbar gx-1">
+                                        <li>
+                                            <a
+                                                href="#search"
+                                                onClick={(ev) => {
+                                                    ev.preventDefault();
+                                                    toggle();
+                                                }}
+                                                className="btn btn-icon search-toggle toggle-search"
+                                            >
+                                                <Icon name="search"></Icon>
+                                            </a>
+                                        </li>
+                                        <li className="btn-toolbar-sep"></li>
+
+
+                                        <li>
+                                            <UncontrolledDropdown>
+                                                <DropdownToggle tag="a" className="btn btn-trigger btn-icon dropdown-toggle">
+                                                    <div className="dot dot-primary"></div>
+                                                    <Icon name="filter-alt"></Icon>
+                                                </DropdownToggle>
+                                            </UncontrolledDropdown>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div className={`card-search search-wrap ${!onSearch && "active"}`}>
+                                    <div className="search-content">
+                                        <Button
+                                            onClick={() => {
+                                                setSearchText("");
+                                                toggle();
+                                            }}
+                                            className="search-back btn-icon toggle-search"
+                                        >
+                                            <Icon name="arrow-left"></Icon>
+                                        </Button>
+                                        <input
+                                            type="text"
+                                            className="border-transparent form-focus-none form-control"
+                                            placeholder="Search by Order Id"
+                                            value={onSearchText}
+                                            onChange={(e) => onFilterChange(e)}
+                                        />
+                                        <Button className="search-submit btn-icon">
+                                            <Icon name="search"></Icon>
+                                        </Button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> */}
                         <DataTableBody bodyclass="nk-tb-tnx">
                             <DataTableHead>
                                 <DataTableRow>
@@ -186,11 +428,25 @@ const KustomSppSiswa = () => {
                                     )
                                 }) : null}
                         </DataTableBody>
+                        <div className="card-inner">
+                            {currentItems.length > 0 ? (
+                                <PaginationComponent
+                                    itemPerPage={itemPerPage}
+                                    totalItems={data.length}
+                                    paginate={paginate}
+                                    currentPage={currentPage}
+                                />
+                            ) : (
+                                <div className="text-center">
+                                    <span className="text-silent">No data found</span>
+                                </div>
+                            )}
+                        </div>
                     </DataTable>
                 </Block>
             </Content>
         </React.Fragment>
-  )
+    )
 }
 
 export default KustomSppSiswa

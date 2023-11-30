@@ -18,6 +18,10 @@ import LayoutNoSidebar from '../layout/index-nonSidebar'
 import Login from '../pages/Auth/Login';
 import Register from '../pages/Auth/Register';
 import PresensiSiswa from '../pages/Presensi/Siswa';
+import PresensiPegawai from '../pages/Presensi/Pegawai';
+import PresensiSiswaManual from '../pages/Presensi/SiswaManual';
+
+// import PresensiSiswa from '../pages/Presensi/Siswa';
 import PenilaianKd from '../pages/Rapor/Penilaian/Kd';
 import PenilaianSikap from '../pages/Rapor/Penilaian/Sikap';
 import PenilaianLain from '../pages/Rapor/Penilaian/Lain';
@@ -37,6 +41,18 @@ import PembayaranSpp from '../pages/Laporan/PembayaranSpp';
 import Identitas from '../pages/Pengaturan/Identitas';
 import AddPegawai from '../component/modal/pegawai/AddModal'
 import AddMutasi from '../component/modal/mutasiPTK/AddModal'
+import Pengetahuan from '../pages/Penilaian/Pengetahuan';
+import Keterampilan from '../pages/Penilaian/Keterampilan';
+import Nilailain from '../pages/Penilaian/Nilailain';
+import Spiritualdansosial from '../pages/Penilaian/Spiritualdansosial';
+import CatatanWalas from '../pages/Penilaian/Catatanwalas';
+import RaporKurikulum from '../pages/Rapor/RaporKurikulum/RaporKurikulum';
+import RekapNilai from '../pages/Rapor/RaporKurikulum/RekapNilai';
+import Cover from '../pages/Rapor/Cover/CetakCover';
+import PembayaranManual from '../pages/Pembayaran/PembayaranManual';
+import HistoryPembayaran from '../pages/Pembayaran/HistoryPembayaran';
+import DataPegguna from '../pages/Pengaturan/DataPengguna';
+import Profile from '../pages/Pengaturan/Profile';
 
 const Router = () => {
   const location = useLocation();
@@ -63,13 +79,16 @@ const Router = () => {
         <Route path='/siswa/mutasi-siswa' element={<MutasiSiswa />}></Route>
 
         {/* PRESENSI */}
-        <Route path='/presensi/siswa' element={<PresensiSiswa />}></Route>
+        {/* <Route path='/presensi/siswa' element={<PresensiSiswa />}></Route> */}
         {/* END PRESENSI */}
 
         {/* RAPOR */}
         <Route path='/rapor/mapel' element={<Mapel />}></Route>
         <Route path='/rapor/mapel-kelas' element={<MapelKelas />}></Route>
         <Route path='/rapor/mapel-kkm' element={<Kkm />}></Route>
+        <Route path='/presensi/siswa' element={<PresensiSiswa/>}></Route>
+        <Route path='/presensi/pegawai' element={<PresensiPegawai/>}></Route>
+        <Route path='/presensi/siswa-manual' element={<PresensiSiswaManual/>}></Route>
         <Route path='/rapor/penilaian-aspek' element={<PenilaianAspek />}></Route>
         <Route path='/rapor/penilaian-kd' element={<PenilaianKd />}></Route>
         <Route path='/rapor/penilaian-sikap' element={<PenilaianSikap />}></Route>
@@ -79,12 +98,17 @@ const Router = () => {
         <Route path='/rapor/setting-tampilkan' element={<TampilanRapor />}></Route>
         <Route path='/rapor/setting-rentang' element={<RentangNilai />}></Route>
         <Route path='/rapor/penilaian-kkm-batas' element={<KkmBatas />}></Route>
+        <Route path='/rapor/kurikulum' element={<RaporKurikulum/>}></Route>
+        <Route path='/rapor/rekap-nilai' element={<RekapNilai/>}></Route>
+        <Route path='/rapor/cetak-cover' element={<Cover/>}></Route>
         {/* END RAPOR */}
 
         {/* PEMBAYARAN */}
         <Route path='/pembayaran/get-all-tagihan-siswa' element={<TagihanSiswa />}></Route>
         <Route path='/pembayaran/spp' element={<TagihanSpp />}></Route>
         <Route path='/pembayaran/kustom-spp' element={<KustomSppSiswa />}></Route>
+        <Route path='/pembayaran/bayar-tagihan' element={<PembayaranManual />}></Route>
+        <Route path='/pembayaran/histori-pembayaran' element={<HistoryPembayaran/>}></Route>
         {/* END PEMBAYARAN */}
 
         {/* PENGUMUMAN */}
@@ -104,6 +128,18 @@ const Router = () => {
         {/* PENGATURAN */}
         <Route path='/pengaturan/identitas' element={<Identitas/>}></Route>
         {/* PENGATURAN */}
+        {/* PENILAIAN */}
+        <Route path='/penilaian/pengetahuan' element={<Pengetahuan />}></Route>
+        <Route path='/penilaian/keterampilan' element={<Keterampilan />}></Route>
+        <Route path='/penilaian/nilailain' element={<Nilailain />}></Route>
+        <Route path='/penilaian/spiritualdansosial' element={<Spiritualdansosial />}></Route>
+        <Route path='/penilaian/catatanwalas' element={<CatatanWalas />}></Route>
+        {/* END PENILAIAN */}
+
+        {/* PENGATURAN */}
+        <Route path='/pengguna' element={<DataPegguna />}></Route>
+        <Route path='/pengaturan/profile' element={<Profile />}></Route>
+        {/* END PENGATURAN */}
 
 
       </Route>
