@@ -39,12 +39,17 @@ import LaporanSiswa from '../pages/Laporan/PresensiSiswa';
 import LaporanPegawai from '../pages/Laporan/PresensiPegawai';
 import PembayaranSpp from '../pages/Laporan/PembayaranSpp';
 import Pengetahuan from '../pages/Penilaian/Pengetahuan';
+import Keterampilan from '../pages/Penilaian/Keterampilan';
+import Nilailain from '../pages/Penilaian/Nilailain';
+import Spiritualdansosial from '../pages/Penilaian/Spiritualdansosial';
+import CatatanWalas from '../pages/Penilaian/Catatanwalas';
 import RaporKurikulum from '../pages/Rapor/RaporKurikulum/RaporKurikulum';
 import RekapNilai from '../pages/Rapor/RaporKurikulum/RekapNilai';
 import Cover from '../pages/Rapor/Cover/CetakCover';
 import PembayaranManual from '../pages/Pembayaran/PembayaranManual';
 import HistoryPembayaran from '../pages/Pembayaran/HistoryPembayaran';
 import DataPegguna from '../pages/Pengaturan/DataPengguna';
+import Profile from '../pages/Pengaturan/Profile';
 
 const Router = () => {
   const location = useLocation();
@@ -117,10 +122,15 @@ const Router = () => {
 
         {/* PENILAIAN */}
         <Route path='/penilaian/pengetahuan' element={<Pengetahuan />}></Route>
+        <Route path='/penilaian/keterampilan' element={<Keterampilan />}></Route>
+        <Route path='/penilaian/nilailain' element={<Nilailain />}></Route>
+        <Route path='/penilaian/spiritualdansosial' element={<Spiritualdansosial />}></Route>
+        <Route path='/penilaian/catatanwalas' element={<CatatanWalas />}></Route>
         {/* END PENILAIAN */}
 
         {/* PENGATURAN */}
         <Route path='/pengguna' element={<DataPegguna />}></Route>
+        <Route path='/pengaturan/profile' element={<Profile />}></Route>
         {/* END PENGATURAN */}
 
 
