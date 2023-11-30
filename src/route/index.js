@@ -51,7 +51,7 @@ import RekapNilai from '../pages/Rapor/RaporKurikulum/RekapNilai';
 import Cover from '../pages/Rapor/Cover/CetakCover';
 import PembayaranManual from '../pages/Pembayaran/PembayaranManual';
 import HistoryPembayaran from '../pages/Pembayaran/HistoryPembayaran';
-import DataPegguna from '../pages/Pengaturan/DataPengguna';
+import DataPengguna from '../pages/Pengaturan/DataPengguna';
 import Profile from '../pages/Pengaturan/Profile';
 
 const Router = () => {
@@ -137,7 +137,7 @@ const Router = () => {
         {/* END PENILAIAN */}
 
         {/* PENGATURAN */}
-        <Route path='/pengguna' element={<DataPegguna />}></Route>
+        <Route path='/pengaturan/pengguna' element={<DataPengguna />}></Route>
         <Route path='/pengaturan/profile' element={<Profile />}></Route>
         {/* END PENGATURAN */}
 

@@ -62,6 +62,7 @@ export const orderData = [
 ]
 // KELAS
 
+
 // SISWA
 export const siswaData = [
     {
@@ -354,6 +355,20 @@ export const ppdb =[
         diterima:"Ya",
     }
 ]
+
+// PENGATURAN DATA PENGGUNA
+export const datapengguna = [
+    {
+        id: 1,
+        nuptk: 2,
+        nlp: "lee jeno",
+        npgn: "jeno",
+        level: "admin",
+
+    },
+]
+// PENGATURAN DATA PENGGUNA
+
 export const pengaturanProfile = [
     {
         id: 1,
