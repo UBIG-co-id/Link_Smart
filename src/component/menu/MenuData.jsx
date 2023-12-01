@@ -278,7 +278,7 @@ const menu = [
       },
       {
         text: "Rekap Presensi Siswa",
-        link: "/laporan/kelas-rekap"
+        link: "/laporan/rekappresensisiswa"
       },
       
     ]
@@ -304,7 +304,7 @@ const menu = [
           },
           {
             text: "PPDB",
-            link: "/pengaturan/ppdb",
+            link: "/pengaturan/pengaturanppdb",
           },
           {
             text: "Profile",
@@ -320,7 +320,7 @@ const menu = [
           },
           {
             text: "Tahun Ajaran",
-            link: "/pengaturan/tahun-ajaran",
+            link: "/pengaturan/tahunajaran",
           },
 
         ],

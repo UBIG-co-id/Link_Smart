@@ -1,28 +1,15 @@
 import React, { useState, useContext, useEffect } from 'react'
 import Content from '../../layout/Content/Content'
 import Head from '../../layout/Head'
-import { Col, Block, BlockHead, BlockBetween, BlockHeadContent, BlockTitle, BlockDes, Button, Icon, SpecialTable, DataTable, RSelect, TooltipComponent, PaginationComponent } from '../../component/Component'
+import { Block, BlockHead, BlockBetween, BlockHeadContent, BlockTitle, BlockDes, Button, Icon, SpecialTable, DataTable, RSelect, TooltipComponent, PaginationComponent } from '../../component/Component'
 import { DataTableBody, DataTableHead, DataTableItem, DataTableRow } from '../../component/table/DataTable'
-import { rekapPresensiSiswa, filterThn, filterBln, filterKls  } from '../../component/user/UserData'
-import { Card, DropdownItem, DropdownMenu, DropdownToggle, UncontrolledDropdown } from 'reactstrap'
+import { ppdb } from '../../component/user/UserData'
+import { bulkActionOptions } from '../../utils/Utils'
+import { Card, DropdownItem, DropdownMenu, DropdownToggle, Label, UncontrolledDropdown } from 'reactstrap'
 
-const RekapPresensiSiswa = () => {
-  const [sm, updateSm] = useState(false);
-    const [data, setData] = useState(rekapPresensiSiswa);
-    const toggle = () => setonSearch(!onSearch);
-    const paginate = (pageNumber) => setCurrentPage(pageNumber);
-    const [onSearch, setonSearch] = useState(true);
-    const [onSearchText, setSearchText] = useState("");
-    const [actionText, setActionText] = useState("");
-
-    const onFilterChange = (e) => {
-        setSearchText(e.target.value);
-    };
-
-    const onActionText = (e) => {
-        setActionText(e.value);
-    };
-
+const Pengaturanppdb = () => {
+    const [sm, updateSm] = useState(false);
+    const [data, setData] = useState(ppdb);
     const [modal, setModal] = useState({
         edit: false,
         add: false,
@@ -32,6 +19,34 @@ const RekapPresensiSiswa = () => {
     const indexOfLastItem = currentPage * itemPerPage;
     const indexOfFirstItem = indexOfLastItem - itemPerPage;
     const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
+    const toggle = () => setonSearch(!onSearch);
+    const [onSearch, setonSearch] = useState(false);
+    const [onSearchText, setSearchText] = useState("");
+    const [actionText, setActionText] = useState("");
+    const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+    const onActionText = (e) => {
+        setActionText(e.value);
+    };
+
+    const onActionClick = (e) => {
+        if (actionText === "suspend") {
+            let newData = data.map((item) => {
+                if (item.checked === true) item.status = "Suspend";
+                return item;
+            });
+            setData([...newData]);
+        } else if (actionText === "delete") {
+            let newData;
+            newData = data.filter((item) => item.checked !== true);
+            setData([...newData]);
+        }
+    };
+
+    const onFilterChange = (e) => {
+        setSearchText(e.target.value);
+    };
+
     const onApproveClick = (id) => {
         let newData = data;
         let index = newData.findIndex((item) => item.id === id);
@@ -44,15 +59,15 @@ const RekapPresensiSiswa = () => {
         newData[index].status = "Rejected";
         setData([...newData]);
     };
-  return (
-    <React.Fragment>
-            <Head title="Rekap Presensi Siswa"></Head>
+    return (
+        <React.Fragment>
+            <Head title="PPDB"></Head>
             <Content>
                 <BlockHead size="sm">
                     <BlockBetween>
                         <BlockHeadContent>
                             <BlockTitle page tag="h3">
-                                Rekap Presensi Siswa
+                                PPDB
                             </BlockTitle>
                             <BlockDes className="text-soft">
                                 <p>Welcome to Link Smart</p>
@@ -68,23 +83,45 @@ const RekapPresensiSiswa = () => {
                                 </Button>
                                 <div className="toggle-expand-content" style={{ display: sm ? "block" : "none" }}>
                                     <ul className="nk-block-tools g-3">
-                                        {/* <li>
+                                        <li>
                                             <Button color="primary" outline className="btn-dim btn-white">
-                                                <Icon name="download-cloud"></Icon>
-                                                <span>Export</span>
+                                                <Icon name="save"></Icon>
+                                                <span>Data Penerimaan</span>
                                             </Button>
                                         </li>
                                         <li>
                                             <Button color="primary" outline className="btn-dim btn-white">
+                                                <Icon name="edit"></Icon>
+                                                <span>Jalur Pendaftaran</span>
+                                            </Button>
+                                        </li>
+                                        <li>
+                                            <Button color="primary" outline className="btn-dim btn-white">
+                                                <Icon name="book"></Icon>
+                                                <span>Kelas Peminatan</span>
+                                            </Button>
+                                        </li>
+                                        <li>
+                                            <Button color="primary" outline className="btn-dim btn-white">
+                                                <Icon name="download-cloud"></Icon>
+                                                <span>Download Data PPDB</span>
+                                            </Button>
+                                        </li>
+                                        <li>
+                                            <Button color="primary" outline className="btn-dim btn-white">
+                                                <Icon name="download-cloud"></Icon>
+                                                <span>Download Password</span>
+                                            </Button>
+                                        </li>
+                                        {/* <li>
+                                            <Button color="primary" outline className="btn-dim btn-white">
                                                 <Icon name="reports"></Icon>
                                                 <span>Reports</span>
                                             </Button>
-                                        </li> */}
-                                        {/* <li className="nk-block-tools-opt">
-                                            <Button color="primary" onClick={() => setModal({ add: true })}>
-                                                <Icon name="plus">
-                                                </Icon>
-                                                <div>Rentang</div>
+                                        </li>
+                                        <li className="nk-block-tools-opt">
+                                            <Button color="primary" className="btn-icon" onClick={() => setModal({ add: true })}>
+                                                <Icon name="plus"></Icon>
                                             </Button>
                                         </li> */}
                                     </ul>
@@ -97,54 +134,71 @@ const RekapPresensiSiswa = () => {
                     <DataTable className="card-stretch">
                         <div className="card-inner">
                             <div className="card-title-group">
-                                <div className="card-title">
-                                    <h5 className="title">Data Rekap Presensi</h5>
+                                {/* <div className="card-title">
+                                    <h5 className="title">Data Pegawai</h5>
+                                </div> */}
+                                <div className="card-tools">
+                                    <div className="form-inline flex-nowrap gx-3">
+                                        <div className="from-wrap">
+                                            <RSelect
+                                                option={bulkActionOptions}
+                                                className="w-150px"
+                                                placeholder="Pilih Tahun Ajran"
+                                                onChange={(e) => onActionText(e)}
+                                            />
+                                        </div>
+                                        {/* <div className="from-wrap">
+                                            <DatePicker
+                                                selected={selectedDate}
+                                                onChange={handleDateChange}
+                                                placeholderText="Select Date"
+                                                dateFormat="dd/MM/yyyy"
+                                                className="form-control w-130px" // Atur gaya sesuai kebutuhan
+                                            />
+                                        </div> */}
+                                        <div className="btn-wrap">
+                                            {/* <span className="d-none d-md-block">
+                                                <Button
+                                                    disabled={actionText !== "" ? false : true}
+                                                    color="light"
+                                                    outline
+                                                    className="btn-dim"
+                                                    onClick={(e) => onActionClick(e)}
+                                                >
+                                                    Apply
+                                                </Button>
+                                            </span> */}
+                                            <span className="d-md-none">
+                                                <Button
+                                                    color="light"
+                                                    outline
+                                                    disabled={actionText !== "" ? false : true}
+                                                    className="btn-dim  btn-icon"
+                                                    onClick={(e) => onActionClick(e)}
+                                                >
+                                                    <Icon name="arrow-right"></Icon>
+                                                </Button>
+                                            </span>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div className="card-tools me-n1">
-                                    <ul>
-                                        <li>
-
-                                       
-                                <div className="from-wrap">
-                                            <RSelect
-                                                option={filterThn}
-                                                className="w-150px"
-                                                placeholder="Tahun Ajran Aktif"
-                                                onChange={(e) => onActionText(e)}
-                                            />
-                                        </div>
-                                        <div className="from-wrap">
-                                            <RSelect
-                                                option={filterBln}
-                                                className="w-150px"
-                                                placeholder="Semua Bulan"
-                                                onChange={(e) => onActionText(e)}
-                                            />
-                                        </div>
-                                        <div className="from-wrap">
-                                            <RSelect
-                                                option={filterKls}
-                                                className="w-150px"
-                                                placeholder="Semua Jenjang"
-                                                onChange={(e) => onActionText(e)}
-                                            />
-                                        </div>
-                                        </li>
-                                    </ul>
                                     <ul className="btn-toolbar gx-1">
                                         <li>
-                                            <Button
+                                            <a
                                                 href="#search"
                                                 onClick={(ev) => {
                                                     ev.preventDefault();
                                                     toggle();
                                                 }}
-                                                className="btn-icon search-toggle toggle-search"
+                                                className="btn btn-icon search-toggle toggle-search"
                                             >
                                                 <Icon name="search"></Icon>
-                                            </Button>
+                                            </a>
                                         </li>
                                         <li className="btn-toolbar-sep"></li>
+
+
                                         <li>
                                             <UncontrolledDropdown>
                                                 <DropdownToggle tag="a" className="btn btn-trigger btn-icon dropdown-toggle">
@@ -182,186 +236,75 @@ const RekapPresensiSiswa = () => {
                         </div>
                         <DataTableBody bodyclass="nk-tb-tnx">
                             <DataTableHead>
-                                {/* <DataTableRow>
+                                <DataTableRow>
                                     <span>No</span>
-                                </DataTableRow> */}
-                                <DataTableRow >
-                                    <div style={{ display: "flex", marginLeft:"35px", fontSize:'15px'}}>
-                                        siswa
-                                        </div>
-                                    <DataTableRow>
-                                        <span>No</span>
-                                    </DataTableRow>
-                                    <DataTableRow>
-                                        <span>nis</span>
-                                    </DataTableRow>
-                                    <DataTableRow>
-                                        <span>nama</span>
-                                    </DataTableRow>
                                 </DataTableRow>
                                 <DataTableRow >
-                                    <div style={{ display: "flex", marginLeft:"35px", fontSize:'15px'}}>
-                                        Juli
-                                        </div>
-                                    <DataTableRow>
-                                        <span>M</span>
-                                    </DataTableRow>
-                                    <DataTableRow>
-                                        <span>S</span>
-                                    </DataTableRow>
-                                    <DataTableRow>
-                                        <span>I</span>
-                                    </DataTableRow>
-                                    <DataTableRow>
-                                        <span>A</span>
-                                    </DataTableRow>
+                                    <span>NISN</span>
                                 </DataTableRow>
                                 <DataTableRow >
-                                    <div style={{ display: "flex", marginLeft:"35px", fontSize:'15px'}}>
-                                        Agustus
-                                        </div>
-                                    <DataTableRow>
-                                        <span>M</span>
-                                    </DataTableRow>
-                                    <DataTableRow>
-                                        <span>S</span>
-                                    </DataTableRow>
-                                    <DataTableRow>
-                                        <span>I</span>
-                                    </DataTableRow>
-                                    <DataTableRow>
-                                        <span>A</span>
-                                    </DataTableRow>
+                                    <span>NIK</span>
                                 </DataTableRow>
                                 <DataTableRow >
-                                    <div style={{ display: "flex", marginLeft:"35px", fontSize:'15px'}}>
-                                        September
-                                        </div>
-                                    <DataTableRow>
-                                        <span>M</span>
-                                    </DataTableRow>
-                                    <DataTableRow>
-                                        <span>S</span>
-                                    </DataTableRow>
-                                    <DataTableRow>
-                                        <span>I</span>
-                                    </DataTableRow>
-                                    <DataTableRow>
-                                        <span>A</span>
-                                    </DataTableRow>
+                                    <span>Nama Siswa</span>
                                 </DataTableRow>
                                 <DataTableRow >
-                                    <div style={{ display: "flex", marginLeft:"35px", fontSize:'15px'}}>
-                                        Oktober
-                                        </div>
-                                    <DataTableRow>
-                                        <span>M</span>
-                                    </DataTableRow>
-                                    <DataTableRow>
-                                        <span>S</span>
-                                    </DataTableRow>
-                                    <DataTableRow>
-                                        <span>I</span>
-                                    </DataTableRow>
-                                    <DataTableRow>
-                                        <span>A</span>
-                                    </DataTableRow>
+                                    <span>Peminatan</span>
                                 </DataTableRow>
-                                 <DataTableRow >
-                                    <div style={{ display: "flex", marginLeft:"35px", fontSize:'15px'}}>
-                                        November
-                                        </div>
-                                    <DataTableRow>
-                                        <span>M</span>
-                                    </DataTableRow>
-                                    <DataTableRow>
-                                        <span>S</span>
-                                    </DataTableRow>
-                                    <DataTableRow>
-                                        <span>I</span>
-                                    </DataTableRow>
-                                    <DataTableRow>
-                                        <span>A</span>
-                                    </DataTableRow>
+                                <DataTableRow >
+                                    <span>Verifikasi</span>
                                 </DataTableRow>
-                                 <DataTableRow >
-                                    <div style={{ display: "flex", marginLeft:"35px", fontSize:'15px'}}>
-                                        Desember
-                                        </div>
-                                    <DataTableRow>
-                                        <span>M</span>
-                                    </DataTableRow>
-                                    <DataTableRow>
-                                        <span>S</span>
-                                    </DataTableRow>
-                                    <DataTableRow>
-                                        <span>I</span>
-                                    </DataTableRow>
-                                    <DataTableRow>
-                                        <span>A</span>
-                                    </DataTableRow>
+                                <DataTableRow >
+                                    <span>Lulus</span>
                                 </DataTableRow>
-                                 <DataTableRow >
-                                    <div style={{ display: "flex", marginLeft:"35px", fontSize:'15px'}}>
-                                        Jumlah
-                                        </div>
-                                    <DataTableRow>
-                                        <span>M</span>
-                                    </DataTableRow>
-                                    <DataTableRow>
-                                        <span>S</span>
-                                    </DataTableRow>
-                                    <DataTableRow>
-                                        <span>I</span>
-                                    </DataTableRow>
-                                    <DataTableRow>
-                                        <span>A</span>
-                                    </DataTableRow>
+                                <DataTableRow >
+                                    <span>Diterima</span>
                                 </DataTableRow>
+
                                 <DataTableRow className="nk-tb-col-tools">Aksi</DataTableRow>
                             </DataTableHead>
                             {currentItems.length > 0
                                 ? currentItems.map((item) => {
                                     return (
                                         <DataTableItem key={item.id}>
-                                            {/* <DataTableRow>
+                                            <DataTableRow>
                                                 <div className="tb-lead">
                                                     <span>{item.id}</span>
                                                 </div>
-                                            </DataTableRow> */}
+                                            </DataTableRow>
                                             <DataTableRow>
                                                 <div className="tb-lead">
-                                                    <span>{item.juli}</span>
+                                                    <span>{item.nisn}</span>
                                                 </div>
                                             </DataTableRow>
                                             <DataTableRow>
                                                 <div className="tb-lead">
-                                                    <span>{item.agust}</span>
+                                                    <span>{item.nik}</span>
                                                 </div>
                                             </DataTableRow>
                                             <DataTableRow>
                                                 <div className="tb-lead">
-                                                    <span>{item.sept}</span>
+                                                    <span>{item.ns}</span>
                                                 </div>
                                             </DataTableRow>
                                             <DataTableRow>
                                                 <div className="tb-lead">
-                                                    <span>{item.okt}</span>
+                                                    <span>{item.peminatan}</span>
                                                 </div>
                                             </DataTableRow>
                                             <DataTableRow>
                                                 <div className="tb-lead">
-                                                    <span>{item.nov}</span>
+                                                    <span>{item.verifikasi}</span>
                                                 </div>
                                             </DataTableRow>
                                             <DataTableRow>
                                                 <div className="tb-lead">
-                                                    <span>{item.des}</span>
+                                                    <span>{item.lulus}</span>
                                                 </div>
                                             </DataTableRow>
                                             <DataTableRow>
                                                 <div className="tb-lead">
-                                                    <span>{item.jml}</span>
+                                                    <span>{item.diterima}</span>
                                                 </div>
                                             </DataTableRow>
                                             <DataTableRow className="nk-tb-col-tools">
@@ -418,7 +361,7 @@ const RekapPresensiSiswa = () => {
                 </Block>
             </Content>
         </React.Fragment>
-  )
+    )
 }
 
-export default RekapPresensiSiswa
+export default Pengaturanppdb

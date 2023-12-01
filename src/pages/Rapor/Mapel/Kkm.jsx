@@ -6,6 +6,7 @@ import AddModal from '../../../component/modal/kkm/AddModal'
 import { Block, BlockHead, BlockBetween, BlockHeadContent, BlockTitle, BlockDes, Button, Icon, SpecialTable, DataTable, RSelect, TooltipComponent, PaginationComponent } from '../../../component/Component'
 import { DataTableBody, DataTableHead, DataTableItem, DataTableRow } from '../../../component/table/DataTable'
 import { kkmData, filterStatus, filterJk, filterMpl } from '../../../component/user/UserData'
+import { Link } from 'react-router-dom'
 const Kkm = () => {
     const [sm, updateSm] = useState(false);
     const [data, setData] = useState(kkmData);
@@ -161,11 +162,13 @@ const Kkm = () => {
                                     
                                     <ul>
                                         <li >
-                                            <Button color="primary"  onClick={() => setModal({ add: true })}>
+                                            <Link to ='/rapor/add-kkm'>
+                                            <Button color="primary" >
                                                 <Icon name="plus">
                                                 </Icon>
                                                 <div>Set Nilai KKM</div>
                                             </Button>
+                                            </Link>
                                         </li>
                                         <ul className="btn-toolbar gx-1">
                                         <li>
@@ -274,7 +277,7 @@ const Kkm = () => {
                         </div>
                     </DataTable>
                 </Block>
-                <AddModal modal={modal.add} FormData={FormData} setFormData={setFormData} closeModal={closeModal} onSubmit={onFormSubmit} filterMpl={filterMpl} />
+                {/* <AddModal modal={modal.add} FormData={FormData} setFormData={setFormData} closeModal={closeModal} onSubmit={onFormSubmit} filterMpl={filterMpl} /> */}
             </Content>
         </React.Fragment>
     )

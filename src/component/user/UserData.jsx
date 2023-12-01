@@ -242,6 +242,35 @@ export const tampilkanRapor = [
         plh:"Nonaktifkan"
     },
 ]
+
+export const rekapPresensiSiswa = [
+    {
+        id: 1,
+        siswa: 'jeno',
+        juli: "",
+        agust:"",
+        sept:"",
+        okt:"",
+        nov:"",
+        des:"",
+        jml:"",
+    },
+]
+
+export const rekapSPP = [
+    {
+        id: 1,
+        siswa: '',
+        juli: "",
+        agust:"",
+        sept:"",
+        okt:"",
+        nov:"",
+        des:"",
+        jml:"",
+    },
+]
+
 export const rentangNilai = [
     {
         id: 1,
@@ -378,6 +407,24 @@ export const pengaturanProfile = [
       
     },
 ]
+
+// PENGATURAN TAHUN AJARAN
+
+export const tahunAjaran = [
+    {
+        id: 1,
+        tajar: 'Struktur',
+        pergan: 1,
+        pergen: 2,
+        semester: 2,
+        status: "Active",
+
+       
+      
+    },
+]
+//PENGATURAN TAHUN AJARAN
+
 
 export const filterStatus = [
     { value: "Active", label: "Active" },

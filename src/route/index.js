@@ -12,7 +12,6 @@ import AksesEditSiswa from '../pages/Siswa/AksesEditSiswa';
 import MutasiSiswa from '../pages/Siswa/MutasiSiswa';
 import Mapel from '../pages/Rapor/Mapel/Mapel';
 import MapelKelas from '../pages/Rapor/Mapel/Kelas'
-import Kkm from '../pages/Rapor/Mapel/Kkm';
 import PenilaianAspek from '../pages/Rapor/Penilaian/Aspek';
 import LayoutNoSidebar from '../layout/index-nonSidebar'
 import Login from '../pages/Auth/Login';
@@ -20,6 +19,10 @@ import Register from '../pages/Auth/Register';
 import PresensiSiswa from '../pages/Presensi/Siswa';
 import PresensiPegawai from '../pages/Presensi/Pegawai';
 import PresensiSiswaManual from '../pages/Presensi/SiswaManual';
+
+//add kkm
+import Kkm from '../pages/Rapor/Mapel/Kkm';
+import AddKkm from '../component/modal/kkm/AddModal';
 
 // import PresensiSiswa from '../pages/Presensi/Siswa';
 import PenilaianKd from '../pages/Rapor/Penilaian/Kd';
@@ -53,6 +56,13 @@ import PembayaranManual from '../pages/Pembayaran/PembayaranManual';
 import HistoryPembayaran from '../pages/Pembayaran/HistoryPembayaran';
 import DataPengguna from '../pages/Pengaturan/DataPengguna';
 import Profile from '../pages/Pengaturan/Profile';
+import Tahunajaran from '../pages/Pengaturan/Tahunajaran';
+import SettingPpdb from '../pages/Pengaturan/Pengaturanppdb';
+import Pembayaran from '../pages/Pengaturan/Pembayaran';
+
+//REKAP PRESENSI & SPP SISWA
+import RekapPresensiSiswa from '../pages/Laporan/RekapPresensiSiswa';
+import RekapSppSiswa from '../pages/Laporan/RekapSppSiswa';
 
 const Router = () => {
   const location = useLocation();
@@ -85,7 +95,6 @@ const Router = () => {
         {/* RAPOR */}
         <Route path='/rapor/mapel' element={<Mapel />}></Route>
         <Route path='/rapor/mapel-kelas' element={<MapelKelas />}></Route>
-        <Route path='/rapor/mapel-kkm' element={<Kkm />}></Route>
         <Route path='/presensi/siswa' element={<PresensiSiswa/>}></Route>
         <Route path='/presensi/pegawai' element={<PresensiPegawai/>}></Route>
         <Route path='/presensi/siswa-manual' element={<PresensiSiswaManual/>}></Route>
@@ -102,6 +111,11 @@ const Router = () => {
         <Route path='/rapor/rekap-nilai' element={<RekapNilai/>}></Route>
         <Route path='/rapor/cetak-cover' element={<Cover/>}></Route>
         {/* END RAPOR */}
+
+        {/* ADD KKM */}
+        <Route path='/rapor/mapel-kkm' element={<Kkm />}></Route>
+        <Route path='/rapor/add-kkm' element={<AddKkm/>}></Route>
+        {/* ADD KKM */}
 
         {/* PEMBAYARAN */}
         <Route path='/pembayaran/get-all-tagihan-siswa' element={<TagihanSiswa />}></Route>
@@ -123,10 +137,15 @@ const Router = () => {
         <Route path='/laporan/siswa' element={<LaporanSiswa />}></Route>
         <Route path='/laporan/pegawai' element={<LaporanPegawai />}></Route>
         <Route path='/laporan/spp' element={<PembayaranSpp />}></Route>
+        <Route path='/laporan/rekappresensisiswa' element={<RekapPresensiSiswa/>}></Route>
+        <Route path='/laporan/spp-rekap' element={<RekapSppSiswa />}></Route>
         {/* END LAPORAN */}
 
         {/* PENGATURAN */}
         <Route path='/pengaturan/identitas' element={<Identitas/>}></Route>
+        <Route path='/pengaturan/tahunajaran' element={<Tahunajaran/>}></Route>
+        <Route path='/pengaturan/pengaturanppdb' element={<SettingPpdb />}></Route>
+        <Route path='/pengaturan/pembayaran' element={<Pembayaran />}></Route>
         {/* PENGATURAN */}
         {/* PENILAIAN */}
         <Route path='/penilaian/pengetahuan' element={<Pengetahuan />}></Route>
