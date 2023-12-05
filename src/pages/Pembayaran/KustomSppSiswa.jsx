@@ -20,7 +20,7 @@ const KustomSppSiswa = () => {
     const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
     const [actionText, setActionText] = useState("");
     const toggle = () => setonSearch(!onSearch);
-    const [onSearch, setonSearch] = useState(false);
+    const [onSearch, setonSearch] = useState(true);
     const [onSearchText, setSearchText] = useState("");
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
 

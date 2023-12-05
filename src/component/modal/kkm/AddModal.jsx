@@ -14,31 +14,61 @@ import {
   BlockHeadContent,
   BlockTitle,
   BlockDes,
-  PreviewAltCard,
-  Block
+  Block,
+  PreviewAltCard
 } from '../../Component'
 import { useForm } from 'react-hook-form'
 import Dropzone from "react-dropzone";
-import Content from '../../../layout/Content/Content';
 import Head from '../../../layout/Head';
-import { filterMpl } from '../../user/UserData';
-
-const AddModal = ({ modal, closeModal, onSubmit, formData }) => {
+import Content from '../../../layout/Content/Content';
+import { filterMpl, kkmData} from '../../user/UserData';
+import { Link } from 'react-router-dom';
+const AddModal = ({ modal, closeModal, }) => {
+  const [data, setData] = useState(kkmData);
   const [files4, setFiles4] = useState([]);
+  const [FormData, setFormData] = useState({
+    mapel: '',
+    kelas: '',
+    kkm: '',
+    nilai_kkm: '', // Added nilai_kkm to FormData
+  });
+
+  const resetForm = () => {
+    setFormData({
+      mapel: '',
+      kelas: '',
+      kkm: '',
+      nilai_kkm: '', // Added nilai_kkm to resetForm
+    });
+  };
 
   useEffect(() => {
-    reset(formData)
-  }, [formData]);
+    reset(FormData);
+  }, [FormData]);
+
   const { reset, register, handleSubmit, formState: { errors } } = useForm();
 
   const handleDropChange = (acceptedFiles, setFiles) => {
     setFiles(acceptedFiles);
     const selectedFile = acceptedFiles[0];
 
-    // setFormData({
-    //   ...formData,
-    //   fotoData: selectedFile,
-    // });
+    setFormData({
+      ...FormData,
+      fotoData: selectedFile,
+    });
+  };
+
+  const onFormSubmit = (submitData) => {
+    const { mapel, kelas, kkm, nilai_kkm } = submitData;
+    let submittedData = {
+      id: data.length + 1,
+      mapel: mapel,
+      kelas: kelas,
+      kkm: kkm,
+      nilai_kkm: nilai_kkm, // Added nilai_kkm to submittedData
+    };
+    setData([submittedData, ...data]);
+    resetForm();
   };
 
   return (
@@ -65,7 +95,7 @@ const AddModal = ({ modal, closeModal, onSubmit, formData }) => {
       <div className='p-2'>
          <h5 className="title">Set Nilai KKM</h5>
          <div className='mt-4'>
-           <Form className="row gy-4" noValidate onSubmit={handleSubmit(onSubmit)}>
+           <Form className="row gy-4" noValidate onSubmit={handleSubmit(onFormSubmit)}>
              <Col md="6">
              <div className="form-group">
              <label className="form-label">Pilih Mata Pelajaran</label>
@@ -73,10 +103,10 @@ const AddModal = ({ modal, closeModal, onSubmit, formData }) => {
              <RSelect
                 options={filterMpl}
                 value={{
-                  value: formData?.mapel || '',
-                  label: formData?.mapel || '',
+                  value: FormData?.mapel || '',
+                  label: FormData?.mapel || '',
                 }}
-                // onChange={(e) => setFormData({ ...formData, mapel: e.value })}
+                onChange={(e) => setFormData({ ...FormData, mapel: e.value })}
               />
 
             </div>
@@ -88,8 +118,8 @@ const AddModal = ({ modal, closeModal, onSubmit, formData }) => {
               className="form-control"
               type="number"
               {...register('nilai_kkm', { required: "This field is required" })}
-              value={formData?.nilai_kkm || ''}
-              // onChange={(e) => setFormData({ ...formData, nilai_kkm: e.target.value })}
+              value={FormData?.nilai_kkm || ''}
+              onChange={(e) => setFormData({ ...FormData, nilai_kkm: e.target.value })}
               placeholder="Enter nilai kkm"
             />
 
@@ -105,16 +135,18 @@ const AddModal = ({ modal, closeModal, onSubmit, formData }) => {
                 </Button>
               </li>
               <li>
+                <Link to = '/rapor/mapel-kkm'>
               <a
-                href="#cancel"
-                onClick={(ev) => {
-                  ev.preventDefault();
-                  closeModal();
-                }}
+                // href="#cancel"
+                // onClick={(ev) => {
+                //   ev.preventDefault();
+                //   // closeModal();
+                // }}
                 className="link link-light"
               >
                 Cancel
               </a>
+              </Link>
               </li>
               </ul>
             </Col>

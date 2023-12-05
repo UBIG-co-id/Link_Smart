@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Content from '../../layout/Content/Content';
 import Head from '../../layout/Head';
-import { Col, Row, Block, BlockHead, BlockBetween, BlockHeadContent, BlockTitle, BlockDes, PreviewAltCard } from '../../component/Component';
+import { Button,Col, Row, Block, BlockHead, BlockBetween, BlockHeadContent, BlockTitle, BlockDes, PreviewAltCard } from '../../component/Component';
 
 const Pembayaran = () => {
   const [sm, updateSm] = useState(false);
@@ -33,6 +33,10 @@ const Pembayaran = () => {
 
   const handleNotPaidStatusChange = (e) => {
     setNotPaidStatus(e.target.value);
+  };
+
+  const handleSaveButtonClick = () => {
+    console.log("Save button clicked!");
   };
 
   return (
@@ -163,6 +167,17 @@ const Pembayaran = () => {
                     />
                   </div>
                 </Col>
+              </Row>
+              <Row className="g-gs">
+              <Col size="12">
+                  <ul className="align-center flex-wrap flex-sm-nowrap gx-4 gy-2" style={{ marginTop: '21px' }}>
+                      <li>
+                        <Button color="primary" size="lg" type="submit">
+                            Simpan
+                        </Button>
+                      </li>
+                  </ul>
+              </Col>
               </Row>
             </PreviewAltCard>
           </Row>

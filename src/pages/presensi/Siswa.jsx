@@ -29,7 +29,7 @@ import 'react-datepicker/dist/react-datepicker.css'; // Import styles
 const Siswa = () => {
     const [data, setData] = useState(presensiSiswa);
     const [sm, updateSm] = useState(false);
-    const [onSearch, setonSearch] = useState(false);
+    const [onSearch, setonSearch] = useState(true);
     const [onSearchText, setSearchText] = useState("");
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
     const [selectedDate, setSelectedDate] = useState(null);

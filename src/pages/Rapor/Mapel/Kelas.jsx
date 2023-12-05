@@ -291,6 +291,7 @@ const Kelas = () => {
                         </div>
                     </DataTable>
                 </Block>
+                <AddModal modal={modal.add} FormData={FormData} setFormData={setFormData} closeModal={closeModal} />
             </Content>
         </React.Fragment>
     )

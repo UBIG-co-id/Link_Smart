@@ -11,7 +11,7 @@ const TagihanSiswa = () => {
     const [data, setData] = useState(tagihanSiswa);
     const toggle = () => setonSearch(!onSearch);
     const [onSearchText, setSearchText] = useState("");
-    const [onSearch, setonSearch] = useState(false);
+    const [onSearch, setonSearch] = useState(true);
 
     const onFilterChange = (e) => {
         setSearchText(e.target.value);

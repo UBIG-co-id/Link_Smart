@@ -40,7 +40,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 const Pegawai = () => {
     const [data, setData] = useState(presensiPegawai);
     const [sm, updateSm] = useState(false);
-    const [onSearch, setonSearch] = useState(false);
+    const [onSearch, setonSearch] = useState(true);
     const [onSearchText, setSearchText] = useState("");
     const toggle = () => setonSearch(!onSearch);
     const [actionText, setActionText] = useState("")

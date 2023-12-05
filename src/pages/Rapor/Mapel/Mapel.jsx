@@ -6,10 +6,11 @@ import AddModal from '../../../component/modal/mapel/AddModal'
 import { Block, BlockHead, BlockBetween, BlockHeadContent, BlockTitle, BlockDes, Button, Icon, SpecialTable, DataTable, RSelect, TooltipComponent, PaginationComponent } from '../../../component/Component'
 import { DataTableBody, DataTableHead, DataTableItem, DataTableRow } from '../../../component/table/DataTable'
 import { mapel } from '../../../component/user/UserData'
+import { Link } from 'react-router-dom'
 const Mapel = () => {
     const [data, setData] = useState(mapel);
     const [sm, updateSm] = useState(false);
-    const [onSearch, setonSearch] = useState(false);
+    const [onSearch, setonSearch] = useState(true);
     const [onSearchText, setSearchText] = useState("");
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
     const toggle = () => setonSearch(!onSearch);
@@ -154,13 +155,17 @@ const Mapel = () => {
                                                 <span>Reports</span>
                                             </Button>
                                         </li>
+                                        
                                         <li>
+                                        <Link to ='/rapor/add-mapel'>
                                             <Button color="primary" onClick={() => setModal({ add: true })}>
                                                 <Icon name="plus">
                                                 </Icon>
                                                 <div>Mata Pelajaran</div>
                                             </Button>
+                                        </Link>
                                         </li>
+                                        
                                     </ul>
                                 </div>
                             </div>
@@ -314,7 +319,7 @@ const Mapel = () => {
                         </div>
                     </DataTable>
                 </Block>
-                <AddModal modal={modal.add} FormData={FormData} setFormData={setFormData} closeModal={closeModal} onSubmit={onFormSubmit}/>
+                {/* <AddModal modal={modal.add} FormData={FormData} setFormData={setFormData} closeModal={closeModal} onSubmit={onFormSubmit}/> */}
             </Content>
         </React.Fragment>
     )

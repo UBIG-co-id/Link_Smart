@@ -127,8 +127,8 @@ export const mutasiSiswa = [
 export const mapel = [
     {
         id: 1,
-        mapel: "Rekayasa Perangkat Lunak",
-        singkat: "RPL",
+        mapel: "Matematika",
+        singkat: "MTK",
 
     },
 ]

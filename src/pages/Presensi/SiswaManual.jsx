@@ -28,7 +28,7 @@ import DatePicker from 'react-datepicker';
 const SiswaManual = () => {
     const [data, setData] = useState(siswaManual);
     const [sm, updateSm] = useState(false);
-    const [onSearch, setonSearch] = useState(false);
+    const [onSearch, setonSearch] = useState(true);
     const [onSearchText, setSearchText] = useState("");
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
     const [selectedDate, setSelectedDate] = useState(new Date());

@@ -102,10 +102,8 @@ const RekapPresensiSiswa = () => {
                                 </div>
                                 <div className="card-tools me-n1">
                                     <ul>
-                                        <li>
-
-                                       
-                                <div className="from-wrap">
+                                        <li>     
+                                        <div className="from-wrap">
                                             <RSelect
                                                 option={filterThn}
                                                 className="w-150px"
@@ -113,6 +111,8 @@ const RekapPresensiSiswa = () => {
                                                 onChange={(e) => onActionText(e)}
                                             />
                                         </div>
+                                        </li>
+                                        <li>
                                         <div className="from-wrap">
                                             <RSelect
                                                 option={filterBln}
@@ -121,6 +121,8 @@ const RekapPresensiSiswa = () => {
                                                 onChange={(e) => onActionText(e)}
                                             />
                                         </div>
+                                        </li>
+                                        <li>
                                         <div className="from-wrap">
                                             <RSelect
                                                 option={filterKls}

@@ -5,6 +5,7 @@ import { Block, BlockHead, BlockBetween, BlockHeadContent, BlockTitle, BlockDes,
 import { DataTableBody, DataTableHead, DataTableItem, DataTableRow } from '../../component/table/DataTable'
 import { tagihanSpp, filterKls } from '../../component/user/UserData'
 import { Card, DropdownItem, DropdownMenu, DropdownToggle, UncontrolledDropdown } from 'reactstrap'
+import { TRUE } from 'sass'
 
 
 const TagihanSpp = () => {
@@ -12,7 +13,7 @@ const TagihanSpp = () => {
     const [data, setData] = useState(tagihanSpp);
     const [onSearchText, setSearchText] = useState("");
     const toggle = () => setonSearch(!onSearch);
-    const [onSearch, setonSearch] = useState(false);
+    const [onSearch, setonSearch] = useState(true);
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
     const onFilterChange = (e) => {

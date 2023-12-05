@@ -95,7 +95,7 @@ const RekapSppSiswa = () => {
                 </BlockHead>
                 <Block size="lg">
                     <DataTable className="card-stretch">
-                        <div className="card-inner">
+                        <div className="card-inner" >
                             <div className="card-title-group">
                                 <div className="card-title">
                                     <h5 className="title">Data Rekap SPP</h5>
@@ -366,6 +366,7 @@ const RekapSppSiswa = () => {
                                         </DataTableItem>
                                     )
                                 }) : null}
+                                <div className='enable-smooth-scroll'>awdadawdadw</div>
                         </DataTableBody>
                         <div className="card-inner">
                             {currentItems.length > 0 ? (
@@ -381,6 +382,7 @@ const RekapSppSiswa = () => {
                                 </div>
                             )}
                         </div>
+                        
                     </DataTable>
                 </Block>
             </Content>

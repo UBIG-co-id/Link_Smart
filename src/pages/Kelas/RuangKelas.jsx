@@ -413,7 +413,7 @@ const resetForm = () => {
                     </DataTable>
                    
                 </Block>
-        <AddModal modal={modal.add} formData={formData} setFormData={setFormData} closeModal={closeModal} onSubmit={onFormSubmit} filterStatus={filterStatus} filterKls={filterKls} filterWk={filterWk} />
+        {/* <AddModal modal={modal.add} formData={formData} setFormData={setFormData} closeModal={closeModal} onSubmit={onFormSubmit} filterStatus={filterStatus} filterKls={filterKls} filterWk={filterWk} /> */}
       </Content>
     </React.Fragment>
   )
