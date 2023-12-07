@@ -34,6 +34,7 @@ import {presensiPegawai, filterSts} from '../../component/user/UserData'
 import AddModal from '../../component/modal/presensi-pegawai/AddModal';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import { Link } from 'react-router-dom'
 
 
 
@@ -184,11 +185,13 @@ const Pegawai = () => {
                                             </Button>
                                         </li>
                                         <li>
+                                            <Link to ='/presensi/add-presensi-pegawai'>
                                             <Button color="primary" onClick={() => setModal({ add: true })}>
                                                 <Icon name="plus">
                                                 </Icon>
                                                 <div>Tambah Presensi </div>
                                             </Button>
+                                            </Link>
                                         </li>
                                     </ul>
                                 </div>
@@ -422,7 +425,7 @@ const Pegawai = () => {
                         </div>
                     </DataTable>
                  </Block>
-                 <AddModal modal={modal.add} formData={formData} setFormData={setFormData} onSubmit={onFormSubmit} closeModal={closeModal} filterSts={filterSts}/>
+                 {/* <AddModal modal={modal.add} formData={formData} setFormData={setFormData} onSubmit={onFormSubmit} closeModal={closeModal} filterSts={filterSts}/> */}
              </Content>
         </React.Fragment>
     )

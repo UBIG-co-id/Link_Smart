@@ -21,7 +21,7 @@ const Sikap = () => {
     const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
     const [onSearchText, setSearchText] = useState("");
     const toggle = () => setonSearch(!onSearch);
-    const [onSearch, setonSearch] = useState(false);
+    const [onSearch, setonSearch] = useState(true);
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
     const onFilterChange = (e) => {

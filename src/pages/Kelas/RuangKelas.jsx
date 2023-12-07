@@ -10,6 +10,7 @@ import { DataTableBody, DataTableHead, DataTableItem, DataTableRow } from '../..
 import EditModal from '../../component/modal/ruangKelas/EditModal'
 import { orderData } from '../../component/user/UserData'
 import AddModal from '../../component/modal/ruangKelas/AddModal'
+import { Link } from 'react-router-dom'
 const RuangKelas = () => {
   
   const [onSearch, setonSearch] = useState(true);
@@ -132,9 +133,11 @@ const resetForm = () => {
                       </Button>
                     </li>
                     <li className="nk-block-tools-opt">
+                      <Link to ='/kelas/add-ruang'>
                       <Button color="primary" className="btn-icon" onClick={() => setModal({ add: true })}>
                         <Icon name="plus"></Icon>
                       </Button>
+                      </Link>
                     </li>
                   </ul>
                 </div>

@@ -24,6 +24,7 @@ import Dropzone from "react-dropzone";
 import Head from '../../../layout/Head';
 import Content from '../../../layout/Content/Content';
 import { UserContext } from '../../user/UserContext';
+import { Link } from 'react-router-dom';
 
 const AddModal = ({ modal, closeModal, onSubmit,  filterStatus, filterPtk, filterThn }) => {
   const [files4, setFiles4] = useState([]);
@@ -183,16 +184,18 @@ const AddModal = ({ modal, closeModal, onSubmit,  filterStatus, filterPtk, filte
                         </Button>
                       </li>
                       <li>
+                        <Link to='/pegawai/mutasi-ptk'>
                         <a
-                          href="#cancel"
-                          onClick={(ev) => {
-                            ev.preventDefault();
-                            closeModal();
-                          }}
+                          // href="#cancel"
+                          // onClick={(ev) => {
+                          //   ev.preventDefault();
+                          //   closeModal();
+                          // }}
                           className="link link-light"
-                        >
+                          >
                           Cancel
                         </a>
+                          </Link>
                       </li>
                     </ul>
                   </Col>

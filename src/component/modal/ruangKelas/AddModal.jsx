@@ -21,9 +21,29 @@ import { useForm } from 'react-hook-form'
 import Dropzone from "react-dropzone";
 import Head from '../../../layout/Head';
 import Content from '../../../layout/Content/Content';
+import { Link } from 'react-router-dom';
 
-const AddModal = ({ modal, closeModal, onSubmit, formData, setFormData, filterStatus, filterWk, filterKls }) => {
+const AddModal = ({ modal, closeModal, onSubmit, filterStatus, filterWk, filterKls }) => {
   const [files4, setFiles4] = useState([]);
+  const [data, setData] = useState();
+  const [formData, setFormData] = useState({
+    tgl: "",
+    ptk: "",
+    jm: "",
+    tahun: "",
+    alasan: "",
+    file: null,
+});
+const resetForm = () => {
+  setFormData({
+      name: "",
+      email: "",
+      balance: 0,
+      phone: "",
+      jk: "Laki-Laki",
+      status: "Active",
+  });
+};
 
   useEffect(() => {
     reset(formData)
@@ -151,16 +171,18 @@ const AddModal = ({ modal, closeModal, onSubmit, formData, setFormData, filterSt
                         </Button>
                       </li>
                       <li>
+                        <Link to='/kelas/ruang'>
                         <a
-                          href="#cancel"
-                          onClick={(ev) => {
-                            ev.preventDefault();
-                            closeModal();
-                          }}
+                          // href="#cancel"
+                          // onClick={(ev) => {
+                          //   ev.preventDefault();
+                          //   closeModal();
+                          // }}
                           className="link link-light"
-                        >
+                          >
                           Cancel
                         </a>
+                          </Link>
                       </li>
                     </ul>
                   </Col>

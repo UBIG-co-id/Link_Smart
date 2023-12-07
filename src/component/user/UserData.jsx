@@ -431,6 +431,10 @@ export const filterStatus = [
     { value: "Izin", label: "Izin" },
     { value: "Sakit", label: "Sakit" },
 ];
+export const filterSikap = [
+    { value: "Spiritual", label: "Spiritual" },
+    { value: "Sosial", label: "Sosial" },
+];
 export const filterJk = [
     { value: "Laki-Laki", label: "Laki-Laki" },
     { value: "Perempuan", label: "Perempuan" },

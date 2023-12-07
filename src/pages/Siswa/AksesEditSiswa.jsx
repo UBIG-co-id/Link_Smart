@@ -14,7 +14,7 @@ const AksesEditSiswa = () => {
     const [data, setData] = useState(biodataSiswa);
     const [actionText, setActionText] = useState("");
     const toggle = () => setonSearch(!onSearch);
-    const [onSearch, setonSearch] = useState(false);
+    const [onSearch, setonSearch] = useState(true);
     const [onSearchText, setSearchText] = useState("");
 
     const onActionClick = (e) => {
