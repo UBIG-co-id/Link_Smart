@@ -23,6 +23,7 @@ import { presensiSiswa, filterKls, filterSts } from '../../component/user/UserDa
 import AddModal from '../../component/modal/presesensi-siswa/AddModal';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css'; // Import styles
+import { Link } from 'react-router-dom';
 // import { filterKls} from '../../component/user/UserData'
 
 
@@ -198,11 +199,13 @@ const Siswa = () => {
                                             </Button>
                                         </li> */}
                                         <li>
+                                            <Link to ='/presensi/add-presensi-siswa'>
                                             <Button color="primary" onClick={() => setModal({ add: true })}>
                                                 <Icon name="plus">
                                                 </Icon>
                                                 <div>Tambah Presensi </div>
                                             </Button>
+                                            </Link>
                                         <li>
                                                 {/* <li>
                                                 <Button color="primary" onClick={() => setModal({ add: true })}>
@@ -496,7 +499,7 @@ const Siswa = () => {
                         </div>
                     </DataTable>
                 </Block>
-                <AddModal modal={modal.add} formData={formData} setFormData={setFormData} onSubmit={onFormSubmit} closeModal={closeModal} filterKls={filterKls} filterSts={filterSts} />
+                {/* <AddModal modal={modal.add} formData={formData} setFormData={setFormData} onSubmit={onFormSubmit} closeModal={closeModal} filterKls={filterKls} filterSts={filterSts} /> */}
             </Content>
         </React.Fragment>
     )

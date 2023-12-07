@@ -4,8 +4,6 @@ import {
   ModalBody,
   Form,
   Row,
-  Col,
-  Button
 } from 'reactstrap'
 import {
   Block,
@@ -16,17 +14,59 @@ import {
   BlockTitle,
   Icon,
   PreviewAltCard,
-  RSelect
+  RSelect,
+  Col,
+  Button,
+  RSelect,
+  BlockHead,
+  BlockBetween,
+  BlockHeadContent,
+  BlockTitle,
+  BlockDes,
+  Block,
+  PreviewAltCard
 } from '../../Component'
 import { useForm } from 'react-hook-form'
 import Dropzone from "react-dropzone";
+import Head from '../../../layout/Head';
+import Content from '../../../layout/Content/Content';
 import { Steps, Step } from "react-step-builder";
 import Head from '../../../layout/Head';
 import Content from '../../../layout/Content/Content';
 
 
-const AddModal = ({ modal, closeModal, onSubmit, formData, setFormData, filterAgm, filterJk, filterP, filterPeng, filterJp }) => {
+const AddModal = ({ modal, closeModal, onSubmit, filterAgm, filterJk, filterP, filterPeng, filterJp }) => {
   const [files4, setFiles4] = useState([]);
+  const [data, setData] = useState();
+  const [formData, setFormData] = useState({
+    nis: "",
+    nlp: "",
+    kls: "",
+    tgl: "",
+    masuk: "",
+    pulang: "",
+    status_in: "",
+    keterangan: "",
+});
+
+const [editFormData, setEditFormData] = useState({
+    nlp: "",
+    kls: "",
+    status: "",
+})
+
+const resetForm = () => {
+    setFormData({
+        nis: "",
+        nlp: "",
+        kls: "",
+        tgl: "",
+        masuk: "",
+        pulang: "",
+        status_in: "Masuk",
+        keterangan: "",
+    });
+};
 
   useEffect(() => {
     reset(formData)
@@ -125,6 +165,26 @@ const AddModal = ({ modal, closeModal, onSubmit, formData, setFormData, filterAg
     useEffect(() => {
       reset(formData)
     }, [formData]);
+
+    const onFormSubmit = (submitData) => {
+      const { nis, nlp, kls, tgl, masuk, pulang, status_in, status_out, keterangan } = submitData;
+      let submittedData = {
+          id: data.length + 1,
+          nis: nis,
+          nlp: nlp,
+          kls: "XII",
+          tgl: tgl,
+          masuk: masuk,
+          status_in: status_in,
+          pulang: pulang,
+          status_out: status_out,
+          keterangan: keterangan,
+
+      };
+      setData([submittedData, ...data]);
+      resetForm();
+      // setModal({ edit: false }, { add: false });
+  };
 
     return (
       <form className="content clearfix" onSubmit={handleSubmit(submitForm)}>

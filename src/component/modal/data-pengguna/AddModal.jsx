@@ -93,7 +93,7 @@ return (
             </div>
             <Col>
             <div className="form-group">
-              <label className="form-label">Singkatan Mata Pelajaran</label>
+              <label className="form-label">Kata Sandi</label>
               <div className="form-control-wrap">
                 <input
                    className="form-control"

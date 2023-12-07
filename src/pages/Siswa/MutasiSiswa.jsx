@@ -13,7 +13,7 @@ const MutasiSiswa = () => {
     const [data, setData] = useState(mutasiSiswa);
     const toggle = () => setonSearch(!onSearch);
     const [onSearchText, setSearchText] = useState("");
-    const [onSearch, setonSearch] = useState(false);
+    const [onSearch, setonSearch] = useState(true);
     const [actionText, setActionText] = useState("");
 
     const onActionText = (e) => {

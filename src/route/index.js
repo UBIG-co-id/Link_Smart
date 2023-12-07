@@ -3,7 +3,6 @@ import Layout from '../layout'
 import { Routes, Route, useLocation } from "react-router-dom";
 import Dashboard from '../pages/Dashboard';
 import Pegawai from '../pages/Pegawai/Pegawai';
-import PTK from '../pages/Pegawai/MutasiPtk'
 import { UserContextProvider } from '../component/user/UserContext';
 import RuangKelas from '../pages/Kelas/RuangKelas';
 // SISWA
@@ -18,9 +17,26 @@ import PenilaianAspek from '../pages/Rapor/Penilaian/Aspek';
 import LayoutNoSidebar from '../layout/index-nonSidebar'
 import Login from '../pages/Auth/Login';
 import Register from '../pages/Auth/Register';
-import PresensiSiswa from '../pages/Presensi/Siswa';
-import PresensiPegawai from '../pages/Presensi/Pegawai';
 import PresensiSiswaManual from '../pages/Presensi/SiswaManual';
+
+//add utasi ptk
+import PTK from '../pages/Pegawai/MutasiPtk'
+
+//add ruang kelas
+import RuangKelas from '../pages/Kelas/RuangKelas';
+import AddRuangKelas from '../component/modal/ruangKelas/AddModal';
+
+//add data siswa
+import Siswa from '../pages/Siswa/Siswa';
+import AddSiswa from '../component/modal/siswa/AddModal';
+
+//add presensi pegawai
+import PresensiPegawai from '../pages/Presensi/Pegawai';
+import AddPresensipegawai from '../component/modal/presensi-pegawai/AddModal';
+
+//add presensi siswa
+import PresensiSiswa from '../pages/Presensi/Siswa';
+import AddPresensiSiswa from '../component/modal/presesensi-siswa/AddModal';
 
 //add kkm
 import Kkm from '../pages/Rapor/Mapel/Kkm';
@@ -30,9 +46,12 @@ import AddKkm from '../component/modal/kkm/AddModal';
 import Mapel from '../pages/Rapor/Mapel/Mapel';
 import AddMapel from '../component/modal/mapel/AddModal';
 
+//add penilaian sikap
+import PenilaianSikap from '../pages/Rapor/Penilaian/Sikap';
+import AddPenilaianSikap from '../component/modal/penilaian-sikap/AddPenilaianSikap';
+
 // import PresensiSiswa from '../pages/Presensi/Siswa';
 import PenilaianKd from '../pages/Rapor/Penilaian/Kd';
-import PenilaianSikap from '../pages/Rapor/Penilaian/Sikap';
 import PenilaianLain from '../pages/Rapor/Penilaian/Lain';
 import TemplateRapor from '../pages/Rapor/Template/TemplateRapor';
 import SettingUmum from '../pages/Rapor/Setting/Umum';
@@ -86,15 +105,12 @@ const Router = () => {
 
         <Route element={<UserContextProvider />}>
           <Route path='/pegawai' element={<Pegawai />}></Route>
-          <Route path='/pegawai/mutasi-ptk' element={<PTK />}></Route>
           <Route path='/pegawai/add-pegawai' element={<AddPegawai />}></Route>
           <Route path='/pegawai/add-mutasi' element={<AddMutasi />}></Route>
         </Route>
 
-        <Route path='/kelas/ruang' element={<RuangKelas />}></Route>
         <Route path='/kelas/Kenaikan-kelas' element={<KenaikanKelas />}></Route>
 
-        <Route path='/siswa' element={<Siswa />}></Route>
         <Route path='/siswa/akses-edit-siswa' element={<AksesEditSiswa />}></Route>
         <Route path='/siswa/mutasi-siswa' element={<MutasiSiswa />}></Route>
         <Route path='/siswa/add-siswa' element={<AddSiswa />}></Route>
@@ -106,12 +122,9 @@ const Router = () => {
 
         {/* RAPOR */}
         <Route path='/rapor/mapel-kelas' element={<MapelKelas />}></Route>
-        <Route path='/presensi/siswa' element={<PresensiSiswa/>}></Route>
-        <Route path='/presensi/pegawai' element={<PresensiPegawai/>}></Route>
         <Route path='/presensi/siswa-manual' element={<PresensiSiswaManual/>}></Route>
         <Route path='/rapor/penilaian-aspek' element={<PenilaianAspek />}></Route>
         <Route path='/rapor/penilaian-kd' element={<PenilaianKd />}></Route>
-        <Route path='/rapor/penilaian-sikap' element={<PenilaianSikap />}></Route>
         <Route path='/rapor/penilaian-lain' element={<PenilaianLain />}></Route>
         <Route path='/rapor/template' element={<TemplateRapor />}></Route>
         <Route path='/rapor/setting-umum' element={<SettingUmum />}></Route>
@@ -123,6 +136,31 @@ const Router = () => {
         <Route path='/rapor/cetak-cover' element={<Cover/>}></Route>
         {/* END RAPOR */}
 
+        {/* ADD RUANG KELAS */}
+        <Route path='/kelas/ruang' element={<RuangKelas />}></Route>
+        <Route path='/kelas/add-ruang' element={<AddRuangKelas />}></Route>
+        {/* ADD RUANG KELAS */}
+
+        {/* ADD PRESENSI PEGAWAI */}
+        <Route path='/presensi/pegawai' element={<PresensiPegawai/>}></Route>
+        <Route path='/presensi/add-presensi-pegawai' element={<AddPresensipegawai/>}></Route>
+        {/* ADD PRESENSI PEGAWAI */}
+
+        {/* ADD PRESENSI SISWA */}
+        <Route path='/presensi/siswa' element={<PresensiSiswa/>}></Route>
+        <Route path='/presensi/add-presensi-siswa' element={<AddPresensiSiswa/>}></Route>
+        {/* ADD PRESENSI SISWA */}
+
+        {/* ADD PENILAIAN SIKAP */}
+        <Route path='/rapor/penilaian-sikap' element={<PenilaianSikap />}></Route>
+        <Route path='/rapor/add-penilaian-sikap' element={<AddPenilaianSikap />}></Route>
+        {/* ADD PENILAIAN SIKAP */}
+
+        {/* ADD SISWA */}
+        <Route path='/siswa' element={<Siswa />}></Route>
+        <Route path='/siswa/add-siswa' element={<AddSiswa />}></Route>
+        {/* ADD SISWA */}
+
         {/* ADD KKM */}
         <Route path='/rapor/mapel-kkm' element={<Kkm />}></Route>
         <Route path='/rapor/add-kkm' element={<AddKkm/>}></Route>
@@ -133,9 +171,10 @@ const Router = () => {
         <Route path='/rapor/add-mapel' element={<AddMapel/>}></Route>
         {/* ADD MAPEL */}
 
-        {/* ADD KELAS-MAPEL */}
-
-        {/* ADD KELAS-MAPEL */}
+        {/* ADD MUTASI PTK */}
+        <Route path='/pegawai/mutasi-ptk' element={<PTK />}></Route>
+        <Route path='/pegawai/add-mutasi-ptk' element={<AddMutasi />}></Route>
+        {/* ADD MUTASI PTK */}
 
         {/* PEMBAYARAN */}
         <Route path='/pembayaran/get-all-tagihan-siswa' element={<TagihanSiswa />}></Route>

@@ -281,13 +281,12 @@ const Pegawai = () => {
                                             <Button color="primary" className="btn-icon" >
                                                 <Icon name="plus"></Icon>
                                         </li> */}
-                                        <li >
+                                        <li>
                                             <Button color="primary" onClick={() => setModal({ add: true })}>
                                                 <Icon name="plus">
                                                 </Icon>
                                                 <div>Tambah Mutasi </div>
                                             </Button>
-                                            {/* </Link> */}
                                         </li>
                                     </ul>
                                 </div>
