@@ -6,10 +6,13 @@ import Pegawai from '../pages/Pegawai/Pegawai';
 import PTK from '../pages/Pegawai/MutasiPtk'
 import { UserContextProvider } from '../component/user/UserContext';
 import RuangKelas from '../pages/Kelas/RuangKelas';
+// SISWA
 import Siswa from '../pages/Siswa/Siswa';
 import KenaikanKelas from '../pages/Kelas/KenaikanKelas';
 import AksesEditSiswa from '../pages/Siswa/AksesEditSiswa';
 import MutasiSiswa from '../pages/Siswa/MutasiSiswa';
+import AddSiswa from '../component/modal/siswa/AddModal';
+// END SISWA
 import MapelKelas from '../pages/Rapor/Mapel/Kelas'
 import PenilaianAspek from '../pages/Rapor/Penilaian/Aspek';
 import LayoutNoSidebar from '../layout/index-nonSidebar'
@@ -94,6 +97,8 @@ const Router = () => {
         <Route path='/siswa' element={<Siswa />}></Route>
         <Route path='/siswa/akses-edit-siswa' element={<AksesEditSiswa />}></Route>
         <Route path='/siswa/mutasi-siswa' element={<MutasiSiswa />}></Route>
+        <Route path='/siswa/add-siswa' element={<AddSiswa />}></Route>
+        
 
         {/* PRESENSI */}
         {/* <Route path='/presensi/siswa' element={<PresensiSiswa />}></Route> */}

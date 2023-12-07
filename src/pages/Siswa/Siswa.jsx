@@ -10,6 +10,7 @@ import { DataTableBody, DataTableHead, DataTableItem, DataTableRow } from '../..
 import EditModal from '../../component/modal/siswa/EditModal'
 import { siswaData } from '../../component/user/UserData'
 import AddModal from '../../component/modal/siswa/AddModal'
+import { Link } from 'react-router-dom'
 
 const Siswa = () => {
     const [sm, updateSm] = useState(false);
@@ -151,10 +152,12 @@ const Siswa = () => {
                                             </Button>
                                         </li>
                                         <li>
-                                            <Button color="primary" outline className="btn-dim btn-white" onClick={() => setModal({ add: true })}>
+                                            <Link to='/siswa/add-siswa'>
+                                            <Button color="primary" outline className="btn-dim btn-white" >
                                                 <Icon name="plus"></Icon>
                                                 <div>Siswa</div>
                                             </Button>
+                                            </Link>
                                         </li>
                                         {/* <li className="nk-block-tools-opt">
                                             <Button color="primary" className="btn-dim btn-white" onClick={() => setModal({ add: true })}>
@@ -424,7 +427,7 @@ const Siswa = () => {
                         </div>
                     </DataTable>
                 </Block>
-                <AddModal modal={modal.add} closeModal={closeModal} filterJk={filterJk} filterAgm={filterAgm} filterJp={filterJp} filterP={filterP} filterPeng={filterPeng} />
+                {/* <AddModal modal={modal.add} closeModal={closeModal} filterJk={filterJk} filterAgm={filterAgm} filterJp={filterJp} filterP={filterP} filterPeng={filterPeng} /> */}
                 {/* <EditModal modal={modal.edit}/> */}
             </Content>
         </React.Fragment>
