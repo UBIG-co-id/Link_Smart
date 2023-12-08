@@ -540,7 +540,7 @@ const onEditSubmit = (submitData) => {
                         <SpecialTable action={true} />
                     </Card> */}
                 </Block>
-                <AddModal modal={modal.add} formData={formData} setFormData={setFormData} closeModal={closeModal} onSubmit={onFormSubmit} filterStatus={filterStatus} filterJk={filterJk} />
+                {/* <AddModal modal={modal.add} formData={formData} setFormData={setFormData} closeModal={closeModal} onSubmit={onFormSubmit} filterStatus={filterStatus} filterJk={filterJk} /> */}
             </Content>
         </React.Fragment>
   )

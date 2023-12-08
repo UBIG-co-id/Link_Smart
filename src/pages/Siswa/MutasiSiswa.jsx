@@ -7,6 +7,7 @@ import { mutasiSiswa, filterJp, filterP, filterPeng, filterAgm, filterJk, filter
 import { Card, DropdownItem, DropdownMenu, DropdownToggle, Label, UncontrolledDropdown } from 'reactstrap'
 import { bulkActionOptions } from '../../utils/Utils'
 import Mutasi from '../../component/modal/siswa/Mutasi'
+import { Link } from 'react-router-dom';
 
 const MutasiSiswa = () => {
     const [sm, updateSm] = useState(false);
@@ -127,11 +128,13 @@ const MutasiSiswa = () => {
                                             </Button>
                                         </li> */}
                                         <li >
+                                            <Link to='/siswa/add-mutasi-siswa'>
                                             <Button color="primary" onClick={() => setModal({ add: true })}>
                                                 <Icon name="plus">
                                                 </Icon>
-                                                <div>Data Manual</div>
+                                                <div>Data Mutasi</div>
                                             </Button>
+                                            </Link>
                                         </li>
                                     </ul>
                                 </div>
@@ -359,7 +362,7 @@ const MutasiSiswa = () => {
                         </div>
                     </DataTable>
                 </Block>
-                <Mutasi modal={modal.add} closeModal={closeModal} formData={formData} setFormData={setFormData} filterJk={filterJk} filterAgm={filterAgm} filterJp={filterJp} filterP={filterP} filterPeng={filterPeng} />
+                {/* <Mutasi modal={modal.add} closeModal={closeModal} formData={formData} setFormData={setFormData} filterJk={filterJk} filterAgm={filterAgm} filterJp={filterJp} filterP={filterP} filterPeng={filterPeng} /> */}
             </Content>
         </React.Fragment>
     )

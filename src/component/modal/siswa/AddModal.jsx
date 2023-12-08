@@ -6,18 +6,10 @@ import {
   Row,
 } from 'reactstrap'
 import {
-  Block,
-  BlockBetween,
-  BlockDes,
-  BlockHead,
-  BlockHeadContent,
-  BlockTitle,
   Icon,
-  PreviewAltCard,
   RSelect,
   Col,
   Button,
-  RSelect,
   BlockHead,
   BlockBetween,
   BlockHeadContent,
@@ -31,8 +23,6 @@ import Dropzone from "react-dropzone";
 import Head from '../../../layout/Head';
 import Content from '../../../layout/Content/Content';
 import { Steps, Step } from "react-step-builder";
-import Head from '../../../layout/Head';
-import Content from '../../../layout/Content/Content';
 
 
 const AddModal = ({ modal, closeModal, onSubmit, filterAgm, filterJk, filterP, filterPeng, filterJp }) => {

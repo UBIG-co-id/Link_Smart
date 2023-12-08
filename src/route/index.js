@@ -4,13 +4,9 @@ import { Routes, Route, useLocation } from "react-router-dom";
 import Dashboard from '../pages/Dashboard';
 import Pegawai from '../pages/Pegawai/Pegawai';
 import { UserContextProvider } from '../component/user/UserContext';
-import RuangKelas from '../pages/Kelas/RuangKelas';
 // SISWA
-import Siswa from '../pages/Siswa/Siswa';
 import KenaikanKelas from '../pages/Kelas/KenaikanKelas';
 import AksesEditSiswa from '../pages/Siswa/AksesEditSiswa';
-import MutasiSiswa from '../pages/Siswa/MutasiSiswa';
-import AddSiswa from '../component/modal/siswa/AddModal';
 // END SISWA
 import MapelKelas from '../pages/Rapor/Mapel/Kelas'
 import PenilaianAspek from '../pages/Rapor/Penilaian/Aspek';
@@ -19,7 +15,11 @@ import Login from '../pages/Auth/Login';
 import Register from '../pages/Auth/Register';
 import PresensiSiswaManual from '../pages/Presensi/SiswaManual';
 
-//add utasi ptk
+//add mutasi siswa
+import MutasiSiswa from '../pages/Siswa/MutasiSiswa';
+import AddMutasiSiswa from '../component/modal/siswa/Mutasi';
+
+//add mutasi ptk
 import PTK from '../pages/Pegawai/MutasiPtk'
 
 //add ruang kelas
@@ -112,7 +112,6 @@ const Router = () => {
         <Route path='/kelas/Kenaikan-kelas' element={<KenaikanKelas />}></Route>
 
         <Route path='/siswa/akses-edit-siswa' element={<AksesEditSiswa />}></Route>
-        <Route path='/siswa/mutasi-siswa' element={<MutasiSiswa />}></Route>
         <Route path='/siswa/add-siswa' element={<AddSiswa />}></Route>
         
 
@@ -135,6 +134,11 @@ const Router = () => {
         <Route path='/rapor/rekap-nilai' element={<RekapNilai/>}></Route>
         <Route path='/rapor/cetak-cover' element={<Cover/>}></Route>
         {/* END RAPOR */}
+
+        {/* ADD MUTASI SISWA */}
+        <Route path='/siswa/mutasi-siswa' element={<MutasiSiswa />}></Route>
+        <Route path='/siswa/add-mutasi-siswa' element={<AddMutasiSiswa />}></Route>
+        {/* ADD MUTASI SISWA */}
 
         {/* ADD RUANG KELAS */}
         <Route path='/kelas/ruang' element={<RuangKelas />}></Route>

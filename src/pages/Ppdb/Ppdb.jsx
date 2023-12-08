@@ -20,7 +20,7 @@ const Ppdb = () => {
     const indexOfFirstItem = indexOfLastItem - itemPerPage;
     const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
     const toggle = () => setonSearch(!onSearch);
-    const [onSearch, setonSearch] = useState(false);
+    const [onSearch, setonSearch] = useState(true);
     const [onSearchText, setSearchText] = useState("");
     const [actionText, setActionText] = useState("");
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
