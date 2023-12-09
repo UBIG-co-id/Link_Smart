@@ -5,6 +5,8 @@ import { Block, BlockHead, BlockBetween, BlockHeadContent, BlockTitle, BlockDes,
 import { DataTableBody, DataTableHead, DataTableItem, DataTableRow } from '../../../component/table/DataTable'
 import { templateRapor } from '../../../component/user/UserData'
 import { Card, DropdownItem, DropdownMenu, DropdownToggle, UncontrolledDropdown } from 'reactstrap'
+import { Link } from 'react-router-dom';
+
 const TemplateRapor = () => {
     const [sm, updateSm] = useState(false);
     const [data, setData] = useState(templateRapor);
@@ -37,6 +39,32 @@ const TemplateRapor = () => {
         newData[index].status = "Rejected";
         setData([...newData]);
     };
+    const [FormData, setFormData] = useState({
+        namatemplate: "",
+        tipe: "",
+        aktif:"",
+      });
+    
+      const resetForm = () => {
+        setFormData({
+            namatemplate: "",
+            tipe: "",
+            aktif:"",
+    
+        });
+    };
+    const onFormSubmit = (submitData) => {
+        const { namatemplate, tipe, aktif } = submitData;
+        let submittedData = {
+            id: data.length + 1,
+            namatemplate: namatemplate,
+            tipe: tipe,
+            aktif:aktif,
+        };
+        setData([submitData, ...data]);
+        resetForm();
+        // setModal({ edit: false , add: false });
+    };
     return (
         <React.Fragment>
             <Head title="Penilaian Lain"></Head>
@@ -60,11 +88,13 @@ const TemplateRapor = () => {
                                 <div className="card-title">
                                     <ul>
                                         <li className="nk-block-tools-opt mb-2">
+                                            <Link to='/rapor/add-template'>
                                             <Button color="primary" onClick={() => setModal({ add: true })}>
                                                 <Icon name="plus">
                                                 </Icon>
                                                 <div>Template Rapor</div>
                                             </Button>
+                                            </Link>
                                         </li>
                                     </ul>
                                     {/* <h5 className="title">Data Rentang Nilai</h5> */}

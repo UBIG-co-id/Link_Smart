@@ -9,7 +9,6 @@ import KenaikanKelas from '../pages/Kelas/KenaikanKelas';
 import AksesEditSiswa from '../pages/Siswa/AksesEditSiswa';
 // END SISWA
 import MapelKelas from '../pages/Rapor/Mapel/Kelas'
-import PenilaianAspek from '../pages/Rapor/Penilaian/Aspek';
 import LayoutNoSidebar from '../layout/index-nonSidebar'
 import Login from '../pages/Auth/Login';
 import Register from '../pages/Auth/Register';
@@ -50,13 +49,26 @@ import AddMapel from '../component/modal/mapel/AddModal';
 import PenilaianSikap from '../pages/Rapor/Penilaian/Sikap';
 import AddPenilaianSikap from '../component/modal/penilaian-sikap/AddPenilaianSikap';
 
+//add penilaian lain
+import PenilaianLain from '../pages/Rapor/Penilaian/Lain';
+import AddPenilaianLain from '../component/modal/Penilaian-lain/AddPenilaianLain';
+
+//add penilaian aspek
+import PenilaianAspek from '../pages/Rapor/Penilaian/Aspek';
+import AddPenilaianAspek from '../component/modal/penilaian-aspek/AddPenilaianAspek';
+
+//add template rapor
+import TemplateRapor from '../pages/Rapor/Template/TemplateRapor';
+import AddTemplateRapor from '../component/modal/template-rapor/AddTemplateRapor';
+
+//add rentang nilai
+import RentangNilai from '../pages/Rapor/Setting/RentangNilai';
+import AddRentangNilai from '../component/modal/rentang-nilai/AddRentangNilai';
+
 // import PresensiSiswa from '../pages/Presensi/Siswa';
 import PenilaianKd from '../pages/Rapor/Penilaian/Kd';
-import PenilaianLain from '../pages/Rapor/Penilaian/Lain';
-import TemplateRapor from '../pages/Rapor/Template/TemplateRapor';
 import SettingUmum from '../pages/Rapor/Setting/Umum';
 import TampilanRapor from '../pages/Rapor/Setting/TampilanRapor';
-import RentangNilai from '../pages/Rapor/Setting/RentangNilai';
 import KkmBatas from '../pages/Rapor/Setting/KkmBatas';
 import TagihanSiswa from '../pages/Pembayaran/TagihanSiswa';
 import TagihanSpp from '../pages/Pembayaran/TagihanSpp';
@@ -122,18 +134,24 @@ const Router = () => {
         {/* RAPOR */}
         <Route path='/rapor/mapel-kelas' element={<MapelKelas />}></Route>
         <Route path='/presensi/siswa-manual' element={<PresensiSiswaManual/>}></Route>
-        <Route path='/rapor/penilaian-aspek' element={<PenilaianAspek />}></Route>
         <Route path='/rapor/penilaian-kd' element={<PenilaianKd />}></Route>
-        <Route path='/rapor/penilaian-lain' element={<PenilaianLain />}></Route>
-        <Route path='/rapor/template' element={<TemplateRapor />}></Route>
         <Route path='/rapor/setting-umum' element={<SettingUmum />}></Route>
         <Route path='/rapor/setting-tampilkan' element={<TampilanRapor />}></Route>
-        <Route path='/rapor/setting-rentang' element={<RentangNilai />}></Route>
         <Route path='/rapor/penilaian-kkm-batas' element={<KkmBatas />}></Route>
         <Route path='/rapor/kurikulum' element={<RaporKurikulum/>}></Route>
         <Route path='/rapor/rekap-nilai' element={<RekapNilai/>}></Route>
         <Route path='/rapor/cetak-cover' element={<Cover/>}></Route>
         {/* END RAPOR */}
+
+        {/* ADD RENTANG NILAI */}
+        <Route path='/rapor/setting-rentang' element={<RentangNilai />}></Route>
+        <Route path='/rapor/add-rentang' element={<AddRentangNilai />}></Route>
+        {/* ADD RENTANG NILAI */}
+
+        {/* ADD TEMPLATE RAPOR */}
+        <Route path='/rapor/template' element={<TemplateRapor />}></Route>
+        <Route path='/rapor/add-template' element={<AddTemplateRapor />}></Route>
+        {/* ADD TEMPLATE RAPOR */}
 
         {/* ADD MUTASI SISWA */}
         <Route path='/siswa/mutasi-siswa' element={<MutasiSiswa />}></Route>
@@ -159,6 +177,16 @@ const Router = () => {
         <Route path='/rapor/penilaian-sikap' element={<PenilaianSikap />}></Route>
         <Route path='/rapor/add-penilaian-sikap' element={<AddPenilaianSikap />}></Route>
         {/* ADD PENILAIAN SIKAP */}
+
+        {/* ADD PENILAIAN LAIN */}
+        <Route path='/rapor/penilaian-lain' element={<PenilaianLain />}></Route>
+        <Route path='/rapor/add-penilaian-lain' element={<AddPenilaianLain />}></Route>
+        {/* ADD PENILAIAN LAIN */}
+
+        {/* ADD PENILAIAN ASPEK */}
+        <Route path='/rapor/penilaian-aspek' element={<PenilaianAspek />}></Route>
+        <Route path='/rapor/add-penilaian-aspek' element={<AddPenilaianAspek />}></Route>
+        {/* ADD PENILAIAN ASPEK */}
 
         {/* ADD SISWA */}
         <Route path='/siswa' element={<Siswa />}></Route>

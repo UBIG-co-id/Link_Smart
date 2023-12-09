@@ -5,6 +5,7 @@ import { Block, BlockHead, BlockBetween, BlockHeadContent, BlockTitle, BlockDes,
 import { DataTableBody, DataTableHead, DataTableItem, DataTableRow } from '../../../component/table/DataTable'
 import { penilaianAspek } from '../../../component/user/UserData'
 import { Card, DropdownItem, DropdownMenu, DropdownToggle, UncontrolledDropdown } from 'reactstrap'
+import { Link } from 'react-router-dom'
 
 const Aspek = () => {
     const [sm, updateSm] = useState(false);
@@ -54,6 +55,31 @@ const Aspek = () => {
         newData[index].status = "Rejected";
         setData([...newData]);
     };
+    const [FormData, setFormData] = useState({
+        aspek: "",
+        ujian:"",
+    });
+    const resetForm = () => {
+        setFormData({
+        aspek: "",
+        ujian:"",
+        });
+    };
+    const closeModal = () => {
+        setModal({ add: false })
+        resetForm();
+    };
+    const onFormSubmit = (submitData) => {
+        const { aspek, ujian } = submitData;
+        let submittedData = {
+            id: data.length + 1,
+            aspek: aspek,
+            ujian: ujian,
+        };
+        setData([submitData, ...data]);
+        resetForm();
+        // setModal({ edit: false , add: false });
+    };
     return (
         <React.Fragment>
             <Head title="Penilaian Aspek"></Head>
@@ -91,11 +117,13 @@ const Aspek = () => {
                                             </Button>
                                         </li> */}
                                         <li className="nk-block-tools-opt">
+                                            <Link to="/rapor/add-penilaian-aspek">
                                             <Button color="primary" onClick={() => setModal({ add: true })}>
                                                 <Icon name="plus">
                                                 </Icon>
                                                 <div>Aspek Penilaian</div>
                                             </Button>
+                                            </Link>
                                         </li>
                                     </ul>
                                 </div>

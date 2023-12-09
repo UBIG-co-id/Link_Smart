@@ -5,6 +5,7 @@ import { Col, Block, BlockHead, BlockBetween, BlockHeadContent, BlockTitle, Bloc
 import { DataTableBody, DataTableHead, DataTableItem, DataTableRow } from '../../../component/table/DataTable'
 import { kkmBatas } from '../../../component/user/UserData'
 import { Card, DropdownItem, DropdownMenu, DropdownToggle, UncontrolledDropdown } from 'reactstrap'
+import { Link } from 'react-router-dom'
 
 const KkmBatas = () => {
     const [sm, updateSm] = useState(false);

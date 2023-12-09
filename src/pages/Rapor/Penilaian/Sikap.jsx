@@ -3,13 +3,14 @@ import Content from '../../../layout/Content/Content'
 import Head from '../../../layout/Head'
 import { Block, BlockHead, BlockBetween, BlockHeadContent, BlockTitle, BlockDes, Button, Icon, SpecialTable, DataTable, RSelect, TooltipComponent, PaginationComponent } from '../../../component/Component'
 import { DataTableBody, DataTableHead, DataTableItem, DataTableRow } from '../../../component/table/DataTable'
-import { penilaianSikap } from '../../../component/user/UserData'
+import { nilaisikap ,filterSikap } from '../../../component/user/UserData'
 import { Card, DropdownItem, DropdownMenu, DropdownToggle, UncontrolledDropdown } from 'reactstrap'
+import { Link } from 'react-router-dom'
 
 
 const Sikap = () => {
     const [sm, updateSm] = useState(false);
-    const [data, setData] = useState(penilaianSikap);
+    const [data, setData] = useState(nilaisikap);
     const [modal, setModal] = useState({
         edit: false,
         add: false,
@@ -39,6 +40,35 @@ const Sikap = () => {
         let index = newData.findIndex((item) => item.id === id);
         newData[index].status = "Rejected";
         setData([...newData]);
+    };
+    const [FormData, setFormData] = useState({
+        sikap: "",
+        nilai: "",
+        deskap:  "",
+    });
+    const resetForm = () => {
+        setFormData({
+            sikap: "",
+            nilai: "",
+            deskap:  "",
+
+        });
+    };
+    const closeModal = () => {
+        setModal({ add: false })
+        resetForm();
+    };
+    const onFormSubmit = (submitData) => {
+        const { sikap, nilai, deskap } = submitData;
+        let submittedData = {
+            id: data.length + 1,
+            sikap: sikap,
+            nilai: nilai,
+            deskap: deskap,
+        };
+        setData([submitData, ...data]);
+        resetForm();
+        setModal({ edit: false , add: false });
     };
     return (
         <React.Fragment>
@@ -77,11 +107,13 @@ const Sikap = () => {
                                             </Button>
                                         </li> */}
                                         <li className="nk-block-tools-opt">
+                                            <Link to='/rapor/add-penilaian-sikap'>
                                             <Button color="primary " onClick={() => setModal({ add: true })}>
                                                 <Icon name="plus">
                                                 </Icon>
                                                 <div>Skenario Penilaian Sikap</div>
                                             </Button>
+                                            </Link>
                                         </li>
                                     </ul>
                                 </div>

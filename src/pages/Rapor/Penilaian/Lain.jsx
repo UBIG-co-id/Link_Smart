@@ -5,6 +5,7 @@ import { Block, BlockHead, BlockBetween, BlockHeadContent, BlockTitle, BlockDes,
 import { DataTableBody, DataTableHead, DataTableItem, DataTableRow } from '../../../component/table/DataTable'
 import { penilaianLain } from '../../../component/user/UserData'
 import { Card, DropdownItem, DropdownMenu, DropdownToggle, UncontrolledDropdown } from 'reactstrap'
+import { Link } from 'react-router-dom'
 
 const Lain = () => {
     const [sm, updateSm] = useState(false);
@@ -77,11 +78,13 @@ const Lain = () => {
                                             </Button>
                                         </li> */}
                                         <li >
+                                            <Link to='/rapor/add-penilaian-lain'>
                                             <Button color="primary" onClick={() => setModal({ add: true })}>
                                                 <Icon name="plus">
                                                 </Icon>
                                                 <div>Penilaian Lain</div>
                                             </Button>
+                                            </Link>
                                         </li>
                                     </ul>
                                 </div>

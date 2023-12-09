@@ -5,6 +5,7 @@ import { Col, Block, BlockHead, BlockBetween, BlockHeadContent, BlockTitle, Bloc
 import { DataTableBody, DataTableHead, DataTableItem, DataTableRow } from '../../../component/table/DataTable'
 import { rentangNilai } from '../../../component/user/UserData'
 import { Card, DropdownItem, DropdownMenu, DropdownToggle, UncontrolledDropdown } from 'reactstrap'
+import { Link } from 'react-router-dom';
 
 const RentangNilai = () => {
     const [sm, updateSm] = useState(false);
@@ -98,11 +99,13 @@ const RentangNilai = () => {
                                 <div className="card-tools me-n1">
                                     <ul>
                                         <li className="nk-block-tools-opt mb-2">
+                                            <Link to='/rapor/add-rentang'>
                                             <Button color="primary" onClick={() => setModal({ add: true })}>
                                                 <Icon name="plus">
                                                 </Icon>
                                                 <div>Rentang</div>
                                             </Button>
+                                            </Link>
                                         </li>
                                     </ul>
                                     <ul className="btn-toolbar gx-1">

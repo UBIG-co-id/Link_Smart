@@ -21,22 +21,20 @@ import { useForm } from 'react-hook-form'
 import Dropzone from "react-dropzone";
 import Head from '../../../layout/Head';
 import Content from '../../../layout/Content/Content';
-import { filterSikap, nilaisikap} from '../../user/UserData';
+import { filtertipenilai, rentangNilai} from '../../user/UserData';
 import { Link } from 'react-router-dom';
-const AddPenilaianSikap = ({ modal, closeModal, }) => {
-  const [data, setData] = useState(nilaisikap);
+const AddRentangNilai = ({ modal, closeModal, }) => {
+  const [data, setData] = useState(rentangNilai);
   const [files4, setFiles4] = useState([]);
   const [FormData, setFormData] = useState({
-    sikap: "",
-    nilai: "",
-    deskap:  "", // Added nilai_kkm to FormData
+        deskripsi:"",
+        huruf: "",
   });
 
   const resetForm = () => {
     setFormData({
-        sikap: "",
-        nilai: "",
-        deskap:  "",
+        deskripsi:"",
+        huruf: "",
 
     });
 };
@@ -58,12 +56,11 @@ const AddPenilaianSikap = ({ modal, closeModal, }) => {
   };
 
   const onFormSubmit = (submitData) => {
-    const { sikap, nilai, deskap } = submitData;
+    const { deskripsi, huruf } = submitData;
     let submittedData = {
         id: data.length + 1,
-        sikap: sikap,
-        nilai: nilai,
-        deskap: deskap,
+        deskripsi: deskripsi,
+        huruf: huruf,
     };
     setData([submitData, ...data]);
     resetForm();
@@ -73,13 +70,13 @@ const AddPenilaianSikap = ({ modal, closeModal, }) => {
   return (
 
     <React.Fragment>
-    <Head title="Add KKM"></Head>
+    <Head title="Add Penilaian Aspek"></Head>
     <Content>
       <BlockHead size="sm">
         <BlockBetween>
           <BlockHeadContent>
             <BlockTitle page tag="h3">
-              Tambah Skeneraio Sikap
+              Tambah Rentang Nilai
             </BlockTitle>
             <BlockDes className="text-soft">
               <p>Welcome to Link Smart</p>
@@ -92,53 +89,37 @@ const AddPenilaianSikap = ({ modal, closeModal, }) => {
         <PreviewAltCard>
 
       <div className='p-2'>
-         <h5 className="title">Penilaian Sikap</h5>
+         <h5 className="title">Rentang Nilai</h5>
          <div className='mt-4'>
            <Form className="row gy-4" noValidate onSubmit={handleSubmit(onFormSubmit)}>
-             <Col md="6">
-             <div className="form-group">
-             <label className="form-label">Tipe Sikap</label>
-             <div>
-             <RSelect
-                options={filterSikap}
-                value={{
-                  value: FormData?.sikap || '',
-                  label: FormData?.sikap || '',
-                }}
-                onChange={(e) => setFormData({ ...FormData, sikap: e.value })}
-              />
-
-            </div>
-            </div>
-            <Col md="12">
+           <Col md="4">
               <div className='form-group'>
-              <label className="form-label">Nilai</label>
+              <label className="form-label">Deskripsi</label>
               <input
               className="form-control"
               type="text"
-              {...register('nilai', { required: "This field is required" })}
-              value={FormData?.nilai || ''}
-              onChange={(e) => setFormData({ ...FormData, nilai: e.target.value })}
-              placeholder="Contoh: A"
+              {...register('aspek', { required: "This field is required" })}
+              value={FormData?.aspek || ''}
+              onChange={(e) => setFormData({ ...FormData, aspek: e.target.value })}
+              placeholder=""
             />
-                    {errors.nilai_kkm && <span className="invalid">{errors.nilai_kkm.message}</span>}
+                    {errors.aspek && <span className="invalid">{errors.aspek.message}</span>}
               </div>
+              <Col md="12">
+              <div className='form-group'>
+              <label className="form-label">Huruf</label>
+              <input
+              className="form-control"
+              type="text"
+              {...register('aspek', { required: "This field is required" })}
+              value={FormData?.aspek || ''}
+              onChange={(e) => setFormData({ ...FormData, aspek: e.target.value })}
+              placeholder=""
+            />
+                    {errors.aspek && <span className="invalid">{errors.aspek.message}</span>}
+              </div>
+             
             </Col>
-            <Col md="12">
-                <div className="form-group">
-                  <label className="form-label">Deskripsi</label>
-                  <div className="form-control-wrap">
-                    <textarea
-                      className="form-control"
-                      {...register('deskap', { required: "This field is required" })}
-                      value={FormData.deskap}
-                      onChange={(e) => setFormData({ ...FormData, deskap: e.target.value })}
-                      placeholder=""
-                    />
-                    {errors.deskap && <span className="invalid">{errors.deskap.message}</span>}
-                  </div>
-                </div>
-              </Col>
             </Col>
             <Col size="12">
               <ul className="align-center flex-wrap flex-sm-nowrap gx-4 gy-2">
@@ -148,7 +129,7 @@ const AddPenilaianSikap = ({ modal, closeModal, }) => {
                 </Button>
               </li>
               <li>
-                <Link to = '/rapor/penilaian-sikap'>
+                <Link to = '/rapor/setting-rentang'>
               <a
                 // href="#cancel"
                 // onClick={(ev) => {
@@ -174,4 +155,4 @@ const AddPenilaianSikap = ({ modal, closeModal, }) => {
       </React.Fragment>
         )
     }
-     export default AddPenilaianSikap
+     export default AddRentangNilai

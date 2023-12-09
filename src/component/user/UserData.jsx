@@ -132,6 +132,15 @@ export const mapel = [
 
     },
 ]
+export const nilaisikap = [
+    {
+        id: 1,
+        sikap: "sosial",
+        nilai: "83",
+        deskap: "coba",
+
+    },
+]
 export const mapelKelas = [
     {
         id: 1,
@@ -198,6 +207,17 @@ export const penilaianAspek = [
        ujian:'Project',
       
     },
+]
+export const filtertiperapor = [
+    { value: "Umum", label: "Umum" },
+    { value: "Khusus", label: "Khusus" },
+    { value: "Cover Rapor", label: "Cover Rapor" },
+]
+export const filtertipenilai = [
+    { value: "Mata Pelajaran[KD]", label: "Mata Pelajaran[KD]" },
+    { value: "Pengetahuan[Nilai Akhir]", label: "Pengetahuan[Nilai Akhir]" },
+    { value: "Keterampilan[Nilai Akhir]", label: "Keterampilan[Nilai Akhir]" },
+    { value: "Sikap", label: "Sikap" },
 ]
 export const penilaianKd = [
     {
@@ -485,6 +505,11 @@ export const filterJp = [
     { value: "SMA", label: "SMA" },
     { value: "SMP", label: "SMP" },
     { value: "SD", label: "SD" },
+
+];
+export const filterSt = [
+    { value: "Aktif", label: "Aktif" },
+    { value: "Non-Aktif", label: "Non-Aktif" },
 
 ];
 export const filterP = [

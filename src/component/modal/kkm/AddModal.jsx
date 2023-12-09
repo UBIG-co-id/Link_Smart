@@ -96,7 +96,7 @@ const AddModal = ({ modal, closeModal, }) => {
          <h5 className="title">Set Nilai KKM</h5>
          <div className='mt-4'>
            <Form className="row gy-4" noValidate onSubmit={handleSubmit(onFormSubmit)}>
-             <Col md="6">
+             <Col md="4">
              <div className="form-group">
              <label className="form-label">Pilih Mata Pelajaran</label>
              <div>
@@ -111,7 +111,7 @@ const AddModal = ({ modal, closeModal, }) => {
 
             </div>
             </div>
-            <Col md="6">
+            <Col md="12">
               <div className='form-group'>
               <label className="form-label">Nilai KKM</label>
               <input
