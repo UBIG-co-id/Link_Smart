@@ -65,11 +65,14 @@ import AddTemplateRapor from '../component/modal/template-rapor/AddTemplateRapor
 import RentangNilai from '../pages/Rapor/Setting/RentangNilai';
 import AddRentangNilai from '../component/modal/rentang-nilai/AddRentangNilai';
 
+// add kkm batas
+import KkmBatas from '../pages/Rapor/Setting/KkmBatas';
+import AddKkmBatas from '../component/modal/kkm-batas/AddKkmBatas';
+
 // import PresensiSiswa from '../pages/Presensi/Siswa';
 import PenilaianKd from '../pages/Rapor/Penilaian/Kd';
 import SettingUmum from '../pages/Rapor/Setting/Umum';
 import TampilanRapor from '../pages/Rapor/Setting/TampilanRapor';
-import KkmBatas from '../pages/Rapor/Setting/KkmBatas';
 import TagihanSiswa from '../pages/Pembayaran/TagihanSiswa';
 import TagihanSpp from '../pages/Pembayaran/TagihanSpp';
 import KustomSppSiswa from '../pages/Pembayaran/KustomSppSiswa';
@@ -137,11 +140,15 @@ const Router = () => {
         <Route path='/rapor/penilaian-kd' element={<PenilaianKd />}></Route>
         <Route path='/rapor/setting-umum' element={<SettingUmum />}></Route>
         <Route path='/rapor/setting-tampilkan' element={<TampilanRapor />}></Route>
-        <Route path='/rapor/penilaian-kkm-batas' element={<KkmBatas />}></Route>
         <Route path='/rapor/kurikulum' element={<RaporKurikulum/>}></Route>
         <Route path='/rapor/rekap-nilai' element={<RekapNilai/>}></Route>
         <Route path='/rapor/cetak-cover' element={<Cover/>}></Route>
         {/* END RAPOR */}
+
+        {/* ADD KKM BATAS */}
+        <Route path='/rapor/penilaian-kkm-batas' element={<KkmBatas />}></Route>
+        <Route path='/rapor/add-penilaian-kkm-batas' element={<AddKkmBatas />}></Route>
+        {/* ADD KKM BATAS */}
 
         {/* ADD RENTANG NILAI */}
         <Route path='/rapor/setting-rentang' element={<RentangNilai />}></Route>

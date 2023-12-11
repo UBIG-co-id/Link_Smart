@@ -97,11 +97,13 @@ const KkmBatas = () => {
                                 <div className="card-tools me-n1">
                                     <ul>
                                         <li className="nk-block-tools-opt mb-2">
+                                            <Link to='/rapor/add-penilaian-kkm-batas'>
                                             <Button color="primary" onClick={() => setModal({ add: true })}>
                                                 <Icon name="plus">
                                                 </Icon>
                                                 <div>KKM Batas</div>
                                             </Button>
+                                            </Link>
                                         </li>
                                     </ul>
                                     <ul className="btn-toolbar gx-1">

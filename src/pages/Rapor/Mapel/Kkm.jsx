@@ -161,7 +161,7 @@ const Kkm = () => {
                                 <div className="card-tools me-n1">
                                     
                                     <ul>
-                                        <li >
+                                        <li className="nk-block-tools-opt mb-2">
                                             <Link to ='/rapor/add-kkm'>
                                             <Button color="primary" >
                                                 <Icon name="plus">

@@ -98,12 +98,12 @@ const AddRentangNilai = ({ modal, closeModal, }) => {
               <input
               className="form-control"
               type="text"
-              {...register('aspek', { required: "This field is required" })}
-              value={FormData?.aspek || ''}
-              onChange={(e) => setFormData({ ...FormData, aspek: e.target.value })}
+              {...register('deskripsi', { required: "This field is required" })}
+              value={FormData?.deskripsi || ''}
+              onChange={(e) => setFormData({ ...FormData, deskripsi: e.target.value })}
               placeholder=""
             />
-                    {errors.aspek && <span className="invalid">{errors.aspek.message}</span>}
+                    {errors.deskripsi && <span className="invalid">{errors.deskripsi.message}</span>}
               </div>
               <Col md="12">
               <div className='form-group'>
@@ -111,12 +111,12 @@ const AddRentangNilai = ({ modal, closeModal, }) => {
               <input
               className="form-control"
               type="text"
-              {...register('aspek', { required: "This field is required" })}
-              value={FormData?.aspek || ''}
-              onChange={(e) => setFormData({ ...FormData, aspek: e.target.value })}
+              {...register('huruf', { required: "This field is required" })}
+              value={FormData?.huruf || ''}
+              onChange={(e) => setFormData({ ...FormData, huruf: e.target.value })}
               placeholder=""
             />
-                    {errors.aspek && <span className="invalid">{errors.aspek.message}</span>}
+                    {errors.huruf && <span className="invalid">{errors.huruf.message}</span>}
               </div>
              
             </Col>

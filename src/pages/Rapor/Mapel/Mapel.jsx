@@ -146,7 +146,7 @@ const Mapel = () => {
                                         <li>
                                             <Button color="primary" outline className="btn-dim btn-white">
                                                 <Icon name="download-cloud"></Icon>
-                                                <span>Export</span>
+                                                <span>Expor</span>
                                             </Button>
                                         </li>
                                         <li>
@@ -175,15 +175,14 @@ const Mapel = () => {
 
                 <Block>
                     <DataTable className="card-stretch">
-                        <div className="card-inner position-relative card-tools-toggle">
+                    <div className="card-inner">
                             <div className="card-title-group">
-                            {/* <div className="card-title">
-                                    <h5 className="title">Tambah Mata Pelajaran </h5>
-                                </div> */}
-                                <div className="card-tools">
-                                    <div className="form-inline flex-nowrap gx-3">
-                                        <ul className="btn-toolbar gx-1">
-                                            <li>
+                                <div className="card-title">
+                                    <h5 className="title"></h5>
+                                </div>
+                                <div className="card-tools me-n1">
+                                    <ul className="btn-toolbar gx-1">
+                                        <li>
                                             <Button
                                                 href="#search"
                                                 onClick={(ev) => {
@@ -194,18 +193,19 @@ const Mapel = () => {
                                             >
                                                 <Icon name="search"></Icon>
                                             </Button>
-                                            </li>
-                                            <li className="btn-toolbar-sep"></li>
-                                            <li>
-                                                <UncontrolledDropdown>
-                                                    <DropdownToggle tag="a" className="btn btn-trigger btn-icon dropdown-toggle">
-                                                        <div className="dot dot-primary"></div>
-                                                        <Icon name="filter-alt"></Icon>
-                                                    </DropdownToggle>
-                                                </UncontrolledDropdown>
-                                            </li>
-                                        </ul>
-                                        <div className={`card-search search-wrap ${!onSearch && "active"}`}>
+                                        </li>
+                                        <li className="btn-toolbar-sep"></li>
+                                        <li>
+                                            <UncontrolledDropdown>
+                                                <DropdownToggle tag="a" className="btn btn-trigger btn-icon dropdown-toggle">
+                                                    <div className="dot dot-primary"></div>
+                                                    <Icon name="filter-alt"></Icon>
+                                                </DropdownToggle>
+                                            </UncontrolledDropdown>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div className={`card-search search-wrap ${!onSearch && "active"}`}>
                                     <div className="search-content">
                                         <Button
                                             onClick={() => {
@@ -226,12 +226,6 @@ const Mapel = () => {
                                         <Button className="search-submit btn-icon">
                                             <Icon name="search"></Icon>
                                         </Button>
-                                    </div>
-                                            <div className="form-inline flex-nowrap gx-3">
-
-                                            </div>
-                                    
-                                        </div>
                                     </div>
                                 </div>
                             </div>

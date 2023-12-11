@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react'
 import Content from '../../../layout/Content/Content'
 import Head from '../../../layout/Head'
+import AddModal from '../../../component/modal/tampilkan-rapor/AddModal'
 import { Col, Block, BlockHead, BlockBetween, BlockHeadContent, BlockTitle, BlockDes, Button, Icon, SpecialTable, DataTable, RSelect, TooltipComponent, PaginationComponent } from '../../../component/Component'
 import { DataTableBody, DataTableHead, DataTableItem, DataTableRow } from '../../../component/table/DataTable'
 import { tampilkanRapor } from '../../../component/user/UserData'
@@ -16,6 +17,32 @@ const TampilanRapor = () => {
 
     const onFilterChange = (e) => {
         setSearchText(e.target.value);
+    };
+
+    const [formData, setFormData] = useState({
+        nis:"",
+        nls: "",
+        kls: "",
+        tr:"",
+        plh:""
+    });
+    const resetForm = () => {
+        setFormData({
+        nis:"",
+        nls: "",
+        kls: "",
+        tr:"",
+        plh:""
+        });
+    };
+
+    const closeModal = () => {
+        setModal({ add: false })
+        resetForm();
+    };
+    const closeEditModal = () => {
+        setModal({ edit: false })
+        resetForm();
     };
 
     const [modal, setModal] = useState({
@@ -252,6 +279,7 @@ const TampilanRapor = () => {
                         </div>
                     </DataTable>
                 </Block>
+                <AddModal modal={modal.add} FormData={FormData} setFormData={setFormData} closeModal={closeModal} />
             </Content>
         </React.Fragment>
     )

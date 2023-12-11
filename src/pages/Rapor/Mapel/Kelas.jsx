@@ -162,23 +162,26 @@ const Kelas = () => {
                 </BlockHead>
                 <Block>
                     <DataTable className="card-stretch">
-                        <div className="card-inner">
+                    <div className="card-inner">
                             <div className="card-title-group">
+                                <div className="card-title">
+                                    <h5 className="title"></h5>
+                                </div>
                                 <div className="card-tools me-n1">
-                                <ul className="nk-block-tools g-3">
-                                        <li>
+                                    <ul className="nk-block-tools g-3">
+                                        <li className="nk-block-tools-opt mb-2">
                                             <Button color="primary" outline className="btn-dim btn-white">
                                                 <Icon name="download-cloud"></Icon>
                                                 <span>Template Mata Pelajaran-Kelas</span>
                                             </Button>
                                         </li>
-                                        <li>
+                                        <li className="nk-block-tools-opt mb-2">
                                             <Button color="primary" outline className="btn-dim btn-white">
                                                 <Icon name="upload-cloud"></Icon>
                                                 <span>Import Mata Pelajaran-Kelas</span>
                                             </Button>
                                         </li>
-                                        <li >
+                                        <li className="nk-block-tools-opt mb-2">
                                             <Button color="primary"  onClick={() => setModal({ add: true })}>
                                                 <Icon name="plus">
                                                 </Icon>
@@ -208,8 +211,9 @@ const Kelas = () => {
                                                 </DropdownToggle>
                                             </UncontrolledDropdown>
                                         </li>
-                                        </ul>
-                                        <div className={`card-search search-wrap ${!onSearch && "active"}`}>
+                                    </ul>
+                                </div>
+                                <div className={`card-search search-wrap ${!onSearch && "active"}`}>
                                     <div className="search-content">
                                         <Button
                                             onClick={() => {
@@ -225,20 +229,15 @@ const Kelas = () => {
                                             className="border-transparent form-focus-none form-control"
                                             placeholder="Search by Order Id"
                                             value={onSearchText}
-                                            onChange={() => onFilterChange()}
+                                            onChange={(e) => onFilterChange(e)}
                                         />
                                         <Button className="search-submit btn-icon">
                                             <Icon name="search"></Icon>
                                         </Button>
                                     </div>
-                                    <div className="form-inline flex-nowrap gx-3">
-
-                                    </div>
-                                    
-                                </div>
                                 </div>
                             </div>
-                            </div>
+                        </div>
                             <DataTableBody compact>
                             <DataTableHead>
 
