@@ -9,9 +9,80 @@ import { Link } from 'react-router-dom'
 
 const KkmBatas = () => {
     const [sm, updateSm] = useState(false);
-    const [data, setData] = useState(kkmBatas);
+    const [data, setData] = useState([]);
+    const [numUrutan, setNumUrutan] = useState(1);
+    const [sort, setSortState] = useState("");
+    const sortFunc = (params) => {
+        let defaultData = [...data]; // Clone array to avoid modifying the original data
+        if (params === "asc") {
+            let sortedData = defaultData.sort((a, b) => (a.name || "").localeCompare(b.name || ""));
+            setData(sortedData);
+        } else if (params === "dsc") {
+            let sortedData = defaultData.sort((a, b) => (b.name || "").localeCompare(a.name || ""));
+            setData(sortedData);
+        }
+    };
+
+    const [currentPage, setCurrentPage] = useState(1);
+    const [itemPerPage, setItemPerPage] = useState(10);
+    const indexOfLastItem = currentPage * itemPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemPerPage;
+    const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
+
+    const fetchData = async () => {
+        try {
+            const token = localStorage.getItem('jwtToken');
+    
+            // Membuat objek untuk menyimpan parameter yang akan digunakan dalam URL
+            const params = {
+                sort_order: sort === "asc" ? "ascending" : "descending",
+                page: 1, // Page selalu dimulai dari 1, Anda dapat memperbarui ini jika menggunakan halaman yang berbeda
+                limit: itemPerPage,
+            };
+    
+            // Mengubah objek parameter menjadi query string
+            const queryString = Object.keys(params)
+                .map(key => `${key}=${encodeURIComponent(params[key])}`)
+                .join('&');
+    
+            // Menggabungkan URL dengan query string
+            const apiUrl = `https://linksmart-1-t2560421.deta.app/kkm-cari/batas?${queryString}`;
+    
+            const response = await fetch(apiUrl, {
+                method: 'POST',
+                headers: {
+                    'accept': 'application/json',
+                    'Authorization': `Bearer ${token}`,
+                },
+                // ... (tambahkan konfigurasi lainnya sesuai kebutuhan)
+            });
+    
+            const result = await response.json();
+            console.log("ini Data", result.Data)
+            let updatedNumUrutan = numUrutan;
+    
+            const updatedData = result.Data.map((item) => {
+                return { ...item, nomor_urutan: updatedNumUrutan++ };
+            });
+    
+            setData(updatedData);
+            setNumUrutan(updatedNumUrutan);
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    };
+
+    useEffect(() => {
+        setNumUrutan(1);
+        fetchData();
+    }, [sort, itemPerPage]);
+
     const toggle = () => setonSearch(!onSearch);
-    const paginate = (pageNumber) => setCurrentPage(pageNumber);
+    const paginate = (pageNumber) => {
+        setCurrentPage(pageNumber);
+        setNumUrutan((pageNumber - 1) * itemPerPage + 1);
+    };
+
     const [onSearch, setonSearch] = useState(true);
     const [onSearchText, setSearchText] = useState("");
 
@@ -23,11 +94,7 @@ const KkmBatas = () => {
         edit: false,
         add: false,
     });
-    const [currentPage, setCurrentPage] = useState(1);
-    const [itemPerPage, setItemPerPage] = useState(10);
-    const indexOfLastItem = currentPage * itemPerPage;
-    const indexOfFirstItem = indexOfLastItem - itemPerPage;
-    const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
+    
     const onApproveClick = (id) => {
         let newData = data;
         let index = newData.findIndex((item) => item.id === id);
@@ -39,6 +106,70 @@ const KkmBatas = () => {
         let index = newData.findIndex((item) => item.id === id);
         newData[index].status = "Rejected";
         setData([...newData]);
+    };
+
+    const [editId, setEditedId] = useState();
+    const [formData, setFormData] = useState({
+        kkm: "",
+        batasd: "",
+        batasc: "",
+        batasb: "",
+        batasa: "",
+    });
+    const [editFormData, setEditFormData] = useState({
+        kkm: "",
+        batasd: "",
+        batasc: "",
+        batasb: "",
+        batasa: "",
+    });
+    const resetForm = () => {
+        setFormData({
+            kkm: "",
+            batasd: "",
+            batasc: "",
+            batasb: "",
+            batasa: "",
+
+        });
+    };
+    const closeEditModal = () => {
+        setModal({ edit: false })
+        resetForm();
+    };
+    const onEditClick = (id) => {
+        data.forEach((item) => {
+            if (item.id === id) {
+                setEditFormData({
+                    kkm:  item.kkm,
+                    batasd: item.batasd,
+                    batasc: item.batasc,
+                    batasb: item.batasb,
+                    batasa: item.batasa,
+                });
+                setModal({ edit: true }, { add: false });
+                setEditedId(id);
+            }
+        });
+    };
+    const onEditSubmit = (submitData) => {
+        const { kkm, batasa, batasb, batasc, batasd } = submitData;
+        let submittedData;
+        let newitems = data;
+        newitems.forEach((item) => {
+            if (item.id === editId) {
+                submittedData = {
+                    kkm:  kkm,
+                    batasd: batasd,
+                    batasc: batasc,
+                    batasb: batasb,
+                    batasa: batasa,
+                };
+            }
+        });
+        let index = newitems.findIndex((item) => item.id === editId);
+        newitems[index] = submittedData;
+        setModal({ edit: false });
     };
     return (
         <React.Fragment>
@@ -183,7 +314,7 @@ const KkmBatas = () => {
                                         <DataTableItem key={item.id}>
                                             <DataTableRow>
                                                 <div className="tb-lead">
-                                                    <span>{item.id}</span>
+                                                    <span>{item.nomor_urutan}</span>
                                                 </div>
                                             </DataTableRow>
                                             <DataTableRow>
@@ -193,22 +324,22 @@ const KkmBatas = () => {
                                             </DataTableRow>
                                             <DataTableRow>
                                                 <div className="tb-lead">
-                                                    <span>{item.batasd}</span>
+                                                    <span>{item.D}</span>
                                                 </div>
                                             </DataTableRow>
                                             <DataTableRow>
                                                 <div className="tb-lead">
-                                                    <span>{item.batasc}</span>
+                                                    <span>{item.C}</span>
                                                 </div>
                                             </DataTableRow>
                                             <DataTableRow>
                                                 <div className="tb-lead">
-                                                    <span>{item.batasb}</span>
+                                                    <span>{item.B}</span>
                                                 </div>
                                             </DataTableRow>
                                             <DataTableRow>
                                                 <div className="tb-lead">
-                                                    <span>{item.batasa}</span>
+                                                    <span>{item.A}</span>
                                                 </div>
                                             </DataTableRow>
                                             <DataTableRow className="nk-tb-col-tools">

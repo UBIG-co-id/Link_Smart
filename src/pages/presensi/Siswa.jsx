@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Head from '../../layout/Head'
 import { bulkActionOptions } from '../../utils/Utils'
 import Content from '../../layout/Content/Content'
@@ -28,7 +28,72 @@ import { Link } from 'react-router-dom';
 
 
 const Siswa = () => {
-    const [data, setData] = useState(presensiSiswa);
+    const [data, setData] = useState([]);
+    const [numUrutan, setNumUrutan] = useState(1);
+    const [sort, setSortState] = useState("");
+    const sortFunc = (params) => {
+        let defaultData = [...data]; // Clone array to avoid modifying the original data
+        if (params === "asc") {
+            let sortedData = defaultData.sort((a, b) => (a.name || "").localeCompare(b.name || ""));
+            setData(sortedData);
+        } else if (params === "dsc") {
+            let sortedData = defaultData.sort((a, b) => (b.name || "").localeCompare(a.name || ""));
+            setData(sortedData);
+        }
+    };
+    const [currentPage, setCurrentPage] = useState(1);
+    const [itemPerPage, setItemPerPage] = useState(10);
+    const indexOfLastItem = currentPage * itemPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemPerPage;
+    const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
+    const fetchData = async () => {
+        try {
+            const token = localStorage.getItem('jwtToken');
+    
+            // Membuat objek untuk menyimpan parameter yang akan digunakan dalam URL
+            const params = {
+                sort_order: sort === "asc" ? "ascending" : "descending",
+                page: 1, // Page selalu dimulai dari 1, Anda dapat memperbarui ini jika menggunakan halaman yang berbeda
+                limit: itemPerPage,
+            };
+    
+            // Mengubah objek parameter menjadi query string
+            const queryString = Object.keys(params)
+                .map(key => `${key}=${encodeURIComponent(params[key])}`)
+                .join('&');
+    
+            // Menggabungkan URL dengan query string
+            const apiUrl = `https://linksmart-1-t2560421.deta.app/presensi-cari/siswa?${queryString}`;
+    
+            const response = await fetch(apiUrl, {
+                method: 'POST',
+                headers: {
+                    'accept': 'application/json',
+                    'Authorization': `Bearer ${token}`,
+                },
+                // ... (tambahkan konfigurasi lainnya sesuai kebutuhan)
+            });
+    
+            const result = await response.json();
+            console.log("Data ini", result.Data)
+            let updatedNumUrutan = numUrutan;
+    
+            const updatedData = result.Data.map((item) => {
+                return { ...item, nomor_urutan: updatedNumUrutan++ };
+            });
+    
+            setData(updatedData);
+            setNumUrutan(updatedNumUrutan);
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    };
+
+    useEffect(() => {
+        setNumUrutan(1);
+        fetchData();
+    }, [sort, itemPerPage]); // Menambahkan dependensi sort dan itemPerPage ke dalam useEffect
+
     const [sm, updateSm] = useState(false);
     const [onSearch, setonSearch] = useState(true);
     const [onSearchText, setSearchText] = useState("");
@@ -49,20 +114,16 @@ const Siswa = () => {
         add: false,
     });
 
-    const [currentPage, setCurrentPage] = useState(1);
-    const [itemPerPage, setItemPerPage] = useState(10);
-    const indexOfLastItem = currentPage * itemPerPage;
-    const indexOfFirstItem = indexOfLastItem - itemPerPage;
-    const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
+    
     const toggle = () => setonSearch(!onSearch);
     const [actionText, setActionText] = useState("");
 
-    const onApproveClick = (id) => {
-        let newData = data;
-        let index = newData.findIndex((item) => item.id === id);
-        newData[index].status = "Completed";
-        setData([...newData]);
-    };
+    // const onApproveClick = (id) => {
+    //     let newData = data;
+    //     let index = newData.findIndex((item) => item.id === id);
+    //     newData[index].status = "Completed";
+    //     setData([...newData]);
+    // };
     const onRejectClick = (id) => {
         let newData = data;
         let index = newData.findIndex((item) => item.id === id);
@@ -88,7 +149,7 @@ const Siswa = () => {
         }
     };
 
-    const [editId, setEditedId] = useState();
+    // const [editId, setEditedId] = useState();
     const [formData, setFormData] = useState({
         nis: "",
         nlp: "",
@@ -100,11 +161,11 @@ const Siswa = () => {
         keterangan: "",
     });
 
-    const [editFormData, setEditFormData] = useState({
-        nlp: "",
-        kls: "",
-        status: "",
-    })
+    // const [editFormData, setEditFormData] = useState({
+    //     nlp: "",
+    //     kls: "",
+    //     status: "",
+    // })
 
     const resetForm = () => {
         setFormData({
@@ -289,16 +350,85 @@ const Siswa = () => {
                                             </a>
                                         </li>
                                         <li className="btn-toolbar-sep"></li>
-
-
                                         <li>
+                                            <UncontrolledDropdown>
+                                                <DropdownToggle tag="a" className="btn btn-trigger btn-icon dropdown-toggle">
+                                                    <Icon name="setting"></Icon>
+                                                </DropdownToggle>
+                                                <DropdownMenu end className="dropdown-menu-xs">
+                                                    <ul className="link-check">
+                                                        <li>
+                                                            <span>Show</span>
+                                                        </li>
+                                                        <li className={itemPerPage === 10 ? "active" : ""}>
+                                                            <DropdownItem
+                                                                tag="a"
+                                                                href="#dropdownitem"
+                                                                onClick={(ev) => {
+                                                                    ev.preventDefault();
+                                                                    setItemPerPage(10);
+                                                                }}
+                                                            >
+                                                                10
+                                                            </DropdownItem>
+                                                        </li>
+                                                        <li className={itemPerPage === 15 ? "active" : ""}>
+                                                            <DropdownItem
+                                                                tag="a"
+                                                                href="#dropdownitem"
+                                                                onClick={(ev) => {
+                                                                    ev.preventDefault();
+                                                                    setItemPerPage(15);
+                                                                }}
+                                                            >
+                                                                15
+                                                            </DropdownItem>
+                                                        </li>
+                                                    </ul>
+                                                    <ul className="link-check">
+                                                        <li>
+                                                            <span>Order</span>
+                                                        </li>
+                                                        <li className={sort === "dsc" ? "active" : ""}>
+                                                            <DropdownItem
+                                                                tag="a"
+                                                                href="#dropdownitem"
+                                                                onClick={(ev) => {
+                                                                    ev.preventDefault();
+                                                                    setSortState("dsc");
+                                                                    sortFunc("dsc");
+                                                                }}
+                                                            >
+                                                                DESC
+                                                            </DropdownItem>
+                                                        </li>
+                                                        <li className={sort === "asc" ? "active" : ""}>
+                                                            <DropdownItem
+                                                                tag="a"
+                                                                href="#dropdownitem"
+                                                                onClick={(ev) => {
+                                                                    ev.preventDefault();
+                                                                    setSortState("asc");
+                                                                    sortFunc("asc");
+                                                                }}
+                                                            >
+                                                                ASC
+                                                            </DropdownItem>
+                                                        </li>
+                                                    </ul>
+                                                </DropdownMenu>
+                                            </UncontrolledDropdown>
+                                        </li>
+
+
+                                        {/* <li>
                                             <UncontrolledDropdown>
                                                 <DropdownToggle tag="a" className="btn btn-trigger btn-icon dropdown-toggle">
                                                     <div className="dot dot-primary"></div>
                                                     <Icon name="filter-alt"></Icon>
                                                 </DropdownToggle>
                                             </UncontrolledDropdown>
-                                        </li>
+                                        </li> */}
                                     </ul>
                                 </div>
                                 <div className={`card-search search-wrap ${!onSearch && "active"}`}>
@@ -378,7 +508,7 @@ const Siswa = () => {
                                         <DataTableItem key={item.id}>
                                             <DataTableRow>
                                                 <div className="tb-lead">
-                                                    <span>{item.id}</span>
+                                                    <span>{item.nomor_urutan}</span>
                                                 </div>
                                             </DataTableRow>
                                             <DataTableRow>
@@ -388,7 +518,7 @@ const Siswa = () => {
                                             </DataTableRow>
                                             <DataTableRow>
                                                 <div className="tb-lead">
-                                                    <span>{item.nlp}</span>
+                                                    <span>{item.nm}</span>
                                                 </div>
                                             </DataTableRow>
                                             <DataTableRow>
@@ -398,22 +528,22 @@ const Siswa = () => {
                                             </DataTableRow>
                                             <DataTableRow>
                                                 <div className="tb-lead">
-                                                    <span>{item.tgl}</span>
+                                                    <span>{item.tgl_presensi}</span>
                                                 </div>
                                             </DataTableRow>
                                             <DataTableRow>
                                                 <div className="tb-lead">
-                                                    <span>{item.masuk}</span>
+                                                    <span>{item.checkin}</span>
                                                 </div>
                                             </DataTableRow>
                                             <DataTableRow>
                                                 <div className="tb-lead">
-                                                    <span>{item.status_in}</span>
+                                                    <span>{item.statusPresensi}</span>
                                                 </div>
                                             </DataTableRow>
                                             <DataTableRow>
                                                 <div className="tb-lead">
-                                                    <span>{item.pulang}</span>
+                                                    <span>{item.checkout}</span>
                                                 </div>
                                             </DataTableRow>
                                             <DataTableRow>
@@ -456,16 +586,16 @@ const Siswa = () => {
                                                         direction="top"
                                                         text="Details"
                                                     />
-                                                    <li className="" onClick={() => onApproveClick(item.id)}>
+                                                    {/* <li className="" onClick={() => onEditClick(item.id)}>
                                                         <TooltipComponent
                                                             tag="a"
                                                             containerClassName="bg-white btn btn-sm btn-outline-light btn-icon btn-tooltip"
-                                                            id={item.ref + "approve"}
-                                                            icon="done"
+                                                            id={item.ref + "edit"}
+                                                            icon="edit"
                                                             direction="top"
-                                                            text="approve"
+                                                            text="edit"
                                                         />
-                                                    </li>
+                                                    </li> */}
                                                     <li className="" onClick={() => onRejectClick(item.id)}>
                                                         <TooltipComponent
                                                             tag="a"

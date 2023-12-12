@@ -69,6 +69,10 @@ import AddRentangNilai from '../component/modal/rentang-nilai/AddRentangNilai';
 import KkmBatas from '../pages/Rapor/Setting/KkmBatas';
 import AddKkmBatas from '../component/modal/kkm-batas/AddKkmBatas';
 
+//add prngaturan profile
+import Profile from '../pages/Pengaturan/Profile';
+import AddProfile from '../component/modal/pengaturan-profile/AddProfile';
+
 // import PresensiSiswa from '../pages/Presensi/Siswa';
 import PenilaianKd from '../pages/Rapor/Penilaian/Kd';
 import SettingUmum from '../pages/Rapor/Setting/Umum';
@@ -94,10 +98,10 @@ import RekapNilai from '../pages/Rapor/RaporKurikulum/RekapNilai';
 import Cover from '../pages/Rapor/Cover/CetakCover';
 import PembayaranManual from '../pages/Pembayaran/PembayaranManual';
 import HistoryPembayaran from '../pages/Pembayaran/HistoryPembayaran';
-import Profile from '../pages/Pengaturan/Profile';
 import Tahunajaran from '../pages/Pengaturan/Tahunajaran';
 import SettingPpdb from '../pages/Pengaturan/Pengaturanppdb';
 import Pembayaran from '../pages/Pengaturan/Pembayaran';
+
 
 //DATA PENGGUNA
 import DataPengguna from '../pages/Pengaturan/DataPengguna';
@@ -255,10 +259,10 @@ const Router = () => {
         <Route path='/penilaian/catatanwalas' element={<CatatanWalas />}></Route>
         {/* END PENILAIAN */}
 
-        {/* PENGATURAN */}
-        
+        {/* ADD DATA PENGATURAN PROFILE*/}
         <Route path='/pengaturan/profile' element={<Profile />}></Route>
-        {/* END PENGATURAN */}
+        <Route path='/pengaturan/add-profile' element={<AddProfile />}></Route>
+        {/* ADD DATA PENGATURAN PROFILE */}
 
         {/* ADD DATA PENGGUNA */}
         <Route path='/pengaturan/pengguna' element={<DataPengguna />}></Route>

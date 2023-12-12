@@ -29,13 +29,14 @@ const AddRentangNilai = ({ modal, closeModal, }) => {
   const [FormData, setFormData] = useState({
         deskripsi:"",
         huruf: "",
+        tenantid: "",
   });
 
   const resetForm = () => {
     setFormData({
         deskripsi:"",
         huruf: "",
-
+        tenantid: "",
     });
 };
 
@@ -56,11 +57,12 @@ const AddRentangNilai = ({ modal, closeModal, }) => {
   };
 
   const onFormSubmit = (submitData) => {
-    const { deskripsi, huruf } = submitData;
+    const { deskripsi, huruf, tenantid } = submitData;
     let submittedData = {
         id: data.length + 1,
         deskripsi: deskripsi,
         huruf: huruf,
+        tenantid: tenantid,
     };
     setData([submitData, ...data]);
     resetForm();
@@ -118,7 +120,20 @@ const AddRentangNilai = ({ modal, closeModal, }) => {
             />
                     {errors.huruf && <span className="invalid">{errors.huruf.message}</span>}
               </div>
-             
+            </Col>
+            <Col md="12">
+              <div className='form-group'>
+              <label className="form-label">Tenant ID</label>
+              <input
+              className="form-control"
+              type="text"
+              {...register('tenantid', { required: "This field is required" })}
+              value={FormData?.tenantid || ''}
+              onChange={(e) => setFormData({ ...FormData, tenantid: e.target.value })}
+              placeholder=""
+            />
+                    {errors.tenantid && <span className="invalid">{errors.tenantid.message}</span>}
+              </div>
             </Col>
             </Col>
             <Col size="12">

@@ -507,7 +507,7 @@ useEffect(() => {
                                             </DataTableRow>
                                             <DataTableRow>
                                                 <div className="tb-lead">
-                                                    <span>{item.status_ptk}</span>
+                                                    <span>{item.status}</span>
                                                 </div>
                                             </DataTableRow>
                                             <DataTableRow>

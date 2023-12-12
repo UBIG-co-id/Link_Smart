@@ -12,7 +12,7 @@ import AddModal from '../../component/modal/mutasiPTK/AddModal'
 import { Link } from 'react-router-dom'
 
 const Pegawai = () => {
-    const [data, setData] = useState(userData);
+    const [data, setData] = useState([]);
     const [sm, updateSm] = useState(false);
     const [onSearch, setonSearch] = useState(true);
     const [onSearchText, setSearchText] = useState("");
@@ -62,7 +62,7 @@ const Pegawai = () => {
                 .join('&');
     
             // Menggabungkan URL dengan query string
-            const apiUrl = `https://linksmart-1-t2560421.deta.app/ptk-cari?${queryString}`;
+            const apiUrl = `https://linksmart-1-t2560421.deta.app/mutasi-cari/guru?${queryString}`;
     
             const response = await fetch(apiUrl, {
                 method: 'POST',
@@ -517,10 +517,10 @@ const Pegawai = () => {
                                                 </div> */}
                                             </DataTableRow>
                                             <DataTableRow size="md">
-                                                <span>{item.id}</span>
+                                                <span>{item.nomor_urutan}</span>
                                             </DataTableRow>
                                             <DataTableRow size="md">
-                                                <span>{item.tgl}</span>
+                                                <span>{item.tgl_mutasi}</span>
                                             </DataTableRow>
                                             <DataTableRow size="sm">
                                                 <span>{item.nip}</span>
@@ -533,11 +533,11 @@ const Pegawai = () => {
                                                     className={`tb-status text-${item.status === "Active" ? "success" : item.status === "Pending" ? "warning" : "danger"
                                                         }`}
                                                 >
-                                                    {item.status}
+                                                    {item.stts_pgwai}
                                                 </span>
                                             </DataTableRow>
                                             <DataTableRow size="lg">
-                                                <span>{item.jnmutasi}</span>
+                                                <span>{item.jenis_mutasi}</span>
                                             </DataTableRow>
                                             <DataTableRow className="nk-tb-col-tools">
                                                 <ul className="nk-tb-actions gx-1">
