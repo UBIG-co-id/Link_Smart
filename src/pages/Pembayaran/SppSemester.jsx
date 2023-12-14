@@ -1,4 +1,4 @@
-import React,{useState} from 'react'
+import React, { useState } from 'react'
 import Head from '../../layout/Head'
 import Content from '../../layout/Content/Content'
 import { Block, BlockBetween, BlockDes, BlockHead, BlockHeadContent, BlockTitle, Button, Icon, PaginationComponent, RSelect, TooltipComponent } from '../../component/Component'
@@ -53,7 +53,7 @@ const SppSemester = () => {
     <React.Fragment>
       <Head title="Spp Semester"></Head>
       <Content>
-      <BlockHead size="sm">
+        <BlockHead size="sm">
           <BlockBetween>
             <BlockHeadContent>
               <BlockTitle page tag="h3">
@@ -232,7 +232,7 @@ const SppSemester = () => {
                           <span>{item.nmsklh}</span>
                         </div>
                       </DataTableRow>
-                      
+
                       <DataTableRow className="nk-tb-col-tools">
                         <ul className="nk-tb-actions gx-1">
                           <TooltipComponent

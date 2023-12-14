@@ -79,8 +79,8 @@ const Kelas = () => {
 
     const onFormSubmit = (submitData) => {
         const { kls, mapel } = submitData;
-        let submittedData = { 
-            id:  data.length + 1,
+        let submittedData = {
+            id: data.length + 1,
             kls: kls,
             mapel: mapel,
         };
@@ -112,13 +112,13 @@ const Kelas = () => {
         newitems[index] = submittedData;
         setModal({ edit: false });
     };
-    return(
+    return (
         <React.Fragment>
             <Head title="Kelas"></Head>
             <Content>
                 <BlockHead size="sm">
                     <BlockBetween>
-                    <BlockHeadContent>
+                        <BlockHeadContent>
                             <BlockTitle page tag="h3">
                                 Kelas-Mapel
                             </BlockTitle>
@@ -150,11 +150,11 @@ const Kelas = () => {
                                         </li>
                                         <li >
                                             <Link to='/rapor/add-mapel-kelas'>
-                                            <Button color="primary"  onClick={() => setModal({ add: true })}>
-                                                <Icon name="plus">
-                                                </Icon>
-                                                <div>Tambah Mata Pelajaran</div>
-                                            </Button>
+                                                <Button color="primary" onClick={() => setModal({ add: true })}>
+                                                    <Icon name="plus">
+                                                    </Icon>
+                                                    <div>Tambah Mata Pelajaran</div>
+                                                </Button>
                                             </Link>
                                         </li>
                                     </ul>
@@ -163,13 +163,12 @@ const Kelas = () => {
                         </BlockHeadContent>
                     </BlockBetween>
                 </BlockHead>
-                <Block>
+                <Block size="lg">
                     <DataTable className="card-stretch">
-                    <div className="card-inner">
+                        <div className="card-inner">
                             <div className="card-title-group">
                                 <div className="card-title">
                                     <h5 className="title"></h5>
-                                </div>
                                 <div className="card-tools me-n1">
                                     <ul className="nk-block-tools g-3">
                                         <li className="nk-block-tools-opt mb-2">
@@ -185,37 +184,40 @@ const Kelas = () => {
                                             </Button>
                                         </li>
                                         <li className="nk-block-tools-opt mb-2">
-                                            <Button color="primary"  onClick={() => setModal({ add: true })}>
+                                            <Button color="primary" onClick={() => setModal({ add: true })}>
                                                 <Icon name="plus">
                                                 </Icon>
                                                 <div>Mapel Tahun Sebelumnya</div>
                                             </Button>
                                         </li>
                                     </ul>
-                                    <ul className="btn-toolbar gx-1">
-                                        <li>
-                                            <Button
-                                                href="#search"
-                                                onClick={(ev) => {
-                                                    ev.preventDefault();
-                                                    toggle();
-                                                }}
-                                                className="btn-icon search-toggle toggle-search"
-                                            >
-                                                <Icon name="search"></Icon>
-                                            </Button>
-                                        </li>
-                                        <li className="btn-toolbar-sep"></li>
-                                        <li>
-                                            <UncontrolledDropdown>
-                                                <DropdownToggle tag="a" className="btn btn-trigger btn-icon dropdown-toggle">
-                                                    <div className="dot dot-primary"></div>
-                                                    <Icon name="filter-alt"></Icon>
-                                                </DropdownToggle>
-                                            </UncontrolledDropdown>
-                                        </li>
-                                    </ul>
                                 </div>
+                                </div>
+                                    <div className='mr-1'>
+                                        <ul className="btn-toolbar gx-1">
+                                            <li>
+                                                <Button
+                                                    href="#search"
+                                                    onClick={(ev) => {
+                                                        ev.preventDefault();
+                                                        toggle();
+                                                    }}
+                                                    className="btn-icon search-toggle toggle-search"
+                                                >
+                                                    <Icon name="search"></Icon>
+                                                </Button>
+                                            </li>
+                                            <li className="btn-toolbar-sep"></li>
+                                            <li>
+                                                <UncontrolledDropdown>
+                                                    <DropdownToggle tag="a" className="btn btn-trigger btn-icon dropdown-toggle">
+                                                        <div className="dot dot-primary"></div>
+                                                        <Icon name="filter-alt"></Icon>
+                                                    </DropdownToggle>
+                                                </UncontrolledDropdown>
+                                            </li>
+                                        </ul>
+                                    </div>
                                 <div className={`card-search search-wrap ${!onSearch && "active"}`}>
                                     <div className="search-content">
                                         <Button
@@ -241,7 +243,7 @@ const Kelas = () => {
                                 </div>
                             </div>
                         </div>
-                            <DataTableBody compact>
+                        <DataTableBody compact>
                             <DataTableHead>
 
                                 <DataTableRow>

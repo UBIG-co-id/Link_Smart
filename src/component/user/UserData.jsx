@@ -386,7 +386,7 @@ export const sppBulan = [
         nls: 'Wahyu Fajar Robyansyah',
         kls: 'X RPL 1',
         bln:"Juli",
-        tagihan:"Rp 275.000",
+        tagihan:"275.000",
         tglbyr:"31/10/2001",
     },
 ]
@@ -396,8 +396,8 @@ export const sppSmstr = [
         nis:1,
         nls: 'Wahyu Fajar Robyansyah',
         kls: 'X RPL 1',
-        gan:"Rp 1.200.000",
-        gen:"Rp 1.275.000",
+        gan:"1.200.000",
+        gen:"1.275.000",
         nmsklh:"SMKN NEO CULTURE",
     },
 ]
@@ -491,6 +491,7 @@ export const tahunAjaran = [
     },
 ]
 //PENGATURAN TAHUN AJARAN
+
 
 export const filterStatus = [
     { value: "Active", label: "Active" },
