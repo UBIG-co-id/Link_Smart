@@ -74,6 +74,10 @@ import AddKkmBatas from '../component/modal/kkm-batas/AddKkmBatas';
 import Profile from '../pages/Pengaturan/Profile';
 import AddProfile from '../component/modal/pengaturan-profile/AddProfile';
 
+//add spp bulan
+import SppBulan from '../pages/Pembayaran/SppBulan';
+import AddSppBulan from '../component/modal/spp-bulan/AddSppBulan';
+
 // Pembayaran
 import TagihanSiswa from '../pages/Pembayaran/TagihanSiswa';
 import TagihanSpp from '../pages/Pembayaran/TagihanSpp';
@@ -81,7 +85,6 @@ import KustomSppSiswa from '../pages/Pembayaran/KustomSppSiswa';
 import PembayaranManual from '../pages/Pembayaran/PembayaranManual';
 import HistoryPembayaran from '../pages/Pembayaran/HistoryPembayaran';
 import BiayaLain from '../pages/Pembayaran/BiayaLain';
-import SppBulan from '../pages/Pembayaran/SppBulan';
 import SppSemester from '../pages/Pembayaran/SppSemester';
 
 // import PresensiSiswa from '../pages/Presensi/Siswa';
@@ -234,6 +237,11 @@ const Router = () => {
         <Route path='/pegawai/add-mutasi-ptk' element={<AddMutasi />}></Route>
         {/* ADD MUTASI PTK */}
 
+        {/* ADD SPP BULAN */}
+        <Route path='/pembayaran/spp-bulan' element={<SppBulan/>}></Route>
+        <Route path='/pembayaran/add-spp-bulan' element={<AddSppBulan/>}></Route>
+        {/* ADD SPP BULAN */}
+
         {/* PEMBAYARAN */}
         <Route path='/pembayaran/get-all-tagihan-siswa' element={<TagihanSiswa />}></Route>
         <Route path='/pembayaran/spp' element={<TagihanSpp />}></Route>
@@ -241,7 +249,6 @@ const Router = () => {
         <Route path='/pembayaran/bayar-tagihan' element={<PembayaranManual />}></Route>
         <Route path='/pembayaran/histori-pembayaran' element={<HistoryPembayaran/>}></Route>
         <Route path='/pembayaran/biaya-lain' element={<BiayaLain/>}></Route>
-        <Route path='/pembayaran/spp-bulan' element={<SppBulan/>}></Route>
         <Route path='/pembayaran/spp-semester' element={<SppSemester/>}></Route>
         {/* END PEMBAYARAN */}
 
