@@ -186,12 +186,26 @@ const menu = [
             link: "/pembayaran/get-all-tagihan-siswa",
           },
           {
-            text: "Tagihan SPP",
-            link: "/pembayaran/spp",
+            text: "SPP",
+            active: false,
+            subMenu:[
+              {
+                text: "SPP Bulanan",
+                link: "/pembayaran/spp-bulan",
+              },
+              {
+                text: "SPP Semester",
+                link: "/pembayaran/spp-semester",
+              },
+              {
+                text: "Total SPP",
+                link: "/pembayaran/spp",
+              },
+            ]
           },
           {
             text: "Biaya Lain",
-            link: "/pembayaran/tagihan-siswa",
+            link: "/pembayaran/biaya-lain",
           },
           {
             text: "Kustom Spp Siswa",

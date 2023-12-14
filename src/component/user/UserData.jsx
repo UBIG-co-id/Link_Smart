@@ -492,6 +492,43 @@ export const tahunAjaran = [
 ]
 //PENGATURAN TAHUN AJARAN
 
+export const biayalain = [
+    {
+        id: 1,
+        nis: "090909",
+        nlp: "Lee Jeno",
+        kls: "XII-RPL 1",
+        jdlbiaya: "Lomba 17 Agustusan",
+        tghnbiayalain: "Rp 2.000.000",
+        status: "Lunas",
+    }   
+];
+export const sppBulan = [
+    {
+        id: 1,
+        nis:1,
+        nls: 'Wahyu Fajar Robyansyah',
+        kls: 'X RPL 1',
+        bln:"Juli",
+        tagihan:"Rp 275.000",
+        tglbyr:"31/10/2001",
+    },
+]
+export const sppSmstr = [
+    {
+        id: 1,
+        nis:1,
+        nls: 'Wahyu Fajar Robyansyah',
+        kls: 'X RPL 1',
+        gan:"Rp 1.200.000",
+        gen:"Rp 1.275.000",
+        nmsklh:"SMKN NEO CULTURE",
+    },
+]
+export const filterStt = [
+    {value: "Lunas", label: "Lunas"},
+    {value: "Belum Lunas", label: "Belum Lunas"},
+];
 
 export const filterStatus = [
     { value: "Active", label: "Active" },
