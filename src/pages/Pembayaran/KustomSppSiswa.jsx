@@ -255,6 +255,7 @@ const KustomSppSiswa = () => {
                                 </div> */}
                                 <div className="card-tools">
                                 <label className="text-bold">PERHATIAN!!</label>
+                                <label className="text-bold">Jika Kustom SPP Kosong.Batas Kustom Kosong </label>
                                     {/* <label className="text-bold">PERHATIAN!!</label> */}
                                     <div className="form-inline flex-nowrap gx-3">
                                         <div className="from-wrap">
