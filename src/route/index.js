@@ -74,13 +74,23 @@ import AddKkmBatas from '../component/modal/kkm-batas/AddKkmBatas';
 import Profile from '../pages/Pengaturan/Profile';
 import AddProfile from '../component/modal/pengaturan-profile/AddProfile';
 
+// Pembayaran
+import TagihanSiswa from '../pages/Pembayaran/TagihanSiswa';
+import TagihanSpp from '../pages/Pembayaran/TagihanSpp';
+import KustomSppSiswa from '../pages/Pembayaran/KustomSppSiswa';
+import PembayaranManual from '../pages/Pembayaran/PembayaranManual';
+import HistoryPembayaran from '../pages/Pembayaran/HistoryPembayaran';
+import BiayaLain from '../pages/Pembayaran/BiayaLain';
+import SppBulan from '../pages/Pembayaran/SppBulan';
+import SppSemester from '../pages/Pembayaran/SppSemester';
+
 // import PresensiSiswa from '../pages/Presensi/Siswa';
 import PenilaianKd from '../pages/Rapor/Penilaian/Kd';
 import SettingUmum from '../pages/Rapor/Setting/Umum';
 import TampilanRapor from '../pages/Rapor/Setting/TampilanRapor';
-import TagihanSiswa from '../pages/Pembayaran/TagihanSiswa';
-import TagihanSpp from '../pages/Pembayaran/TagihanSpp';
-import KustomSppSiswa from '../pages/Pembayaran/KustomSppSiswa';
+
+
+
 import Pengumuman from '../pages/Pengumuman/Pengumuman';
 import Ppdb from '../pages/Ppdb/Ppdb';
 import LaporanSiswa from '../pages/Laporan/PresensiSiswa';
@@ -97,8 +107,8 @@ import CatatanWalas from '../pages/Penilaian/Catatanwalas';
 import RaporKurikulum from '../pages/Rapor/RaporKurikulum/RaporKurikulum';
 import RekapNilai from '../pages/Rapor/RaporKurikulum/RekapNilai';
 import Cover from '../pages/Rapor/Cover/CetakCover';
-import PembayaranManual from '../pages/Pembayaran/PembayaranManual';
-import HistoryPembayaran from '../pages/Pembayaran/HistoryPembayaran';
+
+
 import Tahunajaran from '../pages/Pengaturan/Tahunajaran';
 import SettingPpdb from '../pages/Pengaturan/Pengaturanppdb';
 import Pembayaran from '../pages/Pengaturan/Pembayaran';
@@ -230,6 +240,9 @@ const Router = () => {
         <Route path='/pembayaran/kustom-spp' element={<KustomSppSiswa />}></Route>
         <Route path='/pembayaran/bayar-tagihan' element={<PembayaranManual />}></Route>
         <Route path='/pembayaran/histori-pembayaran' element={<HistoryPembayaran/>}></Route>
+        <Route path='/pembayaran/biaya-lain' element={<BiayaLain/>}></Route>
+        <Route path='/pembayaran/spp-bulan' element={<SppBulan/>}></Route>
+        <Route path='/pembayaran/spp-semester' element={<SppSemester/>}></Route>
         {/* END PEMBAYARAN */}
 
         {/* PENGUMUMAN */}

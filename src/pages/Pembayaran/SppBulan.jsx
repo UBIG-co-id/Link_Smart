@@ -1,13 +1,13 @@
-import React, { useState } from 'react'
+import React,{useState} from 'react'
 import Head from '../../layout/Head'
 import Content from '../../layout/Content/Content'
-import { Block, BlockBetween, BlockDes, BlockHead, BlockHeadContent, BlockTitle, Button, DataTable, Icon, PaginationComponent, RSelect, TooltipComponent } from '../../component/Component'
+import { Block, BlockBetween, BlockDes, BlockHead, BlockHeadContent, BlockTitle, Button, Icon, PaginationComponent, RSelect, TooltipComponent } from '../../component/Component'
+import { sppBulan, filterStt } from '../../component/user/UserData'
+import { DataTable, DataTableBody, DataTableHead, DataTableItem, DataTableRow } from '../../component/table/DataTable'
 import { DropdownToggle, UncontrolledDropdown } from 'reactstrap'
-import { biayalain, filterStt } from '../../component/user/UserData'
-import { DataTableBody, DataTableHead, DataTableItem, DataTableRow } from '../../component/table/DataTable'
-const BiayaLain = () => {
+const SppBulan = () => {
   const [sm, updateSm] = useState(false);
-  const [data, setData] = useState(biayalain)
+  const [data, setData] = useState(sppBulan)
   const toggle = () => setonSearch(!onSearch);
   const [onSearchText, setSearchText] = useState("");
   const [onSearch, setonSearch] = useState(true);
@@ -51,13 +51,13 @@ const BiayaLain = () => {
   });
   return (
     <React.Fragment>
-      <Head title="Biaya Lain"></Head>
+      <Head title="Spp Bulanan"></Head>
       <Content>
-        <BlockHead size="sm">
+      <BlockHead size="sm">
           <BlockBetween>
             <BlockHeadContent>
               <BlockTitle page tag="h3">
-                Biaya Lain
+                Spp Bulanan
               </BlockTitle>
               <BlockDes className="text-soft">
                 <p>Welcome to Link Smart</p>
@@ -183,13 +183,13 @@ const BiayaLain = () => {
                   <span>Kelas</span>
                 </DataTableRow>
                 <DataTableRow >
-                  <span>Judul Biaya</span>
+                  <span>Bulan</span>
                 </DataTableRow>
                 <DataTableRow >
-                  <span>Tagihan Biaya Lain</span>
+                  <span>Tagihan</span>
                 </DataTableRow>
                 <DataTableRow >
-                  <span>Status</span>
+                  <span>Tanggal Bayar</span>
                 </DataTableRow>
                 <DataTableRow className="nk-tb-col-tools">Aksi</DataTableRow>
               </DataTableHead>
@@ -209,7 +209,7 @@ const BiayaLain = () => {
                       </DataTableRow>
                       <DataTableRow>
                         <div className="tb-lead">
-                          <span>{item.nlp}</span>
+                          <span>{item.nls}</span>
                         </div>
                       </DataTableRow>
                       <DataTableRow>
@@ -219,17 +219,17 @@ const BiayaLain = () => {
                       </DataTableRow>
                       <DataTableRow>
                         <div className="tb-lead">
-                          <span>{item.jdlbiaya}</span>
+                          <span>{item.bln}</span>
                         </div>
                       </DataTableRow>
                       <DataTableRow>
                         <div className="tb-lead">
-                          <span>{item.tghnbiayalain}</span>
+                          <span>{item.tagihan}</span>
                         </div>
                       </DataTableRow>
                       <DataTableRow>
                         <div className="tb-lead">
-                          <span>{item.status}</span>
+                          <span>{item.tglbyr}</span>
                         </div>
                       </DataTableRow>
                       
@@ -290,4 +290,4 @@ const BiayaLain = () => {
   )
 }
 
-export default BiayaLain
+export default SppBulan
