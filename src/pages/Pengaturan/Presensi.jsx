@@ -29,64 +29,63 @@ const Presensi = () => {
                 </BlockHead>
                 <Block>
                     <Row className="g-gs">
-                        <Col md="13" xxl="3">
+                        <Col md="15" xxl="2">
                             <PreviewAltCard className="card-full">
                                 <Row>
-                                <Col size="12">
-                                    <ul className="align-center flex-wrap flex-sm-nowrap gx-4 gy-2" style={{ marginTop: '21px' }}>
+                                <Col size="20">
+                                    <ul className="align-center flex-wrap flex-sm-nowrap gx-1 gy-1" style={{ marginTop: '2px' }}>
                                         <li>
-                                            <Button color="primary" size="sm" type="submit">
-                                                Pesan
+                                            <Button color="primary" outline className="btn-dim btn-white" size="sm" type="submit">
+                                                 <span style={{ fontSize: '11px' }}>Pesan</span>
                                             </Button>
                                         </li>
                                         <li >
-                                            <Button color="primary" size="sm" type="submit">
-                                                Perizinan
+                                            <Button color="primary" outline className="btn-dim btn-white" size="sm" type="submit">
+                                                 <span style={{ fontSize: '11px' }}>Perizinan</span>
                                             </Button>
                                         </li>
                                         <li >
-                                            <Button color="primary" size="sm" type="submit">
-                                                Jam Datang
+                                            <Button color="primary" outline className="btn-dim btn-white" size="sm" type="submit" >
+                                               <span style={{ fontSize: '11px' }}> Jam Datang</span>
                                             </Button>
                                         </li>
                                         <li >
-                                            <Button color="primary" size="sm" type="submit">
-                                                Jam Pulang
+                                            <Button color="primary" outline className="btn-dim btn-white" size="sm" type="submit">
+                                                 <span style={{ fontSize: '11px' }}>Jam Pulang</span>
                                             </Button>
                                         </li>
                                         <li >
-                                            <Button color="primary" size="sm" type="submit">
-                                                Rentang Presensi
+                                            <Button color="primary" outline className="btn-dim btn-white" size="sm" type="submit">
+                                                 <span style={{ fontSize: '11px' }}>Rentang Presensi</span>
                                             </Button>
                                         </li>
                                         <li >
-                                            <Button color="primary" size="sm" type="submit">
-                                                Jam Pegawai Datang
+                                            <Button color="primary" outline className="btn-dim btn-white" size="sm" type="submit">
+                                                 <span style={{ fontSize: '11px' }}>Jam Pegawai Datang</span>
                                             </Button>
                                         </li>
                                         <li >
-                                            <Button color="primary" size="sm" type="submit">
-                                                Jam Pegawai Pulang
+                                            <Button color="primary" outline className="btn-dim btn-white" size="sm" type="submit">
+                                                 <span style={{ fontSize: '11px' }}>Jam Pegawai Pulang</span>
                                             </Button>
                                         </li>
                                         <li >
-                                            <Button color="primary" size="sm" type="submit">
-                                                Rentang Presensi Pegawai
+                                            <Button color="primary" outline className="btn-dim btn-white" size="sm" type="submit">
+                                                 <span style={{ fontSize: '11px' }}>Rentang Presensi Pegawai</span>
                                             </Button>
                                         </li>
                                         <li >
-                                            <Button color="primary" size="sm" type="submit">
-                                                Belum Datang
+                                            <Button color="primary" outline className="btn-dim btn-white" size="sm" type="submit">
+                                                 <span style={{ fontSize: '11px' }}>Belum Datang</span>
                                             </Button>
                                         </li>
                                         <li >
-                                            <Button color="primary" size="sm" type="submit">
-                                                Custom
+                                            <Button color="primary" outline className="btn-dim btn-white" size="sm" type="submit">
+                                                 <span style={{ fontSize: '11px' }}>Custom</span>
                                             </Button>
                                         </li>
                                     </ul>
                                 </Col>
-                                    
                                 </Row>
                             </PreviewAltCard>
                         </Col>
