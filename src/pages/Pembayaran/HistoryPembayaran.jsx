@@ -26,17 +26,83 @@ import AddModal from '../../component/modal/pegawai/AddModal'
 
 const HistoryPembayaran = () => {
   const [data, setData] = useState(historyPembayaran);
-    const [sm, updateSm] = useState(false);
-    const [onSearch, setonSearch] = useState(true);
-    const [onSearchText, setSearchText] = useState("");
-    const toggle = () => setonSearch(!onSearch);
-    const paginate = (pageNumber) => setCurrentPage(pageNumber);
+  const [numUrutan, setNumUrutan] = useState(1);
+    const [sort, setSortState] = useState("");
+    const sortFunc = (params) => {
+        let defaultData = [...data]; // Clone array to avoid modifying the original data
+        if (params === "asc") {
+            let sortedData = defaultData.sort((a, b) => (a.name || "").localeCompare(b.name || ""));
+            setData(sortedData);
+        } else if (params === "dsc") {
+            let sortedData = defaultData.sort((a, b) => (b.name || "").localeCompare(a.name || ""));
+            setData(sortedData);
+        }
+    };
+
     const [currentPage, setCurrentPage] = useState(1);
     const [itemPerPage, setItemPerPage] = useState(10);
     const indexOfLastItem = currentPage * itemPerPage;
     const indexOfFirstItem = indexOfLastItem - itemPerPage;
     const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
 
+    const fetchData = async () => {
+        try {
+            const token = localStorage.getItem('jwtToken');
+    
+            // Membuat objek untuk menyimpan parameter yang akan digunakan dalam URL
+            const params = {
+                sort_order: sort === "asc" ? "ascending" : "descending",
+                page: 1, // Page selalu dimulai dari 1, Anda dapat memperbarui ini jika menggunakan halaman yang berbeda
+                limit: itemPerPage,
+            };
+    
+            // Mengubah objek parameter menjadi query string
+            const queryString = Object.keys(params)
+                .map(key => `${key}=${encodeURIComponent(params[key])}`)
+                .join('&');
+    
+            // Menggabungkan URL dengan query string
+            const apiUrl = `https://linksmart-1-t2560421.deta.app/histori-cari?${queryString}`;
+    
+            const response = await fetch(apiUrl, {
+                method: 'POST',
+                headers: {
+                    'accept': 'application/json',
+                    'Authorization': `Bearer ${token}`,
+                },
+                // ... (tambahkan konfigurasi lainnya sesuai kebutuhan)
+            });
+    
+            const result = await response.json();
+            console.log("ini Data", result.Data)
+            let updatedNumUrutan = numUrutan;
+    
+            const updatedData = result.Data.map((item) => {
+                return { ...item, nomor_urutan: updatedNumUrutan++ };
+            });
+    
+            setData(updatedData);
+            setNumUrutan(updatedNumUrutan);
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    };
+
+    useEffect(() => {
+        setNumUrutan(1);
+        fetchData();
+    }, [sort, itemPerPage]);
+
+
+    const [sm, updateSm] = useState(false);
+    const [onSearch, setonSearch] = useState(true);
+    const [onSearchText, setSearchText] = useState("");
+    const toggle = () => setonSearch(!onSearch);
+    const paginate = (pageNumber) => {
+        setCurrentPage(pageNumber);
+        setNumUrutan((pageNumber - 1) * itemPerPage + 1);
+    };
+    
     const onApproveClick = (id) => {
       let newData = data;
       let index = newData.findIndex((item) => item.id === id);
@@ -66,7 +132,6 @@ const HistoryPembayaran = () => {
        jumlah: "",
        terbayar: "",
        jenis: "",
-       via: "",
     });
     const [editFormData, setEditFormData] = useState({
         name: "",
@@ -106,7 +171,6 @@ const HistoryPembayaran = () => {
         jumlah: jumlah,
         terbayar: terbayar,
         jenis: jenis,
-        via: via,
     };
     setData([submittedData, ...data]);
     resetForm();
@@ -116,10 +180,14 @@ const onEditClick = (id) => {
     data.forEach((item) => {
         if (item.id === id) {
             setEditFormData({
-                nip: item.nip,
-                namaptk: item.namaptk,
-                status: item.status,
-                jnmutasi: item.jnmutasi,
+              id: item.id,
+              nama: item.nama,
+              kelas: item.kelas,
+              tgl: item.tgl,
+              pembayaran: item.pembayaran,
+              jumlah: item.jumlah,
+              terbayar: item.terbayar,
+              jenis: item.jenis,
 
             });
             setModal({ edit: true }, { add: false });
@@ -129,7 +197,7 @@ const onEditClick = (id) => {
 };
 
 const onEditSubmit = (submitData) => {
-    const { name, email, phone } = submitData;
+    const { nama, kelas, tgl, pembayaran, jumlah, terbayar, jenis, via } = submitData;
     let submittedData;
     let newitems = data;
     newitems.forEach((item) => {
@@ -143,7 +211,6 @@ const onEditSubmit = (submitData) => {
               jumlah: item.jumlah,
               terbayar: item.terbayar,
               jenis: item.jenis,
-              via: item.via,
             };
         }
     });
@@ -296,9 +363,6 @@ const onEditSubmit = (submitData) => {
                                 <DataTableRow size="sm" >
                                     <span>Jenis</span>
                                 </DataTableRow>
-                                <DataTableRow size="sm" >
-                                    <span>Via</span>
-                                </DataTableRow>
                                 <DataTableRow className="nk-tb-col-tools">Aksi</DataTableRow>
                             </DataTableHead>
                             {currentItems.length > 0
@@ -307,47 +371,42 @@ const onEditSubmit = (submitData) => {
                                         <DataTableItem key={item.id}>
                                             <DataTableRow>
                                                 <div className="tb-lead">
-                                                    <span>{item.id}</span>
+                                                    <span>{item.nomor_urutan}</span>
                                                 </div>
                                             </DataTableRow>
                                             <DataTableRow>
                                                 <div className="tb-lead">
-                                                    <span>{item.nama}</span>
+                                                    <span>{item.nm}</span>
                                                 </div>
                                             </DataTableRow>
                                             <DataTableRow>
                                                 <div className="tb-lead">
-                                                    <span>{item.kelas}</span>
+                                                    <span>{item.kls}</span>
                                                 </div>
                                             </DataTableRow>
                                             <DataTableRow>
                                                 <div className="tb-lead">
-                                                    <span>{item.tgl}</span>
+                                                    <span>{item.tglByr}</span>
                                                 </div>
                                             </DataTableRow>
                                             <DataTableRow>
                                                 <div className="tb-lead">
-                                                    <span>{item.pembayaran}</span>
+                                                    <span>{item.bayar}</span>
                                                 </div>
                                             </DataTableRow>
                                             <DataTableRow>
                                                 <div className="tb-lead">
-                                                    <span>{item.jumlah}</span>
+                                                    <span>{item.tagihan}</span>
                                                 </div>
                                             </DataTableRow>
                                             <DataTableRow>
                                                 <div className="tb-lead">
-                                                    <span>{item.terbayar}</span>
+                                                    <span>{item.totalByr}</span>
                                                 </div>
                                             </DataTableRow>
                                             <DataTableRow>
                                                 <div className="tb-lead">
-                                                    <span>{item.jenis}</span>
-                                                </div>
-                                            </DataTableRow>
-                                            <DataTableRow>
-                                                <div className="tb-lead">
-                                                    <span>{item.via}</span>
+                                                    <span>{item.type}</span>
                                                 </div>
                                             </DataTableRow>
                                             <DataTableRow className="nk-tb-col-tools">
