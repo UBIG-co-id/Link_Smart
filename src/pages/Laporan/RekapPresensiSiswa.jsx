@@ -3,11 +3,11 @@ import Content from '../../layout/Content/Content'
 import Head from '../../layout/Head'
 import { Col, Block, BlockHead, BlockBetween, BlockHeadContent, BlockTitle, BlockDes, Button, Icon, SpecialTable, DataTable, RSelect, TooltipComponent, PaginationComponent } from '../../component/Component'
 import { DataTableBody, DataTableHead, DataTableItem, DataTableRow } from '../../component/table/DataTable'
-import { rekapPresensiSiswa, filterThn, filterBln, filterKls  } from '../../component/user/UserData'
+import { rekapPresensiSiswa, filterThn, filterBln, filterKls } from '../../component/user/UserData'
 import { Card, DropdownItem, DropdownMenu, DropdownToggle, UncontrolledDropdown } from 'reactstrap'
 
 const RekapPresensiSiswa = () => {
-  const [sm, updateSm] = useState(false);
+    const [sm, updateSm] = useState(false);
     const [data, setData] = useState(rekapPresensiSiswa);
     const toggle = () => setonSearch(!onSearch);
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
@@ -44,8 +44,8 @@ const RekapPresensiSiswa = () => {
         newData[index].status = "Rejected";
         setData([...newData]);
     };
-  return (
-    <React.Fragment>
+    return (
+        <React.Fragment>
             <Head title="Rekap Presensi Siswa"></Head>
             <Content>
                 <BlockHead size="sm">
@@ -101,8 +101,7 @@ const RekapPresensiSiswa = () => {
                                     <h5 className="title">Data Rekap Presensi</h5>
                                 </div>
                                 <div className="card-tools me-n1">
-                                    <ul>
-                                        <li>     
+                                    <div className="form-inline flex-nowrap gx-3">
                                         <div className="from-wrap">
                                             <RSelect
                                                 option={filterThn}
@@ -111,8 +110,6 @@ const RekapPresensiSiswa = () => {
                                                 onChange={(e) => onActionText(e)}
                                             />
                                         </div>
-                                        </li>
-                                        <li>
                                         <div className="from-wrap">
                                             <RSelect
                                                 option={filterBln}
@@ -121,8 +118,6 @@ const RekapPresensiSiswa = () => {
                                                 onChange={(e) => onActionText(e)}
                                             />
                                         </div>
-                                        </li>
-                                        <li>
                                         <div className="from-wrap">
                                             <RSelect
                                                 option={filterKls}
@@ -131,9 +126,13 @@ const RekapPresensiSiswa = () => {
                                                 onChange={(e) => onActionText(e)}
                                             />
                                         </div>
-                                        </li>
-                                    </ul>
-                                    <ul className="btn-toolbar gx-1">
+                                        
+                                    </div>
+                                    
+                                </div>
+                            
+
+                                <ul className="btn-toolbar " >
                                         <li>
                                             <Button
                                                 href="#search"
@@ -156,8 +155,7 @@ const RekapPresensiSiswa = () => {
                                             </UncontrolledDropdown>
                                         </li>
                                     </ul>
-                                </div>
-                                <div className={`card-search search-wrap ${!onSearch && "active"}`}>
+                                    <div className={`card-search search-wrap ${!onSearch && "active"}`}>
                                     <div className="search-content">
                                         <Button
                                             onClick={() => {
@@ -180,7 +178,9 @@ const RekapPresensiSiswa = () => {
                                         </Button>
                                     </div>
                                 </div>
+                            
                             </div>
+                            
                         </div>
                         <DataTableBody bodyclass="nk-tb-tnx">
                             <DataTableHead>
@@ -188,9 +188,9 @@ const RekapPresensiSiswa = () => {
                                     <span>No</span>
                                 </DataTableRow> */}
                                 <DataTableRow >
-                                    <div style={{ display: "flex", marginLeft:"35px", fontSize:'15px'}}>
+                                    <div style={{ display: "flex", marginLeft: "35px", fontSize: '15px' }}>
                                         siswa
-                                        </div>
+                                    </div>
                                     <DataTableRow>
                                         <span>No</span>
                                     </DataTableRow>
@@ -202,9 +202,9 @@ const RekapPresensiSiswa = () => {
                                     </DataTableRow>
                                 </DataTableRow>
                                 <DataTableRow >
-                                    <div style={{ display: "flex", marginLeft:"35px", fontSize:'15px'}}>
+                                    <div style={{ display: "flex", marginLeft: "35px", fontSize: '15px' }}>
                                         Juli
-                                        </div>
+                                    </div>
                                     <DataTableRow>
                                         <span>M</span>
                                     </DataTableRow>
@@ -219,9 +219,9 @@ const RekapPresensiSiswa = () => {
                                     </DataTableRow>
                                 </DataTableRow>
                                 <DataTableRow >
-                                    <div style={{ display: "flex", marginLeft:"35px", fontSize:'15px'}}>
+                                    <div style={{ display: "flex", marginLeft: "35px", fontSize: '15px' }}>
                                         Agustus
-                                        </div>
+                                    </div>
                                     <DataTableRow>
                                         <span>M</span>
                                     </DataTableRow>
@@ -236,9 +236,9 @@ const RekapPresensiSiswa = () => {
                                     </DataTableRow>
                                 </DataTableRow>
                                 <DataTableRow >
-                                    <div style={{ display: "flex", marginLeft:"35px", fontSize:'15px'}}>
+                                    <div style={{ display: "flex", marginLeft: "35px", fontSize: '15px' }}>
                                         September
-                                        </div>
+                                    </div>
                                     <DataTableRow>
                                         <span>M</span>
                                     </DataTableRow>
@@ -253,9 +253,9 @@ const RekapPresensiSiswa = () => {
                                     </DataTableRow>
                                 </DataTableRow>
                                 <DataTableRow >
-                                    <div style={{ display: "flex", marginLeft:"35px", fontSize:'15px'}}>
+                                    <div style={{ display: "flex", marginLeft: "35px", fontSize: '15px' }}>
                                         Oktober
-                                        </div>
+                                    </div>
                                     <DataTableRow>
                                         <span>M</span>
                                     </DataTableRow>
@@ -269,10 +269,10 @@ const RekapPresensiSiswa = () => {
                                         <span>A</span>
                                     </DataTableRow>
                                 </DataTableRow>
-                                 <DataTableRow >
-                                    <div style={{ display: "flex", marginLeft:"35px", fontSize:'15px'}}>
+                                <DataTableRow >
+                                    <div style={{ display: "flex", marginLeft: "35px", fontSize: '15px' }}>
                                         November
-                                        </div>
+                                    </div>
                                     <DataTableRow>
                                         <span>M</span>
                                     </DataTableRow>
@@ -286,10 +286,10 @@ const RekapPresensiSiswa = () => {
                                         <span>A</span>
                                     </DataTableRow>
                                 </DataTableRow>
-                                 <DataTableRow >
-                                    <div style={{ display: "flex", marginLeft:"35px", fontSize:'15px'}}>
+                                <DataTableRow >
+                                    <div style={{ display: "flex", marginLeft: "35px", fontSize: '15px' }}>
                                         Desember
-                                        </div>
+                                    </div>
                                     <DataTableRow>
                                         <span>M</span>
                                     </DataTableRow>
@@ -303,10 +303,10 @@ const RekapPresensiSiswa = () => {
                                         <span>A</span>
                                     </DataTableRow>
                                 </DataTableRow>
-                                 <DataTableRow >
-                                    <div style={{ display: "flex", marginLeft:"35px", fontSize:'15px'}}>
+                                <DataTableRow >
+                                    <div style={{ display: "flex", marginLeft: "35px", fontSize: '15px' }}>
                                         Jumlah
-                                        </div>
+                                    </div>
                                     <DataTableRow>
                                         <span>M</span>
                                     </DataTableRow>
@@ -420,7 +420,7 @@ const RekapPresensiSiswa = () => {
                 </Block>
             </Content>
         </React.Fragment>
-  )
+    )
 }
 
 export default RekapPresensiSiswa
