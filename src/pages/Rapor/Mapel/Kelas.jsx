@@ -20,6 +20,7 @@ import {
 } from '../../../component/Component'
 import { DataTableBody, DataTableHead, DataTableItem, DataTableRow } from '../../../component/table/DataTable'
 import { mapelKelas } from '../../../component/user/UserData'
+import { Link } from 'react-router-dom'
 const Kelas = () => {
     const [data, setData] = useState(mapelKelas);
     const [sm, updateSm] = useState(false);
@@ -148,11 +149,13 @@ const Kelas = () => {
                                             </Button>
                                         </li>
                                         <li >
+                                            <Link to='/rapor/add-mapel-kelas'>
                                             <Button color="primary"  onClick={() => setModal({ add: true })}>
                                                 <Icon name="plus">
                                                 </Icon>
                                                 <div>Tambah Mata Pelajaran</div>
                                             </Button>
+                                            </Link>
                                         </li>
                                     </ul>
                                 </div>

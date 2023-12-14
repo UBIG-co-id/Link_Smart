@@ -11,7 +11,73 @@ import { Link } from 'react-router-dom';
 
 const MutasiSiswa = () => {
     const [sm, updateSm] = useState(false);
-    const [data, setData] = useState(mutasiSiswa);
+    const [data, setData] = useState([]);
+    const [numUrutan, setNumUrutan] = useState(1);
+    const [sort, setSortState] = useState("");
+    const sortFunc = (params) => {
+        let defaultData = [...data]; // Clone array to avoid modifying the original data
+        if (params === "asc") {
+            let sortedData = defaultData.sort((a, b) => (a.name || "").localeCompare(b.name || ""));
+            setData(sortedData);
+        } else if (params === "dsc") {
+            let sortedData = defaultData.sort((a, b) => (b.name || "").localeCompare(a.name || ""));
+            setData(sortedData);
+        }
+    };
+
+    const [currentPage, setCurrentPage] = useState(1);
+    const [itemPerPage, setItemPerPage] = useState(10);
+    const indexOfLastItem = currentPage * itemPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemPerPage;
+    const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
+
+    const fetchData = async () => {
+        try {
+            const token = localStorage.getItem('jwtToken');
+    
+            // Membuat objek untuk menyimpan parameter yang akan digunakan dalam URL
+            const params = {
+                sort_order: sort === "asc" ? "ascending" : "descending",
+                page: 1, // Page selalu dimulai dari 1, Anda dapat memperbarui ini jika menggunakan halaman yang berbeda
+                limit: itemPerPage,
+            };
+    
+            // Mengubah objek parameter menjadi query string
+            const queryString = Object.keys(params)
+                .map(key => `${key}=${encodeURIComponent(params[key])}`)
+                .join('&');
+    
+            // Menggabungkan URL dengan query string
+            const apiUrl = `https://linksmart-1-t2560421.deta.app/mutasi-cari/siswa?${queryString}`;
+    
+            const response = await fetch(apiUrl, {
+                method: 'POST',
+                headers: {
+                    'accept': 'application/json',
+                    'Authorization': `Bearer ${token}`,
+                },
+                // ... (tambahkan konfigurasi lainnya sesuai kebutuhan)
+            });
+    
+            const result = await response.json();
+            console.log("ini Data", result.Data)
+            let updatedNumUrutan = numUrutan;
+    
+            const updatedData = result.Data.map((item) => {
+                return { ...item, nomor_urutan: updatedNumUrutan++ };
+            });
+    
+            setData(updatedData);
+            setNumUrutan(updatedNumUrutan);
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    };
+    useEffect(() => {
+        setNumUrutan(1);
+        fetchData();
+    }, [sort, itemPerPage]);
+
     const toggle = () => setonSearch(!onSearch);
     const [onSearchText, setSearchText] = useState("");
     const [onSearch, setonSearch] = useState(true);
@@ -48,37 +114,54 @@ const MutasiSiswa = () => {
         resetForm();
     };
     const [formData, setFormData] = useState({
+        tglmutasi: "",
         nis: "",
-        nuptk: "",
-        fotoData: null,
-        nama: "",
-        jk: "Laki-Laki",
-        status: "Active",
-        notelp: "",
-        email: "",
-        tlahir: "",
-        tgllahir: '',
-        tglmt: "",
-        nik: "",
-        alamat: "",
+        nls: "",
+        kls: "",
+        jeniss: "",
     });
     const resetForm = () => {
         setFormData({
-            name: "",
-            email: "",
-            balance: 0,
-            phone: "",
-            jk: "Laki-Laki",
-            status: "Active",
+            tglmutasi: "",
+            nis: "",
+            nls: "",
+            kls: "",
+            jeniss: "",
         });
     };
 
-    const [currentPage, setCurrentPage] = useState(1);
-    const [itemPerPage, setItemPerPage] = useState(10);
-    const indexOfLastItem = currentPage * itemPerPage;
-    const indexOfFirstItem = indexOfLastItem - itemPerPage;
-    const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
-    const paginate = (pageNumber) => setCurrentPage(pageNumber);
+    const [editId, setEditedId] = useState();
+    const [editFormData, setEditFormData] = useState({
+            tglmutasi: "",
+            nis: "",
+            nls: "",
+            kls: "",
+            jeniss: "",
+    });
+
+    const onEditClick = (id) => {
+        data.forEach((item) => {
+            if (item.id === id) {
+                setEditFormData({
+                    tglmutasi: item.tglmutasi,
+                    nis: item.nis,
+                    nls: item.nls,
+                    kls: item.kls,
+                    jeniss: item.jeniss,
+
+                });
+                setModal({ edit: true }, { add: false });
+                setEditedId(id);
+            }
+        });
+    };
+
+    
+    const paginate = (pageNumber) => {
+        setCurrentPage(pageNumber);
+        setNumUrutan((pageNumber - 1) * itemPerPage + 1);
+    };
+
     const onApproveClick = (id) => {
         let newData = data;
         let index = newData.findIndex((item) => item.id === id);
@@ -290,10 +373,10 @@ const MutasiSiswa = () => {
                                     return (
                                         <DataTableItem key={item.id}>
                                             <DataTableRow size="md">
-                                                <span>{item.id}</span>
+                                                <span>{item.nomor_urutan}</span>
                                             </DataTableRow>
                                             <DataTableRow size="md">
-                                                <span>{item.tglmutasi}</span>
+                                                <span>{item.tgl_mutasi}</span>
                                             </DataTableRow>
                                             <DataTableRow size="md">
                                                 <span>{item.nis}</span>
@@ -302,10 +385,10 @@ const MutasiSiswa = () => {
                                                 <span>{item.nls}</span>
                                             </DataTableRow>
                                             <DataTableRow size="md">
-                                                <span>{item.kls}</span>
+                                                <span>{item.kelas}</span>
                                             </DataTableRow>
                                             <DataTableRow size="md">
-                                                <span>{item.jeniss}</span>
+                                                <span>{item.jenis_mutasi}</span>
                                             </DataTableRow>
                                             <DataTableRow className="nk-tb-col-tools">
                                                 <ul className="nk-tb-actions gx-1">

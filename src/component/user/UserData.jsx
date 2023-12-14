@@ -378,6 +378,17 @@ export const tagihanSiswa = [
         total: "2.400.000",
     },
 ]
+export const kustomspp = [
+    {
+        id: 1,
+        nm: "Jonathan Joestar",
+        nis: "666999",
+        kelas: "X RPL 1",
+        kustomSpp: "Rp 8.090",
+        start: "2023-10-10T00:00:00",
+        batas: "2023-12-30T00:00:00",
+    },
+]
 export const pengumuman = [
     {
         id: 1,
@@ -417,6 +428,7 @@ export const datapengguna = [
     },
 ]
 // PENGATURAN DATA PENGGUNA
+
 
 export const pengaturanProfile = [
     {
@@ -569,6 +581,12 @@ export const filterBln = [
     {value: "November", label: "November"},
     {value: "Desember", label: "Desember"},
 ]
-//Aspek
+
+export const mpl = [
+    
+    { value: "chocolate", label: "Chocolate" },
+    { value: "strawberry", label: "Strawberry" },
+    { value: "vanilla", label: "Vanilla" },
+]
 
 

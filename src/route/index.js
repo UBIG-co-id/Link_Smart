@@ -9,6 +9,7 @@ import KenaikanKelas from '../pages/Kelas/KenaikanKelas';
 import AksesEditSiswa from '../pages/Siswa/AksesEditSiswa';
 // END SISWA
 import MapelKelas from '../pages/Rapor/Mapel/Kelas'
+import AddMapelKelas from '../component/modal/klsmapel/AddMapel'
 import LayoutNoSidebar from '../layout/index-nonSidebar'
 import Login from '../pages/Auth/Login';
 import Register from '../pages/Auth/Register';
@@ -139,7 +140,6 @@ const Router = () => {
         {/* END PRESENSI */}
 
         {/* RAPOR */}
-        <Route path='/rapor/mapel-kelas' element={<MapelKelas />}></Route>
         <Route path='/presensi/siswa-manual' element={<PresensiSiswaManual/>}></Route>
         <Route path='/rapor/penilaian-kd' element={<PenilaianKd />}></Route>
         <Route path='/rapor/setting-umum' element={<SettingUmum />}></Route>
@@ -148,6 +148,11 @@ const Router = () => {
         <Route path='/rapor/rekap-nilai' element={<RekapNilai/>}></Route>
         <Route path='/rapor/cetak-cover' element={<Cover/>}></Route>
         {/* END RAPOR */}
+
+        {/* ADD KELAS MAPEL */}
+        <Route path='/rapor/mapel-kelas' element={<MapelKelas />}></Route>
+        <Route path='/rapor/add-mapel-kelas' element={<AddMapelKelas />}></Route>
+        {/* ADD KELAS MAPEL */}
 
         {/* ADD KKM BATAS */}
         <Route path='/rapor/penilaian-kkm-batas' element={<KkmBatas />}></Route>

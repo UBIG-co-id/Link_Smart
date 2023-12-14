@@ -37,6 +37,16 @@ const AddModal = ({ modal, closeModal, onSubmit, formData, setFormData, filterSt
     return (
         <Modal isOpen={modal} toggle={() => closeModal()} className="modal-dialog-top">
             <ModalHeader>
+            <a
+          href="#cancel"
+          onClick={(ev) => {
+            ev.preventDefault();
+            closeModal()
+          }}
+          className="close"
+        >
+          <Icon name="cross-sm"></Icon>
+        </a>
                 <div className="p-2">
                     <h5 className="title">Peringatan</h5>
                     <div className="mt-4">

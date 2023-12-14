@@ -9,12 +9,100 @@ import { Link } from 'react-router-dom'
 
 const Aspek = () => {
     const [sm, updateSm] = useState(false);
-    const [data, setData] = useState(penilaianAspek);
+    const [data, setData] = useState([]);
+    const [numUrutan, setNumUrutan] = useState(1);
+    const [sort, setSortState] = useState("");
+    const sortFunc = (params) => {
+        let defaultData = [...data]; // Clone array to avoid modifying the original data
+        if (params === "asc") {
+            let sortedData = defaultData.sort((a, b) => (a.name || "").localeCompare(b.name || ""));
+            setData(sortedData);
+        } else if (params === "dsc") {
+            let sortedData = defaultData.sort((a, b) => (b.name || "").localeCompare(a.name || ""));
+            setData(sortedData);
+        }
+    };
+
+    const [currentPage, setCurrentPage] = useState(1);
+    const [itemPerPage, setItemPerPage] = useState(10);
+    const indexOfLastItem = currentPage * itemPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemPerPage;
+    const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
+
+    const fetchData = async () => {
+        try {
+            const token = localStorage.getItem('jwtToken');
+
+            // Membuat objek untuk menyimpan parameter yang akan digunakan dalam URL
+            const params = {
+                sort_order: sort === "asc" ? "ascending" : "descending",
+                page: 1, // Page selalu dimulai dari 1, Anda dapat memperbarui ini jika menggunakan halaman yang berbeda
+                limit: itemPerPage,
+            };
+
+            // Mengubah objek parameter menjadi query string
+            const queryString = Object.keys(params)
+                .map(key => `${key}=${encodeURIComponent(params[key])}`)
+                .join('&');
+
+            // Menggabungkan URL dengan query string
+            const apiUrl = `https://linksmart-1-t2560421.deta.app/aspek-cari?${queryString}`;
+
+            const response = await fetch(apiUrl, {
+                method: 'POST',
+                headers: {
+                    'accept': 'application/json',
+                    'Authorization': `Bearer ${token}`,
+                },
+                // ... (tambahkan konfigurasi lainnya sesuai kebutuhan)
+            });
+
+            const result = await response.json();
+            console.log("ini Data", result.Data)
+            let updatedNumUrutan = numUrutan;
+
+            const updatedData = result.Data.map((item) => {
+                return { ...item, nomor_urutan: updatedNumUrutan++ };
+            });
+
+            setData(updatedData);
+            setNumUrutan(updatedNumUrutan);
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    };
+    useEffect(() => {
+        setNumUrutan(1);
+        fetchData();
+    }, [sort, itemPerPage]);
+
     const toggle = () => setonSearch(!onSearch);
     const [onSearch, setonSearch] = useState(true);
     const [onSearchText, setSearchText] = useState("");
     const [actionText, setActionText] = useState("");
-    const paginate = (pageNumber) => setCurrentPage(pageNumber);
+    const paginate = (pageNumber) => {
+        setCurrentPage(pageNumber);
+        setNumUrutan((pageNumber - 1) * itemPerPage + 1);
+    };
+
+    const [editId, setEditedId] = useState();
+    const [editFormData, setEditFormData] = useState({
+        aspek: "",
+        ujian: "",
+    });
+    const onEditClick = (id) => {
+        data.forEach((item) => {
+            if (item.id === id) {
+                setEditFormData({
+                    aspek: item.aspek,
+                    ujian: item.aspek,
+
+                });
+                setModal({ edit: true }, { add: false });
+                setEditedId(id);
+            }
+        });
+    };
 
     const onActionClick = (e) => {
         if (actionText === "suspend") {
@@ -38,11 +126,7 @@ const Aspek = () => {
         edit: false,
         add: false,
     });
-    const [currentPage, setCurrentPage] = useState(1);
-    const [itemPerPage, setItemPerPage] = useState(10);
-    const indexOfLastItem = currentPage * itemPerPage;
-    const indexOfFirstItem = indexOfLastItem - itemPerPage;
-    const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
+
     const onApproveClick = (id) => {
         let newData = data;
         let index = newData.findIndex((item) => item.id === id);
@@ -57,12 +141,12 @@ const Aspek = () => {
     };
     const [FormData, setFormData] = useState({
         aspek: "",
-        ujian:"",
+        ujian: "",
     });
     const resetForm = () => {
         setFormData({
-        aspek: "",
-        ujian:"",
+            aspek: "",
+            ujian: "",
         });
     };
     const closeModal = () => {
@@ -118,11 +202,11 @@ const Aspek = () => {
                                         </li> */}
                                         <li className="nk-block-tools-opt">
                                             <Link to="/rapor/add-penilaian-aspek">
-                                            <Button color="primary" onClick={() => setModal({ add: true })}>
-                                                <Icon name="plus">
-                                                </Icon>
-                                                <div>Aspek Penilaian</div>
-                                            </Button>
+                                                <Button color="primary" onClick={() => setModal({ add: true })}>
+                                                    <Icon name="plus">
+                                                    </Icon>
+                                                    <div>Aspek Penilaian</div>
+                                                </Button>
                                             </Link>
                                         </li>
                                     </ul>
@@ -255,17 +339,23 @@ const Aspek = () => {
                                         <DataTableItem key={item.id}>
                                             <DataTableRow>
                                                 <div className="tb-lead">
-                                                    <span>{item.id}</span>
+                                                    <span>{item.nomor_urutan}</span>
                                                 </div>
                                             </DataTableRow>
                                             <DataTableRow>
                                                 <div className="tb-lead">
-                                                    <span>{item.aspek}</span>
+                                                    <span>{item.namaAspek}</span>
                                                 </div>
                                             </DataTableRow>
                                             <DataTableRow>
                                                 <div className="tb-lead">
-                                                    <span>{item.ujian}</span>
+                                                    {/* Mapping through dataUjian array to display buttons */}
+                                                    {item.dataUjian.map((ujian, index) => (
+                                                        <Button key={index} color="primary" className="mr-2 mb-2 btn-round">
+                                                            <span>{ujian.data}</span>
+                                                            <Icon name="cross-sm" />
+                                                        </Button>
+                                                    ))}
                                                 </div>
                                             </DataTableRow>
                                             <DataTableRow className="nk-tb-col-tools">

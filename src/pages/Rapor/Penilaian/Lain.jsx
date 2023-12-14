@@ -9,11 +9,80 @@ import { Link } from 'react-router-dom'
 
 const Lain = () => {
     const [sm, updateSm] = useState(false);
-    const [data, setData] = useState(penilaianLain);
+    const [data, setData] = useState([]);
+    const [numUrutan, setNumUrutan] = useState(1);
+    const [sort, setSortState] = useState("");
+    const sortFunc = (params) => {
+        let defaultData = [...data]; // Clone array to avoid modifying the original data
+        if (params === "asc") {
+            let sortedData = defaultData.sort((a, b) => (a.name || "").localeCompare(b.name || ""));
+            setData(sortedData);
+        } else if (params === "dsc") {
+            let sortedData = defaultData.sort((a, b) => (b.name || "").localeCompare(a.name || ""));
+            setData(sortedData);
+        }
+    };
+    const [currentPage, setCurrentPage] = useState(1);
+    const [itemPerPage, setItemPerPage] = useState(10);
+    const indexOfLastItem = currentPage * itemPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemPerPage;
+    const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
+    
+    const fetchData = async () => {
+        try {
+            const token = localStorage.getItem('jwtToken');
+    
+            // Membuat objek untuk menyimpan parameter yang akan digunakan dalam URL
+            const params = {
+                sort_order: sort === "asc" ? "ascending" : "descending",
+                page: 1, // Page selalu dimulai dari 1, Anda dapat memperbarui ini jika menggunakan halaman yang berbeda
+                limit: itemPerPage,
+            };
+    
+            // Mengubah objek parameter menjadi query string
+            const queryString = Object.keys(params)
+                .map(key => `${key}=${encodeURIComponent(params[key])}`)
+                .join('&');
+    
+            // Menggabungkan URL dengan query string
+            const apiUrl = `https://linksmart-1-t2560421.deta.app/penilaianLain-cari?${queryString}`;
+    
+            const response = await fetch(apiUrl, {
+                method: 'POST',
+                headers: {
+                    'accept': 'application/json',
+                    'Authorization': `Bearer ${token}`,
+                },
+                // ... (tambahkan konfigurasi lainnya sesuai kebutuhan)
+            });
+    
+            const result = await response.json();
+            console.log("ini Data", result.Data)
+            let updatedNumUrutan = numUrutan;
+    
+            const updatedData = result.Data.map((item) => {
+                return { ...item, nomor_urutan: updatedNumUrutan++ };
+            });
+    
+            setData(updatedData);
+            setNumUrutan(updatedNumUrutan);
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    };
+
+    useEffect(() => {
+        setNumUrutan(1);
+        fetchData();
+    }, [sort, itemPerPage]);
+
     const toggle = () => setonSearch(!onSearch);
     const [onSearch, setonSearch] = useState(true);
     const [onSearchText, setSearchText] = useState("");
-    const paginate = (pageNumber) => setCurrentPage(pageNumber);
+    const paginate = (pageNumber) => {
+        setCurrentPage(pageNumber);
+        setNumUrutan((pageNumber - 1) * itemPerPage + 1);
+    };
 
     const [modal, setModal] = useState({
         edit: false,
@@ -24,11 +93,7 @@ const Lain = () => {
         setSearchText(e.target.value);
     };
 
-    const [currentPage, setCurrentPage] = useState(1);
-    const [itemPerPage, setItemPerPage] = useState(10);
-    const indexOfLastItem = currentPage * itemPerPage;
-    const indexOfFirstItem = indexOfLastItem - itemPerPage;
-    const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
+    
     const onApproveClick = (id) => {
         let newData = data;
         let index = newData.findIndex((item) => item.id === id);
@@ -40,6 +105,33 @@ const Lain = () => {
         let index = newData.findIndex((item) => item.id === id);
         newData[index].status = "Rejected";
         setData([...newData]);
+    };
+
+    const [FormData, setFormData] = useState({
+        penilaianlain: "",
+        kolomnilai:"",
+    });
+    const resetForm = () => {
+        setFormData({
+            penilaianlain: "",
+            kolomnilai:"",
+
+        });
+    };
+    const closeModal = () => {
+        setModal({ add: false })
+        resetForm();
+    };
+    const onFormSubmit = (submitData) => {
+        const { penilaianlain, kolomnilai } = submitData;
+        let submittedData = {
+            id: data.length + 1,
+            penilaianlain: penilaianlain,
+            kolomnilai: kolomnilai,
+        };
+        setData([submitData, ...data]);
+        resetForm();
+        setModal({ edit: false , add: false });
     };
     return (
         <React.Fragment>
@@ -173,7 +265,7 @@ const Lain = () => {
                                             </DataTableRow>
                                             <DataTableRow>
                                                 <div className="tb-lead">
-                                                    <span>{item.penilaianlain}</span>
+                                                    <span>{item.nama}</span>
                                                 </div>
                                             </DataTableRow>
                                             <DataTableRow>

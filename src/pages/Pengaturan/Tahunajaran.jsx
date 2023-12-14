@@ -10,19 +10,83 @@ import { Card, DropdownItem, DropdownMenu, DropdownToggle, UncontrolledDropdown 
 const Tahunajaran = () => {
     const [sm, updateSm] = useState(false);
     const [data, setData] = useState(tahunAjaran);
-    const [modal, setModal] = useState({
-        edit: false,
-        add: false,
-    });
+    const [numUrutan, setNumUrutan] = useState(1);
+    const [sort, setSortState] = useState("");
+    const sortFunc = (params) => {
+        let defaultData = [...data]; // Clone array to avoid modifying the original data
+        if (params === "asc") {
+            let sortedData = defaultData.sort((a, b) => (a.name || "").localeCompare(b.name || ""));
+            setData(sortedData);
+        } else if (params === "dsc") {
+            let sortedData = defaultData.sort((a, b) => (b.name || "").localeCompare(a.name || ""));
+            setData(sortedData);
+        }
+    };
     const [currentPage, setCurrentPage] = useState(1);
     const [itemPerPage, setItemPerPage] = useState(10);
     const indexOfLastItem = currentPage * itemPerPage;
     const indexOfFirstItem = indexOfLastItem - itemPerPage;
     const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
+
+    const fetchData = async () => {
+        try {
+            const token = localStorage.getItem('jwtToken');
+    
+            // Membuat objek untuk menyimpan parameter yang akan digunakan dalam URL
+            const params = {
+                sort_order: sort === "asc" ? "ascending" : "descending",
+                page: 1, // Page selalu dimulai dari 1, Anda dapat memperbarui ini jika menggunakan halaman yang berbeda
+                limit: itemPerPage,
+            };
+    
+            // Mengubah objek parameter menjadi query string
+            const queryString = Object.keys(params)
+                .map(key => `${key}=${encodeURIComponent(params[key])}`)
+                .join('&');
+    
+            // Menggabungkan URL dengan query string
+            const apiUrl = `https://linksmart-1-t2560421.deta.app/thnajaran-cari?${queryString}`;
+    
+            const response = await fetch(apiUrl, {
+                method: 'POST',
+                headers: {
+                    'accept': 'application/json',
+                    'Authorization': `Bearer ${token}`,
+                },
+                // ... (tambahkan konfigurasi lainnya sesuai kebutuhan)
+            });
+    
+            const result = await response.json();
+            console.log("ini Data", result.Data)
+            let updatedNumUrutan = numUrutan;
+    
+            const updatedData = result.Data.map((item) => {
+                return { ...item, nomor_urutan: updatedNumUrutan++ };
+            });
+    
+            setData(updatedData);
+            setNumUrutan(updatedNumUrutan);
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    };
+
+    useEffect(() => {
+        setNumUrutan(1);
+        fetchData();
+    }, [sort, itemPerPage]);
+
+    const [modal, setModal] = useState({
+        edit: false,
+        add: false,
+    });
     const [onSearchText, setSearchText] = useState("");
     const toggle = () => setonSearch(!onSearch);
     const [onSearch, setonSearch] = useState(false);
-    const paginate = (pageNumber) => setCurrentPage(pageNumber);
+    const paginate = (pageNumber) => {
+        setCurrentPage(pageNumber);
+        setNumUrutan((pageNumber - 1) * itemPerPage + 1);
+    };
 
     const onFilterChange = (e) => {
         setSearchText(e.target.value);
@@ -39,6 +103,69 @@ const Tahunajaran = () => {
         let index = newData.findIndex((item) => item.id === id);
         newData[index].status = "Rejected";
         setData([...newData]);
+    };
+    const [editId, setEditedId] = useState();
+    const [formData, setFormData] = useState({
+        tajar: "",
+        pergan: "",
+        pergen: "",
+        semester: "",
+        status: "",
+    });
+    const [editFormData, setEditFormData] = useState({
+        tajar: "",
+        pergan: "",
+        pergen: "",
+        semester: "",
+        status: "",
+    });
+    const resetForm = () => {
+        setFormData({
+            tajar: "",
+            pergan: "",
+            pergen: "",
+            semester: "",
+            status: "",
+
+        });
+    };
+    const closeEditModal = () => {
+        setModal({ edit: false })
+        resetForm();
+    };
+    const onEditClick = (id) => {
+        data.forEach((item) => {
+            if (item.id === id) {
+                setEditFormData({
+                    tajar: item.tajar,
+                    pergan: item.pergan,
+                    pergen: item.pergen,
+                    semester: item.semester,
+                    status: item.status,
+                });
+                setModal({ edit: true }, { add: false });
+                setEditedId(id);
+            }
+        });
+    };
+    const onEditSubmit = (submitData) => {
+        const { tajar, pergan, pergen, semester, status } = submitData;
+        let submittedData;
+        let newitems = data;
+        newitems.forEach((item) => {
+            if (item.id === editId) {
+                submittedData = {
+                    tajar: tajar,
+                    pergan: pergan,
+                    pergen: pergen,
+                    semester: semester,
+                    status: status,
+                };
+            }
+        });
+        let index = newitems.findIndex((item) => item.id === editId);
+        newitems[index] = submittedData;
+        setModal({ edit: false });
     };
     return (
         <React.Fragment>
@@ -119,32 +246,32 @@ const Tahunajaran = () => {
                                         <DataTableItem key={item.id}>
                                             <DataTableRow>
                                                 <div className="tb-lead">
-                                                    <span>{item.id}</span>
+                                                    <span>{item.nomor_urutan}</span>
                                                 </div>
                                             </DataTableRow>
                                             <DataTableRow>
                                                 <div className="tb-lead">
-                                                    <span>{item.tajar}</span>
+                                                    <span>{item.thnAjrn}</span>
                                                 </div>
                                             </DataTableRow>
                                             <DataTableRow>
                                                 <div className="tb-lead">
-                                                    <span>{item.pergan}</span>
+                                                    <span>{item.startGnjl}</span>
                                                 </div>
                                             </DataTableRow>
                                             <DataTableRow>
                                                 <div className="tb-lead">
-                                                    <span>{item.pergen}</span>
+                                                    <span>{item.startGnap}</span>
                                                 </div>
                                             </DataTableRow>
                                             <DataTableRow>
                                                 <div className="tb-lead">
-                                                    <span>{item.semester}</span>
+                                                    <span>{item.periode}</span>
                                                 </div>
                                             </DataTableRow>
                                             <DataTableRow>
                                                 <div className="tb-lead">
-                                                    <span>{item.status}</span>
+                                                    <span>{item.isAktif}</span>
                                                 </div>
                                             </DataTableRow>
                                             <DataTableRow className="nk-tb-col-tools">

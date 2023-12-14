@@ -14,9 +14,75 @@ import { Link } from 'react-router-dom'
 
 const Siswa = () => {
     const [sm, updateSm] = useState(false);
-    const [data, setData] = useState(siswaData);
+    const [data, setData] = useState([]);
+    const [numUrutan, setNumUrutan] = useState(1);
+    const [sort, setSortState] = useState("");
+    const sortFunc = (params) => {
+        let defaultData = [...data]; // Clone array to avoid modifying the original data
+        if (params === "asc") {
+            let sortedData = defaultData.sort((a, b) => (a.name || "").localeCompare(b.name || ""));
+            setData(sortedData);
+        } else if (params === "dsc") {
+            let sortedData = defaultData.sort((a, b) => (b.name || "").localeCompare(a.name || ""));
+            setData(sortedData);
+        }
+    };
+    const [currentPage, setCurrentPage] = useState(1);
+    const [itemPerPage, setItemPerPage] = useState(10);
+    const indexOfLastItem = currentPage * itemPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemPerPage;
+    const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
+
+    const fetchData = async () => {
+        try {
+            const token = localStorage.getItem('jwtToken');
+    
+            // Membuat objek untuk menyimpan parameter yang akan digunakan dalam URL
+            const params = {
+                sort_order: sort === "asc" ? "ascending" : "descending",
+                page: 1, // Page selalu dimulai dari 1, Anda dapat memperbarui ini jika menggunakan halaman yang berbeda
+                limit: itemPerPage,
+            };
+    
+            // Mengubah objek parameter menjadi query string
+            const queryString = Object.keys(params)
+                .map(key => `${key}=${encodeURIComponent(params[key])}`)
+                .join('&');
+    
+            // Menggabungkan URL dengan query string
+            const apiUrl = `https://linksmart-1-t2560421.deta.app/siswa-cari/?${queryString}`;
+    
+            const response = await fetch(apiUrl, {
+                method: 'POST',
+                headers: {
+                    'accept': 'application/json',
+                    'Authorization': `Bearer ${token}`,
+                },
+                // ... (tambahkan konfigurasi lainnya sesuai kebutuhan)
+            });
+    
+            const result = await response.json();
+            console.log("ini Data", result.Data)
+            let updatedNumUrutan = numUrutan;
+    
+            const updatedData = result.Data.map((item) => {
+                return { ...item, nomor_urutan: updatedNumUrutan++ };
+            });
+    
+            setData(updatedData);
+            setNumUrutan(updatedNumUrutan);
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    };
+    useEffect(() => {
+        setNumUrutan(1);
+        fetchData();
+    }, [sort, itemPerPage]);
+
     const [onSearchText, setSearchText] = useState("");
     const toggle = () => setonSearch(!onSearch);
+    
     const [onSearch, setonSearch] = useState(true);
     const [actionText, setActionText] = useState("");
 
@@ -58,19 +124,26 @@ const Siswa = () => {
     });
     const [editId, setEditedId] = useState();
     const [editFormData, setEditFormData] = useState({
-        nip: "",
-        namaptk: "",
-        status: "",
-        jnmutasi: "",
+        nis: "",
+        userId: "",
+        nls: "",
+        usia: "",
+        kls: "",
+        jk: "",
+        namor: "",
     });
     const onEditClick = (id) => {
         data.forEach((item) => {
             if (item.id === id) {
                 setEditFormData({
                     nip: item.nip,
-                    namaptk: item.namaptk,
-                    status: item.status,
-                    jnmutasi: item.jnmutasi,
+                    nis: item.nis,
+                    userId: item.userId,
+                    nls: item.nls,
+                    usia: item.usia,
+                    kls: item.kls,
+                    jk: item.jk,
+                    namor: item.namor,
 
                 });
                 setModal({ edit: true }, { add: false });
@@ -79,35 +152,29 @@ const Siswa = () => {
         });
     };
 
-    const [currentPage, setCurrentPage] = useState(1);
-    const [itemPerPage, setItemPerPage] = useState(10);
-    const indexOfLastItem = currentPage * itemPerPage;
-    const indexOfFirstItem = indexOfLastItem - itemPerPage;
-    const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
-    const paginate = (pageNumber) => setCurrentPage(pageNumber);
+    
+    const paginate = (pageNumber) =>{
+        setCurrentPage(pageNumber);
+        setNumUrutan((pageNumber - 1) * itemPerPage + 1);
+    };
     const [formData, setFormData] = useState({
-        nip: "",
-        nuptk: "",
-        fotoData: null,
-        nama: "",
-        jk: "Laki-Laki",
-        status: "Active",
-        notelp: "",
-        email: "",
-        tlahir: "",
-        tgllahir: '',
-        tglmt: "",
-        nik: "",
-        alamat: "",
+        nis: "",
+        userId: "",
+        nls: "",
+        usia: "",
+        kls: "",
+        jk: "",
+        namor: "",
     });
     const resetForm = () => {
         setFormData({
-            name: "",
-            email: "",
-            balance: 0,
-            phone: "",
-            jk: "Laki-Laki",
-            status: "Active",
+        nis: "",
+        userId: "",
+        nls: "",
+        usia: "",
+        kls: "",
+        jk: "",
+        namor: "",
         });
     };
 
@@ -348,16 +415,16 @@ const Siswa = () => {
                                                 </div>
                                             </DataTableRow> */}
                                             <DataTableRow size="md">
-                                                <span>{item.id}</span>
+                                                <span>{item.nomor_urutan}</span>
                                             </DataTableRow>
                                             <DataTableRow size="md">
                                                 <span>{item.nis}</span>
                                             </DataTableRow>
                                             <DataTableRow size="sm">
-                                                <span>{item.userId}</span>
+                                                <span>{item.usrId}</span>
                                             </DataTableRow>
                                             <DataTableRow size="md">
-                                                <span>{item.nls}</span>
+                                                <span>{item.nm}</span>
                                             </DataTableRow>
                                             <DataTableRow size="md">
                                                 <span>{item.usia} Tahun</span>
@@ -366,10 +433,10 @@ const Siswa = () => {
                                                 <span>{item.kls}</span>
                                             </DataTableRow>
                                             <DataTableRow size="md">
-                                                <span>{item.jk}</span>
+                                                <span>{item.jnsKlmn}</span>
                                             </DataTableRow>
                                             <DataTableRow size="md">
-                                                <span>{item.namor}</span>
+                                                <span>{item.nmaWali}</span>
                                             </DataTableRow>
                                             {/* <DataTableRow>
                                                 <span
