@@ -627,9 +627,10 @@ export const filterBln = [
 
 export const mpl = [
     
-    { value: "chocolate", label: "Chocolate" },
-    { value: "strawberry", label: "Strawberry" },
-    { value: "vanilla", label: "Vanilla" },
+    { value: "Matematika", label: "Matematika" },
+    { value: "Bahasa indonesia", label: "Bahasa indonesia" },
+    { value: "Bahasa Daerah", label: "Bahasa Daerah" },
+    { value: "Kompetensi Keahlian RPL", label: "Kompetensi Keahlian RPL" },
 ]
 
 

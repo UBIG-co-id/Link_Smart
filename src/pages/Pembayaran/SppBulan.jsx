@@ -5,6 +5,7 @@ import { Block, BlockBetween, BlockDes, BlockHead, BlockHeadContent, BlockTitle,
 import { sppBulan, filterStt } from '../../component/user/UserData'
 import { DataTable, DataTableBody, DataTableHead, DataTableItem, DataTableRow } from '../../component/table/DataTable'
 import { DropdownToggle, UncontrolledDropdown } from 'reactstrap'
+import { Link } from 'react-router-dom'
 const SppBulan = () => {
   const [sm, updateSm] = useState(false);
   const [data, setData] = useState([])
@@ -217,9 +218,11 @@ const onEditSubmit = (submitData) => {
                         </Button>
                     </li> */}
                     <li className="nk-block-tools-opt">
+                      <Link to='/pembayaran/add-spp-bulan'>
                         <Button color="primary" className="btn-icon" onClick={() => setModal({ add: true })}>
                             <Icon name="plus"></Icon>
                         </Button>
+                      </Link>
                     </li>
                   </ul>
                 </div>
@@ -350,7 +353,7 @@ const onEditSubmit = (submitData) => {
                       </DataTableRow>
                       <DataTableRow>
                         <div className="tb-lead">
-                          <span>{item.bln}</span>
+                          <span>{item.bulan}</span>
                         </div>
                       </DataTableRow>
                       <DataTableRow>
